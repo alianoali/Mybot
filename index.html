@@ -3,21 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>بوت الذكاء الاصطناعي | تسجيل الدخول</title>
+  <meta name="description" content="تسجيل الدخول إلى بوت الذكاء الاصطناعي باستخدام حساب Google">
+  <title>بوت الذكاء الاصطناعي | تسجيل الدخول الآمن</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap">
+  <!-- Tajawal Font - Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Tajawal', 'sans-serif'] },
+          fontFamily: {
+            sans: ['Tajawal', 'sans-serif']
+          },
           animation: {
-            float: 'float 6s ease-in-out infinite'
+            float: 'float 8s ease-in-out infinite',
+            fadeIn: 'fadeIn 0.5s ease-out'
           },
           keyframes: {
             float: {
               '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-12px)' }
+              '50%': { transform: 'translateY(-10px)' }
+            },
+            fadeIn: {
+              '0%': { opacity: 0, transform: 'translateY(10px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
             }
           }
         }
@@ -31,20 +43,25 @@
       margin: 0;
       padding: 0;
       overflow-x: hidden;
+      font-feature-settings: "rlig" 1, "calt" 1;
     }
     .auth-card {
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
-      border-radius: 24px;
+      background: rgba(15, 23, 42, 0.92);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 
+        0 10px 30px -10px rgba(0, 0, 0, 0.4),
+        0 20px 40px -20px rgba(0, 0, 0, 0.5);
+      border-radius: 28px;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .google-btn {
       background: white;
       color: #1e293b;
       font-weight: 600;
       padding: 0.875rem 1.5rem;
-      border-radius: 14px;
+      border-radius: 16px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -53,23 +70,26 @@
       width: 100%;
       max-width: 320px;
       font-size: 1rem;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
     .google-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+      transform: translateY(-2px);
+      box-shadow: 
+        0 10px 15px -3px rgba(0, 0, 0, 0.1),
+        0 4px 6px -2px rgba(0, 0, 0, 0.05);
     }
-    .success-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 1.5rem;
-      color: #10b981;
+    .google-btn:active {
+      transform: translateY(0);
     }
     .logo-circle {
       background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+      box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
     }
     .floating {
-      animation: float 6s ease-in-out infinite;
+      animation: float 8s ease-in-out infinite;
     }
     .hidden {
       display: none !important;
@@ -77,38 +97,50 @@
     .spinner {
       width: 20px;
       height: 20px;
-      border: 2px solid transparent;
+      border: 2px solid rgba(59, 130, 246, 0.3);
       border-top-color: #3b82f6;
       border-radius: 50%;
       animation: spin 1s linear infinite;
-      margin-right: 8px;
     }
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+    .status-message {
+      animation: fadeIn 0.5s ease-out;
+    }
+    /* Google One Tap container */
+    #g_id_onload {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
   </style>
 </head>
-<body class="flex items-center justify-center p-4 relative">
+<body class="flex items-center justify-center p-4 sm:p-6 relative">
 
-  <!-- خلفية رسومية -->
+  <!-- خلفية رسومية ديناميكية -->
   <div class="absolute inset-0 overflow-hidden -z-10">
-    <svg class="absolute top-0 left-0 w-full h-full opacity-10" viewBox="0 0 1440 800">
-      <circle cx="200" cy="200" r="120" fill="#3b82f6" class="floating" style="animation-delay: 0s;"></circle>
-      <circle cx="1200" cy="600" r="160" fill="#8b5cf6" class="floating" style="animation-delay: 1.5s;"></circle>
-      <circle cx="700" cy="100" r="80" fill="#60a5fa" class="floating" style="animation-delay: 3s;"></circle>
+    <svg class="absolute top-0 left-0 w-full h-full opacity-8" viewBox="0 0 1440 800">
+      <circle cx="150" cy="150" r="100" fill="#3b82f6" class="floating" style="animation-delay: 0s;"></circle>
+      <circle cx="1250" cy="650" r="140" fill="#8b5cf6" class="floating" style="animation-delay: 2s;"></circle>
+      <circle cx="700" cy="80" r="70" fill="#60a5fa" class="floating" style="animation-delay: 4s;"></circle>
+      <circle cx="400" cy="700" r="90" fill="#4f46e5" class="floating" style="animation-delay: 6s;"></circle>
     </svg>
   </div>
 
-  <!-- شاشة تسجيل الدخول -->
-  <div id="loginScreen" class="auth-card p-8 w-full max-w-md text-center">
-    <div class="mb-6">
+  <!-- شاشة تسجيل الدخول الرئيسية -->
+  <div id="loginScreen" class="auth-card p-7 sm:p-8 w-full max-w-md text-center">
+    <div class="mb-7">
       <div class="mx-auto logo-circle w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
         <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
         </svg>
       </div>
       <h1 class="text-2xl font-bold text-white">مرحباً بك في بوت الذكاء الاصطناعي</h1>
-      <p class="text-gray-400 mt-2 text-sm">سجّل الدخول بحساب Google لإنشاء حسابك تلقائياً</p>
+      <p class="text-gray-400 mt-3 text-sm leading-relaxed">
+        سجّل الدخول بحساب Google لإنشاء حسابك الآمن تلقائياً
+      </p>
     </div>
 
     <button id="googleSignInBtn" class="google-btn mx-auto">
@@ -118,115 +150,218 @@
       تسجيل الدخول بـ Google
     </button>
 
-    <div class="mt-6 text-xs text-gray-500 space-y-1">
-      <p>✓ يُسمح فقط بحسابات Gmail (.com)</p>
-      <p>✓ سيتم إنشاء حسابك تلقائياً عند التحقق</p>
+    <div class="mt-7 text-xs text-gray-500 space-y-1.5">
+      <div class="flex items-center justify-center gap-1.5">
+        <span>✓</span>
+        <span>يُسمح فقط بحسابات Gmail (.com)</span>
+      </div>
+      <div class="flex items-center justify-center gap-1.5">
+        <span>✓</span>
+        <span>بياناتك محمية وآمنة</span>
+      </div>
     </div>
   </div>
 
-  <!-- شاشة النجاح (تُعرض أثناء التوجيه) -->
-  <div id="successScreen" class="auth-card p-8 w-full max-w-md text-center hidden">
-    <svg class="success-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-    </svg>
-    <h2 class="text-xl font-bold text-white mb-2">تم تسجيل الدخول بنجاح!</h2>
-    <p id="welcomeMessage" class="text-gray-300 mb-4">مرحباً بك، <span id="userName" class="font-semibold text-blue-400">...</span></p>
-    <div class="flex items-center justify-center gap-2 text-sm text-gray-400">
-      <div class="spinner"></div>
-      <span>جارٍ التوجيه إلى لوحة التحكم...</span>
+  <!-- شاشة المعالجة (Processing) -->
+  <div id="processingScreen" class="auth-card p-7 sm:p-8 w-full max-w-md text-center hidden">
+    <div class="flex flex-col items-center justify-center py-8">
+      <div class="spinner mb-5"></div>
+      <p id="processingMessage" class="text-gray-300 text-lg font-medium status-message">
+        جارٍ التحقق من حسابك...
+      </p>
+      <p class="text-gray-500 text-sm mt-2">
+        يُرجى الانتظار لحظات
+      </p>
     </div>
   </div>
 
+  <!-- Google Identity Services Container -->
+  <div id="g_id_onload"
+    data-client_id="751119765490-ug00sfscqh4uvs4km9ho2buav6kdp46f.apps.googleusercontent.com"
+    data-callback="handleCredentialResponse"
+    data-auto_select="false"
+    data-cancel_on_tap_outside="true"
+    data-context="signin"
+    data-ux_mode="popup">
+  </div>
+
+  <!-- Google Identity Services Script -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <script>
+    // ======================
+    // الإعدادات الأساسية
+    // ======================
     const GOOGLE_CLIENT_ID = "751119765490-ug00sfscqh4uvs4km9ho2buav6kdp46f.apps.googleusercontent.com";
-    const STORAGE_KEY = "ai_bot_user_session";
+    const STORAGE_KEY = "ai_bot_user_session_v2";
+    const ALLOWED_DOMAIN = "@gmail.com";
 
+    // ======================
+    // دوال المساعدة
+    // ======================
+
+    /**
+     * حفظ بيانات الجلسة
+     */
     function saveSession(name, email) {
       try {
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ name, email, timestamp: Date.now() }));
-      } catch (e) {
-        console.error("فشل حفظ الجلسة:", e);
+        const sessionData = {
+          name: name.trim(),
+          email: email.toLowerCase().trim(),
+          timestamp: Date.now(),
+          version: 2
+        };
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(sessionData));
+        return true;
+      } catch (error) {
+        console.error("فشل حفظ الجلسة:", error);
+        return false;
       }
     }
 
+    /**
+     * تحميل بيانات الجلسة الحالية
+     */
     function loadSession() {
       try {
         const data = sessionStorage.getItem(STORAGE_KEY);
-        return data ? JSON.parse(data) : null;
-      } catch (e) {
+        if (!data) return null;
+        
+        const session = JSON.parse(data);
+        // التحقق من صلاحية الجلسة (اختياري)
+        const now = Date.now();
+        const oneDay = 24 * 60 * 60 * 1000; // 24 ساعة
+        if (now - session.timestamp > oneDay) {
+          sessionStorage.removeItem(STORAGE_KEY);
+          return null;
+        }
+        return session;
+      } catch (error) {
+        console.warn("فشل تحميل الجلسة:", error);
         return null;
       }
     }
 
-    function redirectToDashboard() {
-      // === في التطبيق الحقيقي، استخدم هذا السطر: ===
+    /**
+     * عرض شاشة المعالجة
+     */
+    function showProcessingScreen(message = "جارٍ التحقق من حسابك...") {
+      document.getElementById('processingMessage').textContent = message;
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('processingScreen').classList.remove('hidden');
+    }
+
+    /**
+     * إخفاء شاشة المعالجة
+     */
+    function hideProcessingScreen() {
+      document.getElementById('processingScreen').classList.add('hidden');
+      document.getElementById('loginScreen').classList.remove('hidden');
+    }
+
+    /**
+     * التوجيه إلى لوحة التحكم
+     */
+    function redirectToDashboard(name) {
+      // === في بيئة الإنتاج الحقيقية: ===
       // window.location.href = '/dashboard';
       
-      // === للمعاينة فقط (في هذه البيئة): ===
+      // === للمعاينة في هذه البيئة: ===
       setTimeout(() => {
-        alert("✅ تم التوجيه إلى لوحة التحكم!");
-        // يمكنك إخفاء الرسالة وإظهار شاشة لوحة التحكم هنا إذا أردت
-      }, 2000);
+        const successMsg = `✅ تم تسجيل الدخول بنجاح!\nمرحباً بك، ${name}.\nتم توجيهك إلى لوحة التحكم.`;
+        alert(successMsg);
+        // يمكنك إضافة redirect هنا إذا كنت في بيئة خادم
+      }, 1000);
     }
 
-    function showRedirectScreen(name) {
-      document.getElementById('loginScreen').classList.add('hidden');
-      document.getElementById('userName').textContent = name;
-      document.getElementById('welcomeMessage').textContent = `مرحباً بك، ${name}!`;
-      document.getElementById('successScreen').classList.remove('hidden');
-      
-      // التوجيه بعد 2.5 ثانية
-      setTimeout(() => {
-        redirectToDashboard();
-      }, 2500);
+    /**
+     * معالجة خطأ التسجيل
+     */
+    function handleAuthError(message) {
+      alert(`❌ ${message}`);
+      hideProcessingScreen();
     }
 
-    function handleCredentialResponse(response) {
-      if (!response?.credential) return;
-
-      try {
-        const base64Url = response.credential.split('.')[1];
-        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-        const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
-          '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
-        ).join(''));
-        
-        const payload = JSON.parse(jsonPayload);
-        const email = payload.email || '';
-        const name = payload.name || 'مستخدم';
-
-        if (!email.endsWith('@gmail.com')) {
-          alert('❌ يُسمح فقط بحسابات Gmail (.com)');
-          return;
-        }
-
-        saveSession(name, email);
-        showRedirectScreen(name);
-      } catch (e) {
-        console.error("خطأ في تحليل بيانات Google:", e);
-        alert("حدث خطأ أثناء معالجة بيانات الحساب.");
-      }
-    }
-
-    window.onload = function () {
-      const existingUser = loadSession();
-      if (existingUser) {
-        showRedirectScreen(existingUser.name);
+    // ======================
+    // معالجة استجابة Google
+    // ======================
+    window.handleCredentialResponse = function(response) {
+      if (!response || !response.credential) {
+        console.warn("لم يتم اختيار حساب.");
         return;
       }
 
-      google.accounts.id.initialize({
-        client_id: GOOGLE_CLIENT_ID,
-        callback: handleCredentialResponse,
-        auto_select: false,
-        cancel_on_tap_outside: true
-      });
+      showProcessingScreen("جارٍ التحقق من بيانات الحساب...");
 
-      document.getElementById('googleSignInBtn').addEventListener('click', () => {
-        google.accounts.id.prompt();
-      });
+      // معالجة غير متزامنة لتجنب تجميد الواجهة
+      setTimeout(() => {
+        try {
+          // فك تشفير JWT payload
+          const base64Url = response.credential.split('.')[1];
+          const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+          const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
+            '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)
+          ).join(''));
+          
+          const payload = JSON.parse(jsonPayload);
+          const email = (payload.email || '').toLowerCase().trim();
+          const name = (payload.name || 'مستخدم').trim();
+
+          // التحقق من أن الحساب من Gmail
+          if (!email.endsWith(ALLOWED_DOMAIN)) {
+            handleAuthError(`يُسمح فقط بحسابات Gmail (${ALLOWED_DOMAIN})`);
+            return;
+          }
+
+          // التحقق من صلاحية البريد الإلكتروني
+          if (!email || email.length < 5 || !email.includes('@')) {
+            handleAuthError("بيانات الحساب غير صالحة");
+            return;
+          }
+
+          // حفظ الجلسة
+          if (!saveSession(name, email)) {
+            handleAuthError("فشل حفظ بيانات الجلسة");
+            return;
+          }
+
+          // التوجيه الناجح
+          redirectToDashboard(name);
+
+        } catch (error) {
+          console.error("خطأ في معالجة بيانات Google:", error);
+          handleAuthError("حدث خطأ أثناء معالجة بيانات الحساب. يُرجى المحاولة مرة أخرى.");
+        }
+      }, 600);
+    };
+
+    // ======================
+    // التهيئة عند تحميل الصفحة
+    // ======================
+    window.onload = function () {
+      // التحقق من وجود جلسة نشطة
+      const existingSession = loadSession();
+      if (existingSession) {
+        showProcessingScreen("جارٍ استعادة الجلسة...");
+        setTimeout(() => {
+          redirectToDashboard(existingSession.name);
+        }, 800);
+        return;
+      }
+
+      // ربط زر Google Sign-In
+      const googleBtn = document.getElementById('googleSignInBtn');
+      if (googleBtn) {
+        googleBtn.addEventListener('click', () => {
+          if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+            google.accounts.id.prompt();
+          } else {
+            // احتياطي: إعادة تحميل الصفحة إذا فشل تحميل Google API
+            console.warn("Google API غير جاهز. إعادة المحاولة...");
+            setTimeout(() => location.reload(), 1000);
+          }
+        });
+      }
     };
   </script>
 </body>
