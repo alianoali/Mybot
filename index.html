@@ -3,11 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="تسجيل الدخول إلى بوت الذكاء الاصطناعي باستخدام حساب Google">
-  <title>بوت الذكاء الاصطناعي | تسجيل الدخول الآمن</title>
-  <!-- Tailwind CSS -->
+  <meta name="description" content="بوت الذكاء الاصطناعي - لعبة سلوت احترافية">
+  <title>بوت الذكاء الاصطناعي | لعبة السلوت</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Tajawal Font - Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,21 +13,29 @@
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: {
-            sans: ['Tajawal', 'sans-serif']
-          },
+          fontFamily: { sans: ['Tajawal', 'sans-serif'] },
           animation: {
             float: 'float 8s ease-in-out infinite',
-            fadeIn: 'fadeIn 0.5s ease-out'
+            spinReel: 'spinReel 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+            winPulse: 'winPulse 0.8s ease-in-out infinite',
+            bounce: 'bounce 0.5s'
           },
           keyframes: {
             float: {
               '0%, 100%': { transform: 'translateY(0px)' },
               '50%': { transform: 'translateY(-10px)' }
             },
-            fadeIn: {
-              '0%': { opacity: 0, transform: 'translateY(10px)' },
-              '100%': { opacity: 1, transform: 'translateY(0)' }
+            spinReel: {
+              '0%': { transform: 'translateY(0)' },
+              '100%': { transform: 'translateY(-200%)' }
+            },
+            winPulse: {
+              '0%, 100%': { boxShadow: '0 0 0 0 rgba(251, 191, 36, 0.7)' },
+              '50%': { boxShadow: '0 0 0 15px rgba(251, 191, 36, 0)' }
+            },
+            bounce: {
+              '0%, 100%': { transform: 'scale(1)' },
+              '50%': { transform: 'scale(1.05)' }
             }
           }
         }
@@ -50,11 +56,8 @@
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
       border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 
-        0 10px 30px -10px rgba(0, 0, 0, 0.4),
-        0 20px 40px -20px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
       border-radius: 28px;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .google-btn {
       background: white;
@@ -70,19 +73,12 @@
       width: 100%;
       max-width: 320px;
       font-size: 1rem;
-      box-shadow: 
-        0 4px 6px -1px rgba(0, 0, 0, 0.1),
-        0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
       transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
     .google-btn:hover {
       transform: translateY(-2px);
-      box-shadow: 
-        0 10px 15px -3px rgba(0, 0, 0, 0.1),
-        0 4px 6px -2px rgba(0, 0, 0, 0.05);
-    }
-    .google-btn:active {
-      transform: translateY(0);
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
     }
     .logo-circle {
       background: linear-gradient(135deg, #3b82f6, #8b5cf6);
@@ -105,31 +101,134 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-    .status-message {
-      animation: fadeIn 0.5s ease-out;
-    }
-    /* Google One Tap container */
+    /* Google One Tap */
     #g_id_onload {
       position: absolute;
       top: 20px;
       left: 20px;
       z-index: 1000;
     }
+    
+    /* Slot Machine Styles */
+    .slot-machine {
+      background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
+      border: 4px solid #d4af37;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 
+        0 0 20px rgba(212, 175, 55, 0.5),
+        inset 0 0 15px rgba(0, 0, 0, 0.8);
+      position: relative;
+      overflow: hidden;
+    }
+    .slot-machine::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      right: -5px;
+      bottom: -5px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 25px;
+      pointer-events: none;
+    }
+    .reel-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin: 20px 0;
+    }
+    .reel {
+      width: 80px;
+      height: 100px;
+      background: rgba(0, 0, 0, 0.7);
+      border: 2px solid #d4af37;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .reel-symbols {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      text-align: center;
+    }
+    .symbol {
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+    }
+    .spin-btn {
+      background: linear-gradient(135deg, #d4af37, #b8860b);
+      color: #1a1a2e;
+      font-weight: bold;
+      padding: 14px 40px;
+      border-radius: 50px;
+      font-size: 1.2rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
+    }
+    .spin-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
+    }
+    .spin-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+      transform: none;
+    }
+    .win-message {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: #fbbf24;
+      text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+      animation: winPulse;
+      margin: 15px 0;
+      min-height: 36px;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+    }
+    .bet-control {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #d4af37;
+      border-radius: 12px;
+      padding: 12px 20px;
+      color: white;
+    }
+    .user-info {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #fbbf24;
+      font-weight: 600;
+    }
   </style>
 </head>
 <body class="flex items-center justify-center p-4 sm:p-6 relative">
 
-  <!-- خلفية رسومية ديناميكية -->
+  <!-- خلفية رسومية -->
   <div class="absolute inset-0 overflow-hidden -z-10">
     <svg class="absolute top-0 left-0 w-full h-full opacity-8" viewBox="0 0 1440 800">
       <circle cx="150" cy="150" r="100" fill="#3b82f6" class="floating" style="animation-delay: 0s;"></circle>
       <circle cx="1250" cy="650" r="140" fill="#8b5cf6" class="floating" style="animation-delay: 2s;"></circle>
       <circle cx="700" cy="80" r="70" fill="#60a5fa" class="floating" style="animation-delay: 4s;"></circle>
-      <circle cx="400" cy="700" r="90" fill="#4f46e5" class="floating" style="animation-delay: 6s;"></circle>
     </svg>
   </div>
 
-  <!-- شاشة تسجيل الدخول الرئيسية -->
+  <!-- شاشة تسجيل الدخول -->
   <div id="loginScreen" class="auth-card p-7 sm:p-8 w-full max-w-md text-center">
     <div class="mb-7">
       <div class="mx-auto logo-circle w-16 h-16 rounded-2xl flex items-center justify-center mb-4">
@@ -139,7 +238,7 @@
       </div>
       <h1 class="text-2xl font-bold text-white">مرحباً بك في بوت الذكاء الاصطناعي</h1>
       <p class="text-gray-400 mt-3 text-sm leading-relaxed">
-        سجّل الدخول بحساب Google لإنشاء حسابك الآمن تلقائياً
+        سجّل الدخول بحساب Google لإنشاء حسابك والوصول إلى لعبة السلوت الحصرية
       </p>
     </div>
 
@@ -162,11 +261,11 @@
     </div>
   </div>
 
-  <!-- شاشة المعالجة (Processing) -->
+  <!-- شاشة المعالجة -->
   <div id="processingScreen" class="auth-card p-7 sm:p-8 w-full max-w-md text-center hidden">
     <div class="flex flex-col items-center justify-center py-8">
       <div class="spinner mb-5"></div>
-      <p id="processingMessage" class="text-gray-300 text-lg font-medium status-message">
+      <p id="processingMessage" class="text-gray-300 text-lg font-medium">
         جارٍ التحقق من حسابك...
       </p>
       <p class="text-gray-500 text-sm mt-2">
@@ -175,17 +274,42 @@
     </div>
   </div>
 
-  <!-- Google Identity Services Container -->
+  <!-- شاشة لعبة السلوت -->
+  <div id="slotScreen" class="auth-card p-6 w-full max-w-2xl hidden">
+    <div class="user-info" id="slotUserInfo">
+      <!-- سيتم ملؤه ديناميكياً -->
+    </div>
+    
+    <div class="slot-machine">
+      <div class="reel-container" id="reelContainer">
+        <!-- سيتم إنشاء البكرات ديناميكياً -->
+      </div>
+      
+      <div class="win-message" id="winMessage"></div>
+      
+      <button id="spinBtn" class="spin-btn" disabled>
+        🎰 ابدأ اللعبة
+      </button>
+      
+      <div class="controls">
+        <div class="bet-control">
+          الرصيد: <span id="balance">1000</span> 💰
+        </div>
+        <div class="bet-control">
+          الرهان: <span id="betAmount">100</span> 💰
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Identity Services -->
   <div id="g_id_onload"
     data-client_id="751119765490-ug00sfscqh4uvs4km9ho2buav6kdp46f.apps.googleusercontent.com"
     data-callback="handleCredentialResponse"
     data-auto_select="false"
-    data-cancel_on_tap_outside="true"
-    data-context="signin"
-    data-ux_mode="popup">
+    data-cancel_on_tap_outside="true">
   </div>
 
-  <!-- Google Identity Services Script -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <script>
@@ -197,12 +321,9 @@
     const ALLOWED_DOMAIN = "@gmail.com";
 
     // ======================
-    // دوال المساعدة
+    // دوال تسجيل الدخول
     // ======================
 
-    /**
-     * حفظ بيانات الجلسة
-     */
     function saveSession(name, email) {
       try {
         const sessionData = {
@@ -219,72 +340,39 @@
       }
     }
 
-    /**
-     * تحميل بيانات الجلسة الحالية
-     */
     function loadSession() {
       try {
         const data = sessionStorage.getItem(STORAGE_KEY);
         if (!data) return null;
-        
         const session = JSON.parse(data);
-        // التحقق من صلاحية الجلسة (اختياري)
         const now = Date.now();
-        const oneDay = 24 * 60 * 60 * 1000; // 24 ساعة
+        const oneDay = 24 * 60 * 60 * 1000;
         if (now - session.timestamp > oneDay) {
           sessionStorage.removeItem(STORAGE_KEY);
           return null;
         }
         return session;
       } catch (error) {
-        console.warn("فشل تحميل الجلسة:", error);
         return null;
       }
     }
 
-    /**
-     * عرض شاشة المعالجة
-     */
     function showProcessingScreen(message = "جارٍ التحقق من حسابك...") {
       document.getElementById('processingMessage').textContent = message;
       document.getElementById('loginScreen').classList.add('hidden');
       document.getElementById('processingScreen').classList.remove('hidden');
     }
 
-    /**
-     * إخفاء شاشة المعالجة
-     */
     function hideProcessingScreen() {
       document.getElementById('processingScreen').classList.add('hidden');
-      document.getElementById('loginScreen').classList.remove('hidden');
     }
 
-    /**
-     * التوجيه إلى لوحة التحكم
-     */
-    function redirectToDashboard(name) {
-      // === في بيئة الإنتاج الحقيقية: ===
-      // window.location.href = '/dashboard';
-      
-      // === للمعاينة في هذه البيئة: ===
-      setTimeout(() => {
-        const successMsg = `✅ تم تسجيل الدخول بنجاح!\nمرحباً بك، ${name}.\nتم توجيهك إلى لوحة التحكم.`;
-        alert(successMsg);
-        // يمكنك إضافة redirect هنا إذا كنت في بيئة خادم
-      }, 1000);
-    }
-
-    /**
-     * معالجة خطأ التسجيل
-     */
     function handleAuthError(message) {
       alert(`❌ ${message}`);
       hideProcessingScreen();
+      document.getElementById('loginScreen').classList.remove('hidden');
     }
 
-    // ======================
-    // معالجة استجابة Google
-    // ======================
     window.handleCredentialResponse = function(response) {
       if (!response || !response.credential) {
         console.warn("لم يتم اختيار حساب.");
@@ -293,10 +381,8 @@
 
       showProcessingScreen("جارٍ التحقق من بيانات الحساب...");
 
-      // معالجة غير متزامنة لتجنب تجميد الواجهة
       setTimeout(() => {
         try {
-          // فك تشفير JWT payload
           const base64Url = response.credential.split('.')[1];
           const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
           const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => 
@@ -307,60 +393,204 @@
           const email = (payload.email || '').toLowerCase().trim();
           const name = (payload.name || 'مستخدم').trim();
 
-          // التحقق من أن الحساب من Gmail
           if (!email.endsWith(ALLOWED_DOMAIN)) {
             handleAuthError(`يُسمح فقط بحسابات Gmail (${ALLOWED_DOMAIN})`);
             return;
           }
 
-          // التحقق من صلاحية البريد الإلكتروني
-          if (!email || email.length < 5 || !email.includes('@')) {
-            handleAuthError("بيانات الحساب غير صالحة");
-            return;
-          }
-
-          // حفظ الجلسة
           if (!saveSession(name, email)) {
             handleAuthError("فشل حفظ بيانات الجلسة");
             return;
           }
 
-          // التوجيه الناجح
-          redirectToDashboard(name);
+          // التوجيه إلى لعبة السلوت
+          showSlotMachine(name, email);
 
         } catch (error) {
           console.error("خطأ في معالجة بيانات Google:", error);
           handleAuthError("حدث خطأ أثناء معالجة بيانات الحساب. يُرجى المحاولة مرة أخرى.");
         }
-      }, 600);
+      }, 800);
     };
 
     // ======================
-    // التهيئة عند تحميل الصفحة
+    // لعبة السلوت
     // ======================
+
+    const SYMBOLS = ['🍒', '🍋', '🍉', '🍇', '7️⃣', '💎', 'BAR'];
+    const SYMBOL_VALUES = { '🍒': 2, '🍋': 3, '🍉': 4, '🍇': 5, '7️⃣': 10, '💎': 15, 'BAR': 20 };
+    let balance = 1000;
+    let betAmount = 100;
+    let isSpinning = false;
+
+    function showSlotMachine(name, email) {
+      hideProcessingScreen();
+      document.getElementById('loginScreen').classList.add('hidden');
+      document.getElementById('slotScreen').classList.remove('hidden');
+      
+      // عرض معلومات المستخدم
+      document.getElementById('slotUserInfo').innerHTML = `
+        <h2 class="text-xl font-bold">مرحباً بك، <span class="text-yellow-400">${name}</span>!</h2>
+        <p class="text-gray-400 text-sm mt-1">${email}</p>
+      `;
+      
+      // إنشاء البكرات
+      createReels();
+      
+      // تحديث واجهة المستخدم
+      updateUI();
+      
+      // تمكين زر البدء بعد تأخير قصير
+      setTimeout(() => {
+        document.getElementById('spinBtn').disabled = false;
+        document.getElementById('spinBtn').textContent = '🎯 ابدأ اللعبة';
+      }, 1000);
+    }
+
+    function createReels() {
+      const container = document.getElementById('reelContainer');
+      container.innerHTML = '';
+      
+      for (let i = 0; i < 5; i++) {
+        const reel = document.createElement('div');
+        reel.className = 'reel';
+        reel.id = `reel-${i}`;
+        
+        const symbolsDiv = document.createElement('div');
+        symbolsDiv.className = 'reel-symbols';
+        symbolsDiv.id = `symbols-${i}`;
+        
+        // إنشاء 10 رموز لكل بكرة
+        for (let j = 0; j < 10; j++) {
+          const symbol = document.createElement('div');
+          symbol.className = 'symbol';
+          symbol.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+          symbolsDiv.appendChild(symbol);
+        }
+        
+        reel.appendChild(symbolsDiv);
+        container.appendChild(reel);
+      }
+    }
+
+    function updateUI() {
+      document.getElementById('balance').textContent = balance;
+      document.getElementById('betAmount').textContent = betAmount;
+    }
+
+    function spinReels() {
+      if (isSpinning || balance < betAmount) return;
+      
+      isSpinning = true;
+      balance -= betAmount;
+      updateUI();
+      
+      document.getElementById('spinBtn').disabled = true;
+      document.getElementById('winMessage').textContent = '';
+      
+      const reels = [];
+      for (let i = 0; i < 5; i++) {
+        const reelElement = document.getElementById(`reel-${i}`);
+        const symbolsElement = document.getElementById(`symbols-${i}`);
+        
+        // إعادة تعيين الرموز
+        symbolsElement.innerHTML = '';
+        const newSymbols = [];
+        for (let j = 0; j < 10; j++) {
+          const symbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+          newSymbols.push(symbol);
+          const symbolDiv = document.createElement('div');
+          symbolDiv.className = 'symbol';
+          symbolDiv.textContent = symbol;
+          symbolsElement.appendChild(symbolDiv);
+        }
+        reels.push(newSymbols);
+        
+        // تطبيق تأثير الدوران
+        reelElement.style.animation = 'none';
+        setTimeout(() => {
+          reelElement.style.animation = 'spinReel 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+        }, 10);
+      }
+      
+      // حساب النتيجة بعد انتهاء الدوران
+      setTimeout(() => {
+        const result = reels.map(reel => reel[0]); // أول رمز في كل بكرة
+        const winAmount = calculateWin(result);
+        
+        if (winAmount > 0) {
+          balance += winAmount;
+          document.getElementById('winMessage').textContent = `🎉 فوز! ${winAmount} 💰`;
+          document.getElementById('winMessage').style.animation = 'winPulse 0.8s ease-in-out infinite';
+          
+          // تأثير اهتزاز عند الفوز
+          document.querySelector('.slot-machine').style.animation = 'bounce 0.5s';
+          setTimeout(() => {
+            document.querySelector('.slot-machine').style.animation = '';
+          }, 500);
+        }
+        
+        updateUI();
+        isSpinning = false;
+        document.getElementById('spinBtn').disabled = false;
+        document.getElementById('spinBtn').textContent = '🎯 ابدأ اللعبة';
+      }, 600);
+    }
+
+    function calculateWin(result) {
+      // حساب الفوز بناءً على الرموز
+      let win = 0;
+      
+      // التحقق من 5 رموز متطابقة
+      if (result.every(s => s === result[0])) {
+        win = betAmount * SYMBOL_VALUES[result[0]] * 5;
+      }
+      // التحقق من 4 رموز متطابقة
+      else if (result.slice(0, 4).every(s => s === result[0]) || 
+               result.slice(1, 5).every(s => s === result[1])) {
+        win = betAmount * SYMBOL_VALUES[result[0]] * 3;
+      }
+      // التحقق من 3 رموز متطابقة
+      else if (result.slice(0, 3).every(s => s === result[0]) ||
+               result.slice(1, 4).every(s => s === result[1]) ||
+               result.slice(2, 5).every(s => s === result[2])) {
+        win = betAmount * SYMBOL_VALUES[result[0]] * 2;
+      }
+      
+      return win;
+    }
+
+    // ======================
+    // التهيئة العامة
+    // ======================
+
     window.onload = function () {
-      // التحقق من وجود جلسة نشطة
+      // التحقق من جلسة موجودة
       const existingSession = loadSession();
       if (existingSession) {
         showProcessingScreen("جارٍ استعادة الجلسة...");
         setTimeout(() => {
-          redirectToDashboard(existingSession.name);
+          showSlotMachine(existingSession.name, existingSession.email);
         }, 800);
         return;
       }
 
-      // ربط زر Google Sign-In
+      // ربط زر Google
       const googleBtn = document.getElementById('googleSignInBtn');
       if (googleBtn) {
         googleBtn.addEventListener('click', () => {
           if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
             google.accounts.id.prompt();
           } else {
-            // احتياطي: إعادة تحميل الصفحة إذا فشل تحميل Google API
-            console.warn("Google API غير جاهز. إعادة المحاولة...");
             setTimeout(() => location.reload(), 1000);
           }
         });
+      }
+
+      // ربط زر السلوت
+      const spinBtn = document.getElementById('spinBtn');
+      if (spinBtn) {
+        spinBtn.addEventListener('click', spinReels);
       }
     };
   </script>
