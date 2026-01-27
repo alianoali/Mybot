@@ -3,41 +3,57 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <meta name="description" content="بوت الذكاء الاصطناعي - لعبة سلوت احترافية بعد تسجيل الدخول">
-  <title>بوت الذكاء الاصطناعي | لوحة التحكم</title>
+  <meta name="description" content="تسجيل الدخول إلى بوت الذكاء الاصطناعي - واجهة احترافية">
+  <title>بوت الذكاء الاصطناعي | تسجيل دخول آمن</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Tajawal Font -->
+  <!-- Google Fonts - Tajawal + Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
   <script>
     tailwind.config = {
       theme: {
         extend: {
-          fontFamily: { sans: ['Tajawal', 'sans-serif'] },
+          fontFamily: {
+            sans: ['Tajawal', 'Inter', 'sans-serif']
+          },
+          colors: {
+            primary: {
+              50: '#f0f9ff',
+              100: '#e0f2fe',
+              200: '#bae6fd',
+              300: '#7dd3fc',
+              400: '#38bdf8',
+              500: '#0ea5e9',
+              600: '#0284c7',
+              700: '#0369a1',
+              800: '#075985',
+              900: '#0c4a6e',
+            },
+            gradient: {
+              start: '#6366f1',
+              mid: '#8b5cf6',
+              end: '#ec4899'
+            }
+          },
           animation: {
             float: 'float 8s ease-in-out infinite',
-            spinReel: 'spinReel 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
-            winPulse: 'winPulse 0.8s ease-in-out infinite',
-            bounce: 'bounce 0.5s'
+            fadeIn: 'fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1)',
+            pulseGlow: 'pulseGlow 2s ease-in-out infinite'
           },
           keyframes: {
             float: {
               '0%, 100%': { transform: 'translateY(0px)' },
-              '50%': { transform: 'translateY(-10px)' }
+              '50%': { transform: 'translateY(-12px)' }
             },
-            spinReel: {
-              '0%': { transform: 'translateY(0)' },
-              '100%': { transform: 'translateY(-200%)' }
+            fadeIn: {
+              '0%': { opacity: 0, transform: 'translateY(15px)' },
+              '100%': { opacity: 1, transform: 'translateY(0)' }
             },
-            winPulse: {
-              '0%, 100%': { boxShadow: '0 0 0 0 rgba(251, 191, 36, 0.7)' },
-              '50%': { boxShadow: '0 0 0 15px rgba(251, 191, 36, 0)' }
-            },
-            bounce: {
-              '0%, 100%': { transform: 'scale(1)' },
-              '50%': { transform: 'scale(1.05)' }
+            pulseGlow: {
+              '0%, 100%': { boxShadow: '0 0 0 0 rgba(139, 92, 246, 0.4)' },
+              '50%': { boxShadow: '0 0 0 12px rgba(139, 92, 246, 0)' }
             }
           }
         }
@@ -46,220 +62,243 @@
   </script>
   <style>
     body {
-      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      background: linear-gradient(135deg, #0f0f1b 0%, #1a1a2e 100%);
       min-height: 100vh;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
       font-feature-settings: "rlig" 1, "calt" 1;
     }
+    
+    .auth-card {
+      background: rgba(20, 20, 35, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(139, 92, 246, 0.1),
+        inset 0 0 20px rgba(100, 100, 255, 0.05);
+      border-radius: 32px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .auth-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+    
+    .auth-card:hover::before {
+      opacity: 1;
+    }
+    
+    .google-btn {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      color: #1e293b;
+      font-weight: 600;
+      padding: 0.875rem 1.5rem;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.875rem;
+      cursor: pointer;
+      width: 100%;
+      max-width: 340px;
+      font-size: 1rem;
+      font-family: 'Inter', 'Tajawal', sans-serif;
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+      transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .google-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.5s;
+    }
+    
+    .google-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.2),
+        0 10px 10px -5px rgba(0, 0, 0, 0.1),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+    }
+    
+    .google-btn:hover::before {
+      left: 100%;
+    }
+    
+    .logo-circle {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+      box-shadow: 
+        0 0 25px rgba(139, 92, 246, 0.4),
+        0 0 40px rgba(236, 72, 153, 0.2);
+      animation: pulseGlow 2s ease-in-out infinite;
+    }
+    
     .floating {
       animation: float 8s ease-in-out infinite;
     }
+    
     .hidden {
       display: none !important;
     }
+    
     .spinner {
-      width: 20px;
-      height: 20px;
-      border: 2px solid rgba(59, 130, 246, 0.3);
-      border-top-color: #3b82f6;
+      width: 24px;
+      height: 24px;
+      border: 3px solid rgba(139, 92, 246, 0.2);
+      border-top-color: #8b5cf6;
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
+    
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
-    /* Slot Machine */
-    .slot-machine {
-      background: linear-gradient(180deg, #1a1a2e 0%, #16213e 100%);
-      border: 4px solid #d4af37;
-      border-radius: 20px;
-      padding: 24px;
-      box-shadow: 
-        0 0 20px rgba(212, 175, 55, 0.5),
-        inset 0 0 15px rgba(0, 0, 0, 0.8);
+    
+    .status-message {
+      animation: fadeIn 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    
+    .gradient-border {
       position: relative;
-      overflow: hidden;
     }
-    .reel-container {
-      display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 20px 0;
-    }
-    .reel {
-      width: 80px;
-      height: 100px;
-      background: rgba(0, 0, 0, 0.7);
-      border: 2px solid #d4af37;
-      border-radius: 8px;
-      overflow: hidden;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .symbol {
-      height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
-    }
-    .spin-btn {
-      background: linear-gradient(135deg, #d4af37, #b8860b);
-      color: #1a1a2e;
-      font-weight: bold;
-      padding: 14px 40px;
-      border-radius: 50px;
-      font-size: 1.2rem;
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s;
-      box-shadow: 0 6px 15px rgba(212, 175, 55, 0.4);
-    }
-    .spin-btn:hover:not(:disabled) {
-      transform: scale(1.05);
-      box-shadow: 0 8px 20px rgba(212, 175, 55, 0.6);
-    }
-    .spin-btn:disabled {
+    
+    .gradient-border::after {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+      z-index: -1;
+      border-radius: 34px;
       opacity: 0.6;
-      cursor: not-allowed;
-      transform: none;
+      filter: blur(10px);
     }
-    .win-message {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: #fbbf24;
-      text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
-      animation: winPulse;
-      margin: 15px 0;
-      min-height: 36px;
-    }
-    /* Profile Card */
-    .profile-card {
-      background: rgba(30, 41, 59, 0.7);
-      border-radius: 16px;
-      padding: 16px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .avatar {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, #3b82f6, #8b5cf6);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-weight: bold;
-      font-size: 1.2rem;
-    }
-    .balance-badge {
-      background: linear-gradient(135deg, #fbbf24, #d97706);
-      color: #1a1a2e;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: bold;
-      font-size: 0.9rem;
-    }
+    
+    /* Google One Tap container */
     #g_id_onload {
       position: absolute;
       top: 20px;
       left: 20px;
       z-index: 1000;
     }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 15, 27, 0.5);
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 4px;
+    }
   </style>
 </head>
-<body class="text-gray-100">
+<body class="flex items-center justify-center p-4 sm:p-6 md:p-8 relative">
 
-  <!-- Google Identity Services -->
+  <!-- خلفية رسومية ديناميكية -->
+  <div class="absolute inset-0 overflow-hidden -z-10">
+    <svg class="absolute top-0 left-0 w-full h-full opacity-15" viewBox="0 0 1440 800">
+      <circle cx="100" cy="100" r="80" fill="#6366f1" class="floating" style="animation-delay: 0s;"></circle>
+      <circle cx="1300" cy="700" r="120" fill="#8b5cf6" class="floating" style="animation-delay: 1.5s;"></circle>
+      <circle cx="600" cy="50" r="60" fill="#ec4899" class="floating" style="animation-delay: 3s;"></circle>
+      <circle cx="900" cy="600" r="100" fill="#3b82f6" class="floating" style="animation-delay: 4.5s;"></circle>
+    </svg>
+  </div>
+
+  <!-- شاشة تسجيل الدخول الرئيسية -->
+  <div id="loginScreen" class="auth-card p-7 sm:p-8 w-full max-w-md text-center gradient-border">
+    <div class="mb-8">
+      <div class="mx-auto logo-circle w-20 h-20 rounded-2xl flex items-center justify-center mb-5">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+        </svg>
+      </div>
+      <h1 class="text-2xl md:text-3xl font-bold text-white mb-2">مرحباً بك في بوت الذكاء الاصطناعي</h1>
+      <p class="text-gray-400 mt-3 text-sm leading-relaxed max-w-xs mx-auto">
+        سجّل الدخول بحساب Google لإنشاء حسابك الآمن والمتقدم تلقائياً
+      </p>
+    </div>
+
+    <button id="googleSignInBtn" class="google-btn mx-auto">
+      <svg class="w-5 h-5" viewBox="0 0 24 24">
+        <path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z" fill="#4285F4"/>
+      </svg>
+      <span class="font-medium">تسجيل الدخول بـ Google</span>
+    </button>
+
+    <div class="mt-8 text-xs text-gray-500 space-y-2">
+      <div class="flex items-center justify-center gap-2">
+        <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+        <span>يُسمح فقط بحسابات Gmail (.com)</span>
+      </div>
+      <div class="flex items-center justify-center gap-2">
+        <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+        <span>بياناتك مشفرة وآمنة تماماً</span>
+      </div>
+      <div class="flex items-center justify-center gap-2">
+        <div class="w-1.5 h-1.5 rounded-full bg-emerald-400"></div>
+        <span>إنشاء حساب تلقائي فوري</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- شاشة المعالجة (Processing) -->
+  <div id="processingScreen" class="auth-card p-7 sm:p-8 w-full max-w-md text-center hidden">
+    <div class="flex flex-col items-center justify-center py-10">
+      <div class="spinner mb-6"></div>
+      <p id="processingMessage" class="text-gray-300 text-lg font-medium status-message mb-2">
+        جارٍ التحقق من حسابك...
+      </p>
+      <p class="text-gray-500 text-sm">
+        يُرجى الانتظار لحظات
+      </p>
+      <div class="mt-6 w-32 h-1 bg-gray-700 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 animate-pulse"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Google Identity Services Container -->
   <div id="g_id_onload"
     data-client_id="751119765490-ug00sfscqh4uvs4km9ho2buav6kdp46f.apps.googleusercontent.com"
     data-callback="handleCredentialResponse"
     data-auto_select="false"
-    data-cancel_on_tap_outside="true">
+    data-cancel_on_tap_outside="true"
+    data-context="signin"
+    data-ux_mode="popup">
   </div>
 
-  <!-- شاشة تسجيل الدخول -->
-  <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
-    <div class="bg-slate-900/80 backdrop-blur-lg border border-slate-700 rounded-2xl p-8 w-full max-w-md text-center shadow-2xl">
-      <div class="mb-6">
-        <div class="mx-auto w-16 h-16 rounded-2xl bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center mb-4">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-          </svg>
-        </div>
-        <h1 class="text-2xl font-bold text-white">مرحباً بك في بوت الذكاء الاصطناعي</h1>
-        <p class="text-gray-400 mt-2 text-sm">سجّل الدخول بحساب Google لإنشاء حسابك والوصول إلى لعبة السلوت الحصرية</p>
-      </div>
-
-      <button id="googleSignInBtn" class="w-full max-w-xs bg-white text-slate-900 font-semibold py-3 px-6 rounded-xl flex items-center justify-center gap-3 shadow-lg hover:shadow-xl transition-all">
-        <svg class="w-5 h-5" viewBox="0 0 24 24">
-          <path d="M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z" fill="#4285F4"/>
-        </svg>
-        تسجيل الدخول بـ Google
-      </button>
-
-      <div class="mt-6 text-xs text-gray-500 space-y-1">
-        <p>✓ يُسمح فقط بحسابات Gmail (.com)</p>
-        <p>✓ بياناتك محمية وآمنة</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- شاشة المعالجة -->
-  <div id="processingScreen" class="min-h-screen flex items-center justify-center p-4 hidden">
-    <div class="bg-slate-900/80 backdrop-blur-lg border border-slate-700 rounded-2xl p-8 w-full max-w-md text-center">
-      <div class="spinner mb-5 mx-auto"></div>
-      <p id="processingMessage" class="text-gray-300 text-lg">جارٍ التحقق من حسابك...</p>
-    </div>
-  </div>
-
-  <!-- الشاشة الرئيسية (بعد تسجيل الدخول) -->
-  <div id="mainScreen" class="hidden">
-    <!-- شريط التنقل العلوي -->
-    <header class="bg-slate-900/60 backdrop-blur-md border-b border-slate-700 sticky top-0 z-50">
-      <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-        <h1 class="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-500">
-          بوت الذكاء الاصطناعي
-        </h1>
-        <div id="profileCard" class="profile-card">
-          <div class="avatar" id="avatarInitial">أ</div>
-          <div>
-            <div class="font-semibold text-white" id="profileName">...</div>
-            <div class="text-xs text-gray-400" id="profileEmail">...</div>
-          </div>
-          <div class="balance-badge" id="balanceDisplay">1000 💰</div>
-        </div>
-      </div>
-    </header>
-
-    <!-- محتوى اللعبة -->
-    <main class="container mx-auto px-4 py-8">
-      <div class="text-center mb-8">
-        <h2 class="text-2xl font-bold text-white">🎮 لعبة السلوت الاحترافية</h2>
-        <p class="text-gray-400 mt-2">استمتع بأفضل تجربة سلوت كما في لاس فيغاس!</p>
-      </div>
-
-      <div class="max-w-2xl mx-auto">
-        <div class="slot-machine">
-          <div class="reel-container" id="reelContainer"></div>
-          <div class="win-message" id="winMessage"></div>
-          <button id="spinBtn" class="spin-btn" disabled>🎯 ابدأ اللعبة</button>
-        </div>
-      </div>
-    </main>
-  </div>
-
-  <!-- Google Identity Script -->
+  <!-- Google Identity Services Script -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
   <script>
@@ -267,176 +306,103 @@
     // الإعدادات الأساسية
     // ======================
     const GOOGLE_CLIENT_ID = "751119765490-ug00sfscqh4uvs4km9ho2buav6kdp46f.apps.googleusercontent.com";
-    const STORAGE_KEY = "ai_bot_user_v3";
+    const STORAGE_KEY = "ai_bot_user_session_v3";
     const ALLOWED_DOMAIN = "@gmail.com";
 
     // ======================
     // دوال المساعدة
     // ======================
 
-    function saveUser(name, email) {
+    /**
+     * حفظ بيانات الجلسة
+     */
+    function saveSession(name, email) {
       try {
-        sessionStorage.setItem(STORAGE_KEY, JSON.stringify({ name, email, balance: 1000, timestamp: Date.now() }));
+        const sessionData = {
+          name: name.trim(),
+          email: email.toLowerCase().trim(),
+          timestamp: Date.now(),
+          version: 3
+        };
+        sessionStorage.setItem(STORAGE_KEY, JSON.stringify(sessionData));
         return true;
-      } catch (e) {
-        console.error("فشل حفظ المستخدم:", e);
+      } catch (error) {
+        console.error("فشل حفظ الجلسة:", error);
         return false;
       }
     }
 
-    function loadUser() {
+    /**
+     * تحميل بيانات الجلسة الحالية
+     */
+    function loadSession() {
       try {
         const data = sessionStorage.getItem(STORAGE_KEY);
         if (!data) return null;
-        const user = JSON.parse(data);
-        if (Date.now() - user.timestamp > 24 * 60 * 60 * 1000) {
+        
+        const session = JSON.parse(data);
+        const now = Date.now();
+        const oneDay = 24 * 60 * 60 * 1000;
+        if (now - session.timestamp > oneDay) {
           sessionStorage.removeItem(STORAGE_KEY);
           return null;
         }
-        return user;
-      } catch (e) {
+        return session;
+      } catch (error) {
+        console.warn("فشل تحميل الجلسة:", error);
         return null;
       }
     }
 
-    function showProcessing(message = "جارٍ التحقق من حسابك...") {
+    /**
+     * عرض شاشة المعالجة
+     */
+    function showProcessingScreen(message = "جارٍ التحقق من حسابك...") {
       document.getElementById('processingMessage').textContent = message;
       document.getElementById('loginScreen').classList.add('hidden');
       document.getElementById('processingScreen').classList.remove('hidden');
     }
 
-    function showError(message) {
-      alert(`❌ ${message}`);
+    /**
+     * إخفاء شاشة المعالجة
+     */
+    function hideProcessingScreen() {
       document.getElementById('processingScreen').classList.add('hidden');
       document.getElementById('loginScreen').classList.remove('hidden');
     }
 
-    function showMainScreen(user) {
-      const { name, email, balance } = user;
-
-      // تحديث الملف الشخصي
-      document.getElementById('profileName').textContent = name;
-      document.getElementById('profileEmail').textContent = email;
-      document.getElementById('balanceDisplay').textContent = `${balance} 💰`;
-      document.getElementById('avatarInitial').textContent = name.charAt(0).toUpperCase();
-
-      // إخفاء الشاشات الأخرى
-      document.getElementById('loginScreen').classList.add('hidden');
-      document.getElementById('processingScreen').classList.add('hidden');
-      document.getElementById('mainScreen').classList.remove('hidden');
-
-      // تهيئة اللعبة
-      initSlotMachine(balance);
-    }
-
-    // ======================
-    // لعبة السلوت
-    // ======================
-
-    const SYMBOLS = ['🍒', '🍋', '🍉', '🍇', '7️⃣', '💎', 'BAR'];
-    const SYMBOL_VALUES = { '🍒': 2, '🍋': 3, '🍉': 4, '🍇': 5, '7️⃣': 10, '💎': 15, 'BAR': 20 };
-    let currentBalance = 1000;
-    let isSpinning = false;
-
-    function initSlotMachine(balance) {
-      currentBalance = balance;
-      createReels();
-      document.getElementById('spinBtn').disabled = false;
-      document.getElementById('spinBtn').textContent = '🎯 ابدأ اللعبة';
-    }
-
-    function createReels() {
-      const container = document.getElementById('reelContainer');
-      container.innerHTML = '';
-      for (let i = 0; i < 5; i++) {
-        const reel = document.createElement('div');
-        reel.className = 'reel';
-        const symbolsDiv = document.createElement('div');
-        symbolsDiv.style.display = 'flex';
-        symbolsDiv.style.flexDirection = 'column';
-        symbolsDiv.style.width = '100%';
-        symbolsDiv.style.textAlign = 'center';
-        for (let j = 0; j < 10; j++) {
-          const symbol = document.createElement('div');
-          symbol.className = 'symbol';
-          symbol.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-          symbolsDiv.appendChild(symbol);
-        }
-        reel.appendChild(symbolsDiv);
-        container.appendChild(reel);
-      }
-    }
-
-    function spinReels() {
-      if (isSpinning || currentBalance < 100) return;
-
-      isSpinning = true;
-      currentBalance -= 100;
-      document.getElementById('balanceDisplay').textContent = `${currentBalance} 💰`;
-      document.getElementById('spinBtn').disabled = true;
-      document.getElementById('winMessage').textContent = '';
-
-      const reels = [];
-      for (let i = 0; i < 5; i++) {
-        const reelEl = document.querySelector(`#reelContainer .reel:nth-child(${i + 1})`);
-        const symbolsDiv = reelEl.firstChild;
-        symbolsDiv.innerHTML = '';
-        const newSymbols = [];
-        for (let j = 0; j < 10; j++) {
-          const sym = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-          newSymbols.push(sym);
-          const div = document.createElement('div');
-          div.className = 'symbol';
-          div.textContent = sym;
-          symbolsDiv.appendChild(div);
-        }
-        reels.push(newSymbols);
-
-        // تأثير الدوران
-        reelEl.style.animation = 'none';
-        setTimeout(() => {
-          reelEl.style.animation = 'spinReel 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-        }, 10);
-      }
-
+    /**
+     * التوجيه إلى لوحة التحكم
+     */
+    function redirectToDashboard(name) {
+      // === في بيئة الإنتاج الحقيقية: ===
+      // window.location.href = '/dashboard';
+      
+      // === للمعاينة في هذه البيئة: ===
       setTimeout(() => {
-        const result = reels.map(r => r[0]);
-        const win = calculateWin(result);
-        if (win > 0) {
-          currentBalance += win;
-          document.getElementById('balanceDisplay').textContent = `${currentBalance} 💰`;
-          document.getElementById('winMessage').textContent = `🎉 فوز! ${win} 💰`;
-          document.querySelector('.slot-machine').style.animation = 'bounce 0.5s';
-          setTimeout(() => document.querySelector('.slot-machine').style.animation = '', 500);
-        }
-        isSpinning = false;
-        document.getElementById('spinBtn').disabled = false;
-        document.getElementById('spinBtn').textContent = '🎯 ابدأ اللعبة';
-
-        // حفظ الرصيد الجديد
-        const userData = loadUser();
-        if (userData) {
-          userData.balance = currentBalance;
-          sessionStorage.setItem(STORAGE_KEY, JSON.stringify(userData));
-        }
-      }, 600);
+        const successMsg = `✅ تم تسجيل الدخول بنجاح!\nمرحباً بك، ${name}.\nتم توجيهك إلى لوحة التحكم.`;
+        alert(successMsg);
+      }, 1200);
     }
 
-    function calculateWin(result) {
-      if (result.every(s => s === result[0])) return 100 * SYMBOL_VALUES[result[0]] * 5;
-      if (result.slice(0, 4).every(s => s === result[0]) || result.slice(1, 5).every(s => s === result[1])) return 100 * SYMBOL_VALUES[result[0]] * 3;
-      if (result.slice(0, 3).every(s => s === result[0]) || result.slice(1, 4).every(s => s === result[1]) || result.slice(2, 5).every(s => s === result[2])) return 100 * SYMBOL_VALUES[result[0]] * 2;
-      return 0;
+    /**
+     * معالجة خطأ التسجيل
+     */
+    function handleAuthError(message) {
+      alert(`❌ ${message}`);
+      hideProcessingScreen();
     }
 
     // ======================
-    // معالجة تسجيل الدخول
+    // معالجة استجابة Google
     // ======================
-
     window.handleCredentialResponse = function(response) {
-      if (!response?.credential) return;
+      if (!response || !response.credential) {
+        console.warn("لم يتم اختيار حساب.");
+        return;
+      }
 
-      showProcessing("جارٍ التحقق من بيانات الحساب...");
+      showProcessingScreen("جارٍ التحقق من بيانات الحساب...");
 
       setTimeout(() => {
         try {
@@ -451,44 +417,53 @@
           const name = (payload.name || 'مستخدم').trim();
 
           if (!email.endsWith(ALLOWED_DOMAIN)) {
-            showError(`يُسمح فقط بحسابات Gmail (${ALLOWED_DOMAIN})`);
+            handleAuthError(`يُسمح فقط بحسابات Gmail (${ALLOWED_DOMAIN})`);
             return;
           }
 
-          if (!saveUser(name, email)) {
-            showError("فشل حفظ بيانات المستخدم");
+          if (!email || email.length < 5 || !email.includes('@')) {
+            handleAuthError("بيانات الحساب غير صالحة");
             return;
           }
 
-          showMainScreen({ name, email, balance: 1000 });
-        } catch (e) {
-          console.error("خطأ:", e);
-          showError("حدث خطأ أثناء معالجة الحساب. يُرجى المحاولة مرة أخرى.");
+          if (!saveSession(name, email)) {
+            handleAuthError("فشل حفظ بيانات الجلسة");
+            return;
+          }
+
+          redirectToDashboard(name);
+
+        } catch (error) {
+          console.error("خطأ في معالجة بيانات Google:", error);
+          handleAuthError("حدث خطأ أثناء معالجة بيانات الحساب. يُرجى المحاولة مرة أخرى.");
         }
       }, 800);
     };
 
     // ======================
-    // التهيئة عند التحميل
+    // التهيئة عند تحميل الصفحة
     // ======================
-
     window.onload = function () {
-      const existingUser = loadUser();
-      if (existingUser) {
-        showProcessing("جارٍ استعادة الجلسة...");
-        setTimeout(() => showMainScreen(existingUser), 800);
+      const existingSession = loadSession();
+      if (existingSession) {
+        showProcessingScreen("جارٍ استعادة الجلسة...");
+        setTimeout(() => {
+          redirectToDashboard(existingSession.name);
+        }, 1000);
         return;
       }
 
-      document.getElementById('googleSignInBtn').addEventListener('click', () => {
-        if (typeof google !== 'undefined') {
-          google.accounts.id.prompt();
-        } else {
-          setTimeout(() => location.reload(), 1000);
-        }
-      });
-
-      document.getElementById('spinBtn').addEventListener('click', spinReels);
+      const googleBtn = document.getElementById('googleSignInBtn');
+      if (googleBtn) {
+        googleBtn.addEventListener('click', () => {
+          if (typeof google !== 'undefined' && google.accounts && google.accounts.id) {
+            google.accounts.id.prompt();
+          } else {
+            console.warn("Google API غير جاهز. إعادة المحاولة...");
+            setTimeout(() => location.reload(), 1000);
+          }
+        });
+      }
     };
   </script>
 </body>
