@@ -8,13 +8,14 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="description" content="Kratos Bot - نظام رصيد احترافي مع لعبة صيد الأكواد">
     <title>Kratos Bot | النظام الاحترافي</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js">
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         /* ============================================
-           Design System (Tokens) – محسن
+           Design System – محسن مع إضافات جديدة
            ============================================ */
         :root {
             --color-bg-base: #0b1120;
@@ -32,6 +33,7 @@
             --color-success: #10b981;
             --color-danger: #ef4444;
             --color-pink: #ec4899;
+            --color-notification: #3b82f6;
 
             --color-text-primary: #f1f5f9;
             --color-text-secondary: #94a3b8;
@@ -155,7 +157,7 @@
         }
 
         /* ============================================
-           Loader محسّن
+           Loader
            ============================================ */
         .app-loader {
             position: fixed;
@@ -226,7 +228,7 @@
         }
 
         /* ============================================
-           Auth Gate محسّن
+           Auth Gate
            ============================================ */
         .auth-gate {
             position: fixed;
@@ -362,7 +364,7 @@
         }
 
         /* ============================================
-           Buttons محسّنة
+           Buttons
            ============================================ */
         .btn {
             display: inline-flex;
@@ -433,6 +435,14 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(236, 72, 153, 0.35);
         }
+        .btn-notification {
+            background: linear-gradient(135deg, var(--color-notification), var(--color-accent));
+            color: #fff;
+        }
+        .btn-notification:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
+        }
         .btn-full {
             width: 100%;
             justify-content: center;
@@ -457,7 +467,7 @@
         }
 
         /* ============================================
-           Header محسّن
+           Header
            ============================================ */
         .app-header {
             position: fixed;
@@ -553,6 +563,23 @@
                 box-shadow: 0 0 0 8px rgba(245, 158, 11, 0);
             }
         }
+        .notification-badge {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background: var(--color-danger);
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 700;
+            min-width: 1.2rem;
+            height: 1.2rem;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 0.3rem;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+        }
         .user-chip {
             display: flex;
             align-items: center;
@@ -609,7 +636,7 @@
         }
 
         /* ============================================
-           Sidebar محسّن
+           Sidebar
            ============================================ */
         .sidebar-overlay {
             position: fixed;
@@ -1086,14 +1113,108 @@
         .game-card-label {
             color: var(--color-text-secondary);
             font-size: 0.85rem;
+            margin-bottom: var(--space-2);
+        }
+        .game-card-bet {
+            font-size: 0.8rem;
+            color: var(--color-text-muted);
+            background: rgba(0, 0, 0, 0.15);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-full);
+            display: inline-block;
             margin-bottom: var(--space-6);
+            border: 1px solid var(--color-border);
         }
         .game-card .btn {
             margin-top: auto;
         }
 
         /* ============================================
-           Admin – محسّن مع رسوم بيانية
+           Notifications Center
+           ============================================ */
+        .notif-item {
+            display: flex;
+            gap: var(--space-4);
+            padding: var(--space-4);
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--space-2);
+            transition: all var(--transition-base);
+            animation: slide-in 0.3s ease;
+            position: relative;
+        }
+        .notif-item:hover {
+            border-color: var(--color-border-hover);
+            transform: translateX(-4px);
+        }
+        .notif-item.unread {
+            border-right: 3px solid var(--color-primary);
+            background: rgba(127, 255, 0, 0.03);
+        }
+        .notif-icon {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+            width: 3rem;
+            height: 3rem;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.15);
+        }
+        .notif-icon.info {
+            color: var(--color-secondary);
+            background: rgba(0, 212, 255, 0.1);
+        }
+        .notif-icon.success {
+            color: var(--color-success);
+            background: rgba(16, 185, 129, 0.1);
+        }
+        .notif-icon.warning {
+            color: var(--color-warning);
+            background: rgba(245, 158, 11, 0.1);
+        }
+        .notif-icon.error {
+            color: var(--color-danger);
+            background: rgba(239, 68, 68, 0.1);
+        }
+        .notif-icon.broadcast {
+            color: var(--color-pink);
+            background: rgba(236, 72, 153, 0.1);
+        }
+        .notif-content {
+            flex: 1;
+            min-width: 0;
+        }
+        .notif-title {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .notif-message {
+            font-size: 0.85rem;
+            color: var(--color-text-secondary);
+            margin-top: var(--space-1);
+            line-height: 1.6;
+        }
+        .notif-time {
+            font-size: 0.7rem;
+            color: var(--color-text-muted);
+            margin-top: var(--space-1);
+        }
+        .notif-actions {
+            display: flex;
+            gap: var(--space-1);
+            margin-top: var(--space-2);
+        }
+        .notif-actions .btn {
+            padding: var(--space-1) var(--space-3);
+            font-size: 0.7rem;
+            min-height: auto;
+        }
+
+        /* ============================================
+           Admin – محسّن
            ============================================ */
         .admin-header {
             background: linear-gradient(145deg, rgba(245, 158, 11, 0.08), rgba(139, 92, 246, 0.04));
@@ -1167,7 +1288,6 @@
             margin-top: var(--space-1);
         }
 
-        /* Chart placeholder */
         .chart-container {
             background: rgba(0, 0, 0, 0.2);
             border-radius: var(--radius-md);
@@ -1343,7 +1463,6 @@
             color: var(--color-warning);
             border: 1px solid rgba(245, 158, 11, 0.3);
         }
-
         .action-btns {
             display: flex;
             gap: 0.3rem;
@@ -1540,9 +1659,27 @@
         .bottom-nav-icon {
             font-size: 1.4rem;
         }
+        .bottom-nav-badge {
+            position: absolute;
+            top: 0;
+            right: 50%;
+            transform: translateX(calc(50% + 1.5rem));
+            background: var(--color-danger);
+            color: #fff;
+            font-size: 0.55rem;
+            font-weight: 700;
+            min-width: 1rem;
+            height: 1rem;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 0.3rem;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+        }
 
         /* ============================================
-           Modals محسّنة
+           Modals
            ============================================ */
         .modal-overlay {
             position: fixed;
@@ -1638,7 +1775,7 @@
         }
 
         /* ============================================
-           Toast محسّن
+           Toast
            ============================================ */
         .toast-container {
             position: fixed;
@@ -1810,6 +1947,11 @@
             align-items: center;
             flex-wrap: wrap;
             gap: var(--space-3);
+            transition: all var(--transition-base);
+        }
+        .public-code-item:hover {
+            border-color: var(--color-warning);
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.06);
         }
         .public-code-item-code {
             font-family: var(--font-family-display);
@@ -1820,6 +1962,16 @@
         .public-code-item-meta {
             font-size: 0.75rem;
             color: var(--color-text-muted);
+        }
+        .public-code-item-winner {
+            font-size: 0.75rem;
+            color: var(--color-secondary);
+            background: rgba(0, 212, 255, 0.06);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            border: 1px solid rgba(0, 212, 255, 0.15);
+            display: inline-block;
+            margin-top: var(--space-1);
         }
         .copy-btn {
             padding: var(--space-2) var(--space-4);
@@ -1893,7 +2045,7 @@
         }
 
         /* ============================================
-           Responsive محسّن
+           Responsive
            ============================================ */
         @media (max-width: 768px) {
             .app-main {
@@ -2005,9 +2157,9 @@
                 <div class="info-box-title">✨ مميزات النظام</div>
                 <div class="info-box-text">
                     💰 نظام رصيد متكامل<br>
-                    🎁 لعبة صيد الأكواد<br>
+                    🎁 لعبة صيد الأكواد مع مبلغ رهان لكل فئة<br>
                     🔒 تخزين محلي آمن (IndexedDB)<br>
-                    ⚡ أداء فائق السرعة<br>
+                    🔔 نظام إشعارات متطور<br>
                     🌙 وضع ليلي احترافي
                 </div>
             </div>
@@ -2032,6 +2184,10 @@
                     <div class="brand-title">KRATOS<span>BOT</span></div>
                 </div>
                 <div class="header-actions">
+                    <button class="icon-btn" id="notifBtn" title="الإشعارات" style="position:relative;">
+                        🔔
+                        <span class="notification-badge" id="notifBadge" style="display:none;">0</span>
+                    </button>
                     <button class="icon-btn icon-btn-admin" id="adminBtn" style="display:none;" title="لوحة المشرف">👑</button>
                     <button class="icon-btn" id="themeToggle" title="تبديل الوضع">🌙</button>
                     <button class="icon-btn" id="menuToggle" title="القائمة">☰</button>
@@ -2092,6 +2248,13 @@
                     <div class="sidebar-item-content">
                         <div class="sidebar-item-title">الملف الشخصي</div>
                         <div class="sidebar-item-desc">إدارة الحساب</div>
+                    </div>
+                </div>
+                <div class="sidebar-item" data-page="notifications">
+                    <div class="sidebar-item-icon">🔔</div>
+                    <div class="sidebar-item-content">
+                        <div class="sidebar-item-title">الإشعارات</div>
+                        <div class="sidebar-item-desc">جميع الإشعارات</div>
                     </div>
                 </div>
                 <div class="sidebar-item" data-page="admin" id="sidebarAdminItem" style="display:none;">
@@ -2172,14 +2335,14 @@
                 <div class="page-header">
                     <div>
                         <h1 class="page-title">صيد <span>الأكواد</span> 🎁</h1>
-                        <p class="page-sub">راهن واربح كود هدية حقيقي!</p>
+                        <p class="page-sub">راهن بمبلغ محدد لكل فئة واربح كود هدية حقيقي!</p>
                     </div>
                 </div>
                 <div class="game-hero">
                     <div class="game-hero-content">
                         <div class="game-hero-icon">🎰</div>
                         <div class="game-hero-title">اربح كود هدية</div>
-                        <div class="game-hero-sub">راهن بـ <strong style="color:var(--color-pink);">1000 نقطة</strong> على أي فئة، وربما تكون الفائز بالكود!<br>لا توجد نسب ظاهرة - الفوز عشوائي تماماً!</div>
+                        <div class="game-hero-sub">لكل فئة مبلغ رهان خاص بها، اختر الفئة المناسبة وجرب حظك!<br>الفوز عشوائي تماماً!</div>
                     </div>
                 </div>
                 <div class="section-header"><div class="section-title">🎯 الفئات المتاحة</div></div>
@@ -2225,7 +2388,7 @@
                 <div class="page-header">
                     <div>
                         <h1 class="page-title">أكواد <span>الرابحين</span> 🌐</h1>
-                        <p class="page-sub">الأكواد التي انتهت مهلة استلامها وأصبحت متاحة للجميع</p>
+                        <p class="page-sub">الأكواد التي انتهت مهلة استلامها وأصبحت متاحة للجميع مع معلومات الفائز</p>
                     </div>
                 </div>
                 <div class="section">
@@ -2302,6 +2465,35 @@
                 </div>
             </div>
 
+            <!-- ==================== NOTIFICATIONS ==================== -->
+            <div class="page" id="page-notifications">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">الإشعارات <span>🔔</span></h1>
+                        <p class="page-sub">جميع الإشعارات الواردة</p>
+                    </div>
+                    <div style="display:flex;gap:var(--space-2);">
+                        <button class="btn btn-secondary" onclick="Notifications.markAllAsRead()">📖 تعيين كمقروء</button>
+                        <button class="btn btn-danger" onclick="Notifications.clearAll()">🗑️ مسح الكل</button>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">📋 قائمة الإشعارات</div>
+                        <div class="filter-group">
+                            <button class="filter-btn active" data-filter="all" onclick="Notifications.filter('all',this)">الكل</button>
+                            <button class="filter-btn" data-filter="info" onclick="Notifications.filter('info',this)">ℹ️</button>
+                            <button class="filter-btn" data-filter="success" onclick="Notifications.filter('success',this)">✅</button>
+                            <button class="filter-btn" data-filter="warning" onclick="Notifications.filter('warning',this)">⚠️</button>
+                            <button class="filter-btn" data-filter="broadcast" onclick="Notifications.filter('broadcast',this)">📢</button>
+                        </div>
+                    </div>
+                    <div id="notificationsList">
+                        <div class="empty-state"><div class="empty-state-icon">🔔</div><div class="empty-state-title">لا توجد إشعارات</div></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ==================== SETTINGS ==================== -->
             <div class="page" id="page-settings">
                 <div class="page-header">
@@ -2316,13 +2508,17 @@
                         <div><div style="font-weight:600;">الوضع الليلي</div><div style="font-size:0.8rem;color:var(--color-text-muted);">تفعيل الوضع الداكن</div></div>
                         <div class="toggle active" id="themeToggle2" onclick="App.toggleTheme()"></div>
                     </div>
+                    <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-4) 0;border-bottom:1px solid var(--color-border);">
+                        <div><div style="font-weight:600;">إشعارات فورية</div><div style="font-size:0.8rem;color:var(--color-text-muted);">استلام إشعارات فورية</div></div>
+                        <div class="toggle active" id="notifToggle" onclick="App.toggleNotifications()"></div>
+                    </div>
                 </div>
                 <div class="section">
                     <div class="section-title" style="margin-bottom:var(--space-4);">ℹ️ معلومات التطبيق</div>
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--space-4);">
                         <div style="background:var(--color-bg-elevated);padding:var(--space-4);border-radius:var(--radius-md);">
                             <div style="font-size:0.8rem;color:var(--color-text-muted);">الإصدار</div>
-                            <div style="font-weight:700;">v7.0.0</div>
+                            <div style="font-weight:700;">v7.1.0</div>
                         </div>
                         <div style="background:var(--color-bg-elevated);padding:var(--space-4);border-radius:var(--radius-md);">
                             <div style="font-size:0.8rem;color:var(--color-text-muted);">التخزين</div>
@@ -2340,17 +2536,41 @@
             <div class="page" id="page-admin">
                 <div class="admin-header">
                     <div class="admin-header-title">👑 لوحة تحكم المشرف</div>
-                    <div class="admin-header-sub">إدارة كاملة للمستخدمين والأرصدة والبيانات</div>
+                    <div class="admin-header-sub">إدارة كاملة للمستخدمين والأرصدة والبيانات والإشعارات</div>
                     <div class="admin-stats">
                         <div class="admin-stat"><div class="admin-stat-value" id="adminTotalUsers">0</div><div class="admin-stat-label">المستخدمين</div></div>
                         <div class="admin-stat"><div class="admin-stat-value" id="adminTotalBalance">0</div><div class="admin-stat-label">إجمالي الأرصدة</div></div>
                         <div class="admin-stat"><div class="admin-stat-value" id="adminTotalTransactions">0</div><div class="admin-stat-label">المعاملات</div></div>
                         <div class="admin-stat"><div class="admin-stat-value" id="adminTotalCharged">0</div><div class="admin-stat-label">إجمالي الشحن</div></div>
                     </div>
-                    <!-- Chart -->
-                    <div class="chart-container" id="adminChart">
-                        <!-- يتم إنشاء الأعمدة ديناميكياً -->
+                    <div class="chart-container" id="adminChart"></div>
+                </div>
+
+                <!-- Broadcast -->
+                <div class="admin-section" style="border-color:rgba(59,130,246,0.3);">
+                    <div class="admin-section-title" style="color:var(--color-notification);border-color:rgba(59,130,246,0.2);">
+                        <span>📢 الإشعارات العامة (Broadcast)</span>
                     </div>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
+                        <div class="form-group">
+                            <label class="form-label">عنوان الإشعار</label>
+                            <input type="text" class="form-input" id="broadcastTitle" placeholder="عنوان الإشعار">
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">نوع الإشعار</label>
+                            <select class="form-input" id="broadcastType">
+                                <option value="broadcast">📢 عام</option>
+                                <option value="info">ℹ️ معلومات</option>
+                                <option value="success">✅ نجاح</option>
+                                <option value="warning">⚠️ تحذير</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">محتوى الإشعار</label>
+                        <textarea class="form-input" id="broadcastMessage" rows="4" placeholder="أدخل نص الإشعار..."></textarea>
+                    </div>
+                    <button class="btn btn-notification btn-full" onclick="Admin.sendBroadcast()">📢 إرسال الإشعار للجميع</button>
                 </div>
 
                 <!-- Users -->
@@ -2468,17 +2688,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Quick Actions -->
-                <div class="admin-section">
-                    <div class="admin-section-title"><span>⚡ إجراءات سريعة</span></div>
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--space-4);">
-                        <div class="stat-card" onclick="Admin.exportAllData()" style="cursor:pointer;"><div class="stat-icon">📥</div><div class="stat-label" style="font-weight:700;color:var(--color-text-primary);">تصدير البيانات</div></div>
-                        <div class="stat-card" onclick="Admin.importData()" style="cursor:pointer;"><div class="stat-icon">📤</div><div class="stat-label" style="font-weight:700;color:var(--color-text-primary);">استيراد البيانات</div></div>
-                        <div class="stat-card" onclick="Admin.sendBroadcast()" style="cursor:pointer;"><div class="stat-icon">📢</div><div class="stat-label" style="font-weight:700;color:var(--color-text-primary);">إشعار عام</div></div>
-                        <div class="stat-card" onclick="Admin.viewAllActivities()" style="cursor:pointer;"><div class="stat-icon">📊</div><div class="stat-label" style="font-weight:700;color:var(--color-text-primary);">كل النشاطات</div></div>
-                    </div>
-                </div>
             </div>
 
         </main>
@@ -2488,6 +2697,11 @@
             <button class="bottom-nav-item active" data-page="home"><span class="bottom-nav-icon">💰</span><span>الرصيد</span></button>
             <button class="bottom-nav-item" data-page="game"><span class="bottom-nav-icon">🎁</span><span>اللعبة</span></button>
             <button class="bottom-nav-item" data-page="my-codes"><span class="bottom-nav-icon">🎟️</span><span>أكوادي</span></button>
+            <button class="bottom-nav-item" data-page="notifications" id="bottomNavNotif" style="position:relative;">
+                <span class="bottom-nav-icon">🔔</span>
+                <span>إشعارات</span>
+                <span class="bottom-nav-badge" id="bottomNotifBadge" style="display:none;">0</span>
+            </button>
             <button class="bottom-nav-item" data-page="profile"><span class="bottom-nav-icon">👤</span><span>الملف</span></button>
             <button class="bottom-nav-item" data-page="admin" id="bottomNavAdmin" style="display:none;"><span class="bottom-nav-icon">👑</span><span>المشرف</span></button>
         </nav>
@@ -2595,6 +2809,7 @@
             </div>
             <form id="addCategoryForm">
                 <div class="form-group"><label class="form-label">قيمة الكود (المبلغ المستهدف)</label><input type="number" class="form-input" id="categoryValue" placeholder="مثال: 10000" min="1000" required><div class="form-hint">المبلغ الذي يجب أن يصله الصندوق ليفوز أحد</div></div>
+                <div class="form-group"><label class="form-label">مبلغ الرهان لهذه الفئة</label><input type="number" class="form-input" id="categoryBetAmount" placeholder="مثال: 500" min="100" step="50" required value="1000"><div class="form-hint">المبلغ الذي يخصم من المستخدم عند الرهان على هذه الفئة</div></div>
                 <div class="form-group"><label class="form-label">الأكواد (كود واحد في كل سطر)</label><textarea class="form-input" id="categoryCodes" rows="6" placeholder="CODE-001&#10;CODE-002" required></textarea><div class="form-hint">أدخل الأكواد المتاحة لهذه الفئة</div></div>
                 <div style="display:flex;gap:var(--space-2);">
                     <button type="button" class="btn btn-secondary" style="flex:1;" onclick="App.closeModal('addCategoryModal')">إلغاء</button>
@@ -2702,18 +2917,18 @@
     </div>
 
     <!-- ============================================
-    JAVASCRIPT – كل المنطق مع التحسينات
+    JAVASCRIPT – كل المنطق مع الإضافات الجديدة
     ============================================ -->
     <script>
         // =============================================
         // 1. CONFIG
         // =============================================
         const ADMIN_CONFIG = { TELEGRAM_ID: 8614039081 };
-        const GAME_CONFIG = { BET_AMOUNT: 1000, CLAIM_TIMEOUT: 5 * 60 * 1000 };
-        const APP_VERSION = 'v7.0.0';
+        const GAME_CONFIG = { CLAIM_TIMEOUT: 5 * 60 * 1000 };
+        const APP_VERSION = 'v7.1.0';
 
         // =============================================
-        // 2. UTILITY: Encryption (بسيط للتشفير)
+        // 2. UTILITY: Encryption
         // =============================================
         const Crypto = {
             _key: 'KRATOS_SECRET_2026',
@@ -2741,12 +2956,12 @@
         };
 
         // =============================================
-        // 3. DATABASE (IndexedDB) – مع تحسين الفهارس
+        // 3. DATABASE (IndexedDB) – مع تخزين الإشعارات
         // =============================================
         class KratosDB {
             constructor() {
                 this.dbName = 'KratosBotDB_v8';
-                this.dbVersion = 5;
+                this.dbVersion = 6;
                 this.db = null;
             }
 
@@ -2758,7 +2973,6 @@
                         resolve(this.db); };
                     req.onupgradeneeded = (ev) => {
                         const db = ev.target.result;
-                        // Users
                         if (!db.objectStoreNames.contains('users')) {
                             const s = db.createObjectStore('users', { keyPath: 'telegramId' });
                             s.createIndex('username', 'username', { unique: false });
@@ -2766,22 +2980,18 @@
                             s.createIndex('lastLogin', 'lastLogin', { unique: false });
                             s.createIndex('isBanned', 'isBanned', { unique: false });
                         }
-                        // Transactions
                         if (!db.objectStoreNames.contains('transactions')) {
                             const s = db.createObjectStore('transactions', { keyPath: 'id' });
                             s.createIndex('userId', 'userId', { unique: false });
                             s.createIndex('type', 'type', { unique: false });
                             s.createIndex('timestamp', 'timestamp', { unique: false });
                         }
-                        // Settings
                         if (!db.objectStoreNames.contains('settings')) {
                             db.createObjectStore('settings', { keyPath: 'key' });
                         }
-                        // Game Categories
                         if (!db.objectStoreNames.contains('game_categories')) {
                             db.createObjectStore('game_categories', { keyPath: 'id' });
                         }
-                        // Game Codes
                         if (!db.objectStoreNames.contains('game_codes')) {
                             const s = db.createObjectStore('game_codes', { keyPath: 'id' });
                             s.createIndex('category_id', 'category_id', { unique: false });
@@ -2790,7 +3000,6 @@
                             s.createIndex('is_public_revealed', 'is_public_revealed', { unique: false });
                             s.createIndex('winner_user_id', 'winner_user_id', { unique: false });
                         }
-                        // Game Bets
                         if (!db.objectStoreNames.contains('game_bets')) {
                             const s = db.createObjectStore('game_bets', { keyPath: 'id' });
                             s.createIndex('user_id', 'user_id', { unique: false });
@@ -2798,13 +3007,19 @@
                             s.createIndex('is_winning_bet', 'is_winning_bet', { unique: false });
                             s.createIndex('created_at', 'created_at', { unique: false });
                         }
-                        // Delete Log
                         if (!db.objectStoreNames.contains('delete_log')) {
                             db.createObjectStore('delete_log', { keyPath: 'id' });
                         }
-                        // Achievements
                         if (!db.objectStoreNames.contains('achievements')) {
                             db.createObjectStore('achievements', { keyPath: 'id' });
+                        }
+                        // NEW: Notifications store
+                        if (!db.objectStoreNames.contains('notifications')) {
+                            const s = db.createObjectStore('notifications', { keyPath: 'id' });
+                            s.createIndex('userId', 'userId', { unique: false });
+                            s.createIndex('read', 'read', { unique: false });
+                            s.createIndex('type', 'type', { unique: false });
+                            s.createIndex('timestamp', 'timestamp', { unique: false });
                         }
                     };
                 });
@@ -2877,7 +3092,6 @@
                     lastLogin: Date.now(),
                     loginCount: (existing.loginCount || 0) + 1,
                     updatedAt: Date.now(),
-                    // تشفير البيانات الحساسة
                     email: data.email ? Crypto.encrypt(data.email) : existing.email,
                     phone: data.phone ? Crypto.encrypt(data.phone) : existing.phone,
                 } : {
@@ -2919,7 +3133,6 @@
             async getUser(tgId) {
                 const u = await this.get('users', tgId);
                 if (u) {
-                    // فك التشفير عند القراءة
                     if (u.email) u.email = Crypto.decrypt(u.email);
                     if (u.phone) u.phone = Crypto.decrypt(u.phone);
                 }
@@ -2929,12 +3142,10 @@
             async updateUser(tgId, updates) {
                 const u = await this.get('users', tgId);
                 if (!u) return null;
-                // تشفير الحقول الحساسة إذا وردت
                 if (updates.email) updates.email = Crypto.encrypt(updates.email);
                 if (updates.phone) updates.phone = Crypto.encrypt(updates.phone);
                 const updated = { ...u, ...updates, updatedAt: Date.now() };
                 await this.put('users', updated);
-                // إرجاع البيانات مفككة
                 const result = { ...updated };
                 if (result.email) result.email = Crypto.decrypt(result.email);
                 if (result.phone) result.phone = Crypto.decrypt(result.phone);
@@ -2947,6 +3158,8 @@
                 if (u.isAdmin) return { success: false, message: 'لا يمكن حذف المشرف' };
                 const txs = await this.getAll('transactions');
                 for (const tx of txs.filter(t => t.userId === tgId)) await this.delete('transactions', tx.id);
+                const notifs = await this.getAll('notifications');
+                for (const n of notifs.filter(n => n.userId === tgId)) await this.delete('notifications', n.id);
                 await this.delete('users', tgId);
                 return { success: true };
             }
@@ -3047,6 +3260,65 @@
                 return false;
             }
 
+            // === Notifications ===
+            async addNotification(data) {
+                const n = {
+                    id: 'notif_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                    userId: data.userId || 'all',
+                    type: data.type || 'info',
+                    title: data.title || 'إشعار',
+                    message: data.message || '',
+                    data: data.data || null,
+                    read: false,
+                    broadcast: data.broadcast || false,
+                    timestamp: Date.now(),
+                    icon: data.icon || this._getIconForType(data.type || 'info')
+                };
+                await this.put('notifications', n);
+                return n;
+            }
+
+            async getNotifications(userId, limit = 100) {
+                const all = await this.getAll('notifications');
+                const filtered = all.filter(n => n.userId === 'all' || n.userId === userId);
+                return filtered.sort((a, b) => b.timestamp - a.timestamp).slice(0, limit);
+            }
+
+            async getUnreadCount(userId) {
+                const all = await this.getAll('notifications');
+                return all.filter(n => (n.userId === 'all' || n.userId === userId) && !n.read).length;
+            }
+
+            async markNotificationRead(id) {
+                const n = await this.get('notifications', id);
+                if (n) { n.read = true;
+                    await this.put('notifications', n); }
+            }
+
+            async markAllNotificationsRead(userId) {
+                const all = await this.getAll('notifications');
+                for (const n of all) {
+                    if ((n.userId === 'all' || n.userId === userId) && !n.read) {
+                        n.read = true;
+                        await this.put('notifications', n);
+                    }
+                }
+            }
+
+            async deleteNotification(id) { await this.delete('notifications', id); }
+
+            async clearNotifications(userId) {
+                const all = await this.getAll('notifications');
+                for (const n of all) {
+                    if (n.userId === 'all' || n.userId === userId) await this.delete('notifications', n.id);
+                }
+            }
+
+            _getIconForType(type) {
+                const map = { info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌', broadcast: '📢' };
+                return map[type] || '🔔';
+            }
+
             _id() { return 'id_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 9); }
         }
 
@@ -3124,7 +3396,7 @@
                 el.className = `toast ${type}`;
                 const icons = { success: '✅', error: '❌', info: 'ℹ️', warning: '⚠️' };
                 el.innerHTML =
-                    `<span class="toast-icon">${icons[type]}</span><span class="toast-message">${msg}</span><span class="toast-close" onclick="this.parentElement.remove()">✕</span>`;
+                    `<span class="toast-icon">${icons[type] || 'ℹ️'}</span><span class="toast-message">${msg}</span><span class="toast-close" onclick="this.parentElement.remove()">✕</span>`;
                 container.appendChild(el);
                 setTimeout(() => {
                     el.style.opacity = '0';
@@ -3135,7 +3407,154 @@
         };
 
         // =============================================
-        // 6. MAIN APP – مع توجيه (Routing) وتحسينات
+        // 6. NOTIFICATIONS SYSTEM
+        // =============================================
+        const Notifications = {
+            currentFilter: 'all',
+            _lastCount: 0,
+
+            async add(data) {
+                const db = App.db;
+                const notif = await db.addNotification({
+                    userId: data.userId || 'all',
+                    type: data.type || 'info',
+                    title: data.title || 'إشعار',
+                    message: data.message || '',
+                    data: data.data || null,
+                    broadcast: data.broadcast || false,
+                    icon: data.icon || null
+                });
+                // إظهار توست فوري للمستخدم الحالي
+                const current = App.currentUser;
+                if (notif.userId === 'all' || notif.userId === current?.telegramId) {
+                    const icon = notif.icon || this._getIcon(notif.type);
+                    Toast.show(`${icon} ${notif.title}: ${notif.message}`, notif.type, 4000);
+                }
+                this._updateBadge();
+                // تحديث واجهة الإشعارات إذا كانت مفتوحة
+                if (document.getElementById('page-notifications').classList.contains('active')) {
+                    this.render();
+                }
+                return notif;
+            },
+
+            async render() {
+                const db = App.db;
+                const user = App.currentUser;
+                if (!user) return;
+                const notifs = await db.getNotifications(user.telegramId);
+                const filtered = this.currentFilter === 'all' ? notifs : notifs.filter(n => n.type === this
+                .currentFilter);
+                const container = document.getElementById('notificationsList');
+                if (filtered.length === 0) {
+                    container.innerHTML =
+                        `<div class="empty-state"><div class="empty-state-icon">🔔</div><div class="empty-state-title">لا توجد إشعارات</div><div class="empty-state-text">ستظهر الإشعارات هنا عند استلامها</div></div>`;
+                    return;
+                }
+                container.innerHTML = filtered.map(n => `
+                    <div class="notif-item ${n.read ? '' : 'unread'}" data-id="${n.id}">
+                        <div class="notif-icon ${n.type}">${n.icon || this._getIcon(n.type)}</div>
+                        <div class="notif-content">
+                            <div class="notif-title">${n.title}</div>
+                            <div class="notif-message">${n.message}</div>
+                            <div class="notif-time">${this._timeAgo(n.timestamp)} ${n.broadcast ? ' • 📢 عام' : ''}</div>
+                            <div class="notif-actions">
+                                ${!n.read ? `<button class="btn btn-secondary" onclick="Notifications.markRead('${n.id}')">📖 تعيين كمقروء</button>` : ''}
+                                <button class="btn btn-danger" onclick="Notifications.deleteOne('${n.id}')">🗑️</button>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            },
+
+            async markRead(id) {
+                await App.db.markNotificationRead(id);
+                this._updateBadge();
+                this.render();
+            },
+
+            async markAllAsRead() {
+                const user = App.currentUser;
+                if (!user) return;
+                await App.db.markAllNotificationsRead(user.telegramId);
+                this._updateBadge();
+                this.render();
+                Toast.show('📖 تم تعيين جميع الإشعارات كمقروءة', 'info');
+            },
+
+            async deleteOne(id) {
+                if (!confirm('حذف هذا الإشعار؟')) return;
+                await App.db.deleteNotification(id);
+                this._updateBadge();
+                this.render();
+            },
+
+            async clearAll() {
+                const user = App.currentUser;
+                if (!user) return;
+                if (!confirm('هل تريد مسح جميع الإشعارات نهائياً؟')) return;
+                await App.db.clearNotifications(user.telegramId);
+                this._updateBadge();
+                this.render();
+                Toast.show('🗑️ تم مسح جميع الإشعارات', 'success');
+            },
+
+            filter(type, btn) {
+                this.currentFilter = type;
+                document.querySelectorAll('#page-notifications .filter-btn').forEach(b => b.classList.remove('active'));
+                if (btn) btn.classList.add('active');
+                this.render();
+            },
+
+            async _updateBadge() {
+                const user = App.currentUser;
+                if (!user) return;
+                const count = await App.db.getUnreadCount(user.telegramId);
+                const badge = document.getElementById('notifBadge');
+                const bottomBadge = document.getElementById('bottomNotifBadge');
+                if (count > 0) {
+                    badge.style.display = 'flex';
+                    badge.textContent = count > 99 ? '99+' : count;
+                    bottomBadge.style.display = 'flex';
+                    bottomBadge.textContent = count > 99 ? '99+' : count;
+                } else {
+                    badge.style.display = 'none';
+                    bottomBadge.style.display = 'none';
+                }
+                this._lastCount = count;
+            },
+
+            _getIcon(type) {
+                const map = { info: 'ℹ️', success: '✅', warning: '⚠️', error: '❌', broadcast: '📢' };
+                return map[type] || '🔔';
+            },
+
+            _timeAgo(ts) {
+                const s = Math.floor((Date.now() - ts) / 1000);
+                if (s < 60) return 'الآن';
+                const m = Math.floor(s / 60);
+                if (m < 60) return `منذ ${m} د`;
+                const h = Math.floor(m / 60);
+                if (h < 24) return `منذ ${h} س`;
+                const d = Math.floor(h / 24);
+                if (d < 7) return `منذ ${d} ي`;
+                const w = Math.floor(d / 7);
+                if (w < 4) return `منذ ${w} أسبوع`;
+                return new Date(ts).toLocaleDateString('ar');
+            },
+
+            // دالة لإرسال إشعار لمستخدم معين أو للجميع
+            async sendToUser(userId, title, message, type = 'info') {
+                return await this.add({ userId, title, message, type });
+            },
+
+            async broadcast(title, message, type = 'broadcast') {
+                return await this.add({ userId: 'all', title, message, type, broadcast: true });
+            }
+        };
+
+        // =============================================
+        // 7. MAIN APP
         // =============================================
         const App = {
             db: new KratosDB(),
@@ -3143,6 +3562,7 @@
             simulatedNum: 1,
             currentFilter: 'all',
             _loaderFill: document.getElementById('loaderFill'),
+            _notificationsEnabled: true,
 
             async init() {
                 this._updateLoader('جاري فتح قاعدة البيانات...', 10);
@@ -3153,6 +3573,11 @@
                 this._bindEvents();
                 this._updateLoader('جاهز!', 100);
                 setTimeout(() => document.getElementById('appLoader').classList.add('hidden'), 600);
+                // تحميل تفضيل الإشعارات
+                const notifPref = await this.db.getSetting('notifications_enabled');
+                this._notificationsEnabled = notifPref !== null ? notifPref : true;
+                const toggle = document.getElementById('notifToggle');
+                if (toggle) toggle.classList.toggle('active', this._notificationsEnabled);
             },
 
             _updateLoader(text, progress) {
@@ -3182,7 +3607,7 @@
                         if (user) { this.currentUser = user;
                             this._enterApp(); return; }
                     }
-                    document.getElementById('authGate').classList.remove('hidden');
+                    document.getElementById('authGate').classlist.remove('hidden');
                 }
             },
 
@@ -3192,25 +3617,28 @@
                 localStorage.setItem('kratos_last_user', this.currentUser.telegramId);
                 this.renderAll();
                 Game.startPublicRevealTask();
-                // التحقق من الإنجازات
                 this._checkAchievements();
+                // إشعار ترحيبي
+                if (this.currentUser.loginCount <= 2) {
+                    Notifications.add({
+                        userId: this.currentUser.telegramId,
+                        type: 'success',
+                        title: 'مرحباً بك!',
+                        message: `مرحباً ${this.currentUser.fullName || this.currentUser.username} في Kratos Bot! استمتع بلعبة صيد الأكواد.`,
+                        icon: '👋'
+                    });
+                }
                 const greet = this.currentUser.isAdmin ? '👑 مرحباً بك أيها المشرف!' :
                     `مرحباً ${this.currentUser.fullName || this.currentUser.username}!`;
                 Toast.show(greet, 'success');
-                // تسجيل الدخول في السجل
                 this.db.updateUser(this.currentUser.telegramId, { lastLogin: Date.now() });
+                // تحديث عدد الإشعارات
+                setTimeout(() => Notifications._updateBadge(), 500);
             },
 
             _checkAchievements() {
                 const u = this.currentUser;
                 if (!u) return;
-                const achievements = [
-                    { id: 'first_login', name: 'أول دخول', icon: '🚀', desc: 'قمت بتسجيل الدخول لأول مرة' },
-                    { id: 'first_bet', name: 'أول رهان', icon: '🎰', desc: 'قمت بأول رهان في اللعبة' },
-                    { id: 'first_win', name: 'أول فوز', icon: '🏆', desc: 'فزت بأول كود' },
-                    { id: '10_bets', name: '10 رهانات', icon: '🎯', desc: 'قمت بـ 10 رهانات' },
-                    { id: '1000_balance', name: 'رصيد 1000', icon: '💰', desc: 'وصل رصيدك إلى 1000 نقطة' }
-                ];
                 // يمكن تفعيل الإنجازات تدريجياً حسب الأحداث
             },
 
@@ -3222,6 +3650,7 @@
                 document.getElementById('sidebarClose').addEventListener('click', () => this._toggleSidebar());
                 document.getElementById('sidebarOverlay').addEventListener('click', () => this._toggleSidebar());
                 document.getElementById('themeToggle').addEventListener('click', () => this.toggleTheme());
+                document.getElementById('notifBtn').addEventListener('click', () => this.navigate('notifications'));
                 document.getElementById('editProfileForm').addEventListener('submit', (e) => { e.preventDefault();
                     this.saveProfile(); });
                 document.getElementById('chargeForm').addEventListener('submit', (e) => { e.preventDefault();
@@ -3267,7 +3696,7 @@
                 const t2 = document.getElementById('themeToggle2');
                 if (t2) t2.classList.toggle('active', savedTheme === 'dark');
 
-                // Keyboard shortcuts
+                // Keyboard
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape') {
                         document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
@@ -3275,7 +3704,7 @@
                     }
                 });
 
-                // Service Worker (PWA)
+                // Service Worker
                 if ('serviceWorker' in navigator) {
                     navigator.serviceWorker.register('/sw.js').catch(() => {});
                 }
@@ -3320,6 +3749,14 @@
                 Toast.show(`تم التبديل إلى الوضع ${next === 'light' ? 'الفاتح' : 'الداكن'}`, 'info');
             },
 
+            async toggleNotifications() {
+                this._notificationsEnabled = !this._notificationsEnabled;
+                await this.db.setSetting('notifications_enabled', this._notificationsEnabled);
+                const toggle = document.getElementById('notifToggle');
+                if (toggle) toggle.classList.toggle('active', this._notificationsEnabled);
+                Toast.show(this._notificationsEnabled ? '🔔 تم تفعيل الإشعارات' : '🔕 تم تعطيل الإشعارات', 'info');
+            },
+
             navigate(page) {
                 if (page === 'admin' && !this.currentUser.isAdmin) { Toast.show('⛔ للمشرفين فقط', 'error'); return; }
                 document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
@@ -3328,7 +3765,6 @@
                 document.querySelectorAll('.bottom-nav-item, .sidebar-item').forEach(el => {
                     el.classList.toggle('active', el.dataset.page === page);
                 });
-                // تحديث URL
                 if (history.pushState) history.pushState(null, '', '#' + page);
                 if (page === 'admin') { Admin.renderDashboard();
                     GameAdmin.refresh();
@@ -3337,6 +3773,7 @@
                 if (page === 'game') Game.renderCategories();
                 if (page === 'my-codes') Game.renderMyWonCodes();
                 if (page === 'public-codes') Game.renderPublicCodes();
+                if (page === 'notifications') Notifications.render();
                 if (page === 'settings') this._updateStorageInfo();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             },
@@ -3379,6 +3816,7 @@
                 document.getElementById('detailPhone').textContent = u.phone || '-';
                 document.getElementById('detailLang').textContent = u.language === 'ar' ? 'العربية' : 'English';
                 document.getElementById('detailTgId').textContent = u.telegramId;
+                Notifications._updateBadge();
             },
 
             _renderRecent(txs) {
@@ -3444,6 +3882,15 @@
                     note: `طريقة: ${method} | ${note}`,
                     performedBy: this.currentUser.username
                 });
+                // إشعار للمشرف
+                const adminNotif = await Notifications.add({
+                    userId: 'tg_' + ADMIN_CONFIG.TELEGRAM_ID,
+                    type: 'warning',
+                    title: '📥 طلب شحن جديد',
+                    message: `${this.currentUser.username} طلب شحن ${amount} نقطة عبر ${method}`,
+                    data: { user: this.currentUser.telegramId, amount, method, note },
+                    icon: '💰'
+                });
                 this.closeModal('requestChargeModal');
                 Toast.show('✅ تم إرسال طلب الشحن للمشرف', 'success');
                 await this.renderAll();
@@ -3475,7 +3922,9 @@
             async exportData() {
                 const u = this.currentUser;
                 const txs = await this.db.getUserTransactions(u.telegramId);
-                const data = { exportedAt: new Date().toISOString(), user: u, transactions: txs, version: APP_VERSION };
+                const notifs = await this.db.getNotifications(u.telegramId);
+                const data = { exportedAt: new Date().toISOString(), user: u, transactions: txs, notifications: notifs,
+                    version: APP_VERSION };
                 const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -3511,7 +3960,7 @@
         };
 
         // =============================================
-        // 7. ADMIN – مع رسوم بيانية
+        // 8. ADMIN – مع إشعارات البث
         // =============================================
         const Admin = {
             async renderDashboard() {
@@ -3609,6 +4058,14 @@
                     note: note || 'شحن يدوي',
                     performedBy: App.currentUser.username
                 });
+                // إشعار للمستخدم
+                await Notifications.add({
+                    userId: userId,
+                    type: 'success',
+                    title: '💰 تم شحن رصيدك',
+                    message: `تم شحن ${amount.toFixed(2)} نقطة بواسطة المشرف`,
+                    icon: '💳'
+                });
                 App.closeModal('chargeModal');
                 Toast.show(`✅ تم شحن ${amount.toFixed(2)} نقطة`, 'success');
                 await this.renderDashboard();
@@ -3654,6 +4111,13 @@
                 const action = u.isBanned ? 'إلغاء الحظر' : 'الحظر';
                 if (!confirm(`هل تريد ${action} ${u.username}؟`)) return;
                 await App.db.updateUser(tgId, { isBanned: !u.isBanned, status: u.isBanned ? 'active' : 'banned' });
+                await Notifications.add({
+                    userId: tgId,
+                    type: u.isBanned ? 'success' : 'warning',
+                    title: u.isBanned ? '✅ تم إلغاء حظر حسابك' : '⛔ تم حظر حسابك',
+                    message: u.isBanned ? 'تم إلغاء حظر حسابك بواسطة المشرف' : 'تم حظر حسابك بواسطة المشرف',
+                    icon: u.isBanned ? '✅' : '⛔'
+                });
                 Toast.show(`تم ${action} بنجاح`, 'success');
                 await this._renderUsers();
             },
@@ -3675,8 +4139,9 @@
                 const gameCategories = await App.db.getAll('game_categories');
                 const gameCodes = await App.db.getAll('game_codes');
                 const gameBets = await App.db.getAll('game_bets');
+                const notifications = await App.db.getAll('notifications');
                 const data = { exportedAt: new Date().toISOString(), users, transactions, gameCategories, gameCodes,
-                    gameBets, version: APP_VERSION };
+                    gameBets, notifications, version: APP_VERSION };
                 const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -3706,6 +4171,8 @@
                                 'game_categories', c);
                             if (data.gameCodes) for (const c of data.gameCodes) await App.db.put('game_codes', c);
                             if (data.gameBets) for (const b of data.gameBets) await App.db.put('game_bets', b);
+                            if (data.notifications) for (const n of data.notifications) await App.db.put(
+                                'notifications', n);
                             Toast.show('✅ تم الاستيراد', 'success');
                             await this.renderDashboard();
                         } catch (_) { Toast.show('❌ خطأ في الملف', 'error'); }
@@ -3715,9 +4182,18 @@
                 input.click();
             },
 
-            sendBroadcast() {
-                const msg = prompt('أدخل رسالة الإشعار العام:');
-                if (msg) Toast.show(`📢 تم إرسال: ${msg}`, 'success');
+            async sendBroadcast() {
+                const title = document.getElementById('broadcastTitle').value.trim();
+                const message = document.getElementById('broadcastMessage').value.trim();
+                const type = document.getElementById('broadcastType').value;
+                if (!title || !message) { Toast.show('⚠️ يرجى ملء العنوان والمحتوى', 'error'); return; }
+                if (!confirm(`📢 إرسال إشعار عام لجميع المستخدمين؟\n\n${title}\n${message}`)) return;
+                await Notifications.broadcast(title, message, type);
+                document.getElementById('broadcastTitle').value = '';
+                document.getElementById('broadcastMessage').value = '';
+                Toast.show('📢 تم إرسال الإشعار للجميع', 'success');
+                // إضافة سجل
+                await App.db.addDeleteLog({ type: 'broadcast', description: `إشعار عام: ${title}` });
             },
 
             async viewAllActivities() {
@@ -3729,12 +4205,12 @@
             }
         };
 
-        // Event listeners for admin filters
+        // Admin filters
         document.getElementById('adminSearchInput')?.addEventListener('input', () => Admin._renderUsers());
         document.getElementById('adminFilterStatus')?.addEventListener('change', () => Admin._renderUsers());
 
         // =============================================
-        // 8. DATA MANAGER – محسّن
+        // 9. DATA MANAGER
         // =============================================
         const DataManager = {
             stats: {},
@@ -3892,6 +4368,13 @@
                     }
                     await App.db.addDeleteLog({ type: 'delete_records', recordType: type, count: deletedCount,
                         description });
+                    await Notifications.add({
+                        userId: 'tg_' + ADMIN_CONFIG.TELEGRAM_ID,
+                        type: 'warning',
+                        title: '🗑️ تم حذف سجلات',
+                        message: description,
+                        icon: '📋'
+                    });
                     Toast.show(`✅ تم حذف ${deletedCount} سجل بنجاح`, 'success');
                     App.closeModal('deleteRecordsModal');
                     await this.refresh();
@@ -3928,6 +4411,13 @@
                     count: deleted,
                     description: `حذف ${deleted} مستخدم غير نشط (أكثر من ${days} يوم)`
                 });
+                await Notifications.add({
+                    userId: 'tg_' + ADMIN_CONFIG.TELEGRAM_ID,
+                    type: 'info',
+                    title: '👻 تم حذف الجلسات القديمة',
+                    message: `تم حذف ${deleted} مستخدم غير نشط`,
+                    icon: '👻'
+                });
                 Toast.show(`✅ تم حذف ${deleted} مستخدم غير نشط`, 'success');
                 App.closeModal('deleteOldSessionsModal');
                 await this.refresh();
@@ -3957,7 +4447,8 @@
                     content.innerHTML =
                         '<div class="empty-state"><div class="empty-state-icon">📜</div><div class="empty-state-title">لا توجد عمليات حذف</div></div>';
                 } else {
-                    const icons = { delete_records: '🗑️', delete_old_sessions: '👻', delete_database: '💥' };
+                    const icons = { delete_records: '🗑️', delete_old_sessions: '👻', delete_database: '💥',
+                        broadcast: '📢' };
                     content.innerHTML = logs.map(log =>
                         `<div style="display:flex;gap:var(--space-3);padding:var(--space-3);background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.15);border-radius:var(--radius-md);font-size:0.85rem;margin-bottom:var(--space-2);"><div style="font-size:1.5rem;">${icons[log.type] || '📜'}</div><div style="flex:1;min-width:0;"><div style="font-weight:600;">${log.description}</div><div style="font-size:0.75rem;color:var(--color-text-muted);">${new Date(log.timestamp).toLocaleString('ar')} • بواسطة: ${log.adminId}</div></div></div>`
                     ).join('');
@@ -3981,7 +4472,8 @@
                         `<div class="empty-state" style="padding:var(--space-6);"><div class="empty-state-icon">📜</div><div class="empty-state-title">لا توجد عمليات حذف بعد</div></div>`;
                     return;
                 }
-                const icons = { delete_records: '🗑️', delete_old_sessions: '👻', delete_database: '💥' };
+                const icons = { delete_records: '🗑️', delete_old_sessions: '👻', delete_database: '💥',
+                    broadcast: '📢' };
                 container.innerHTML = logs.map(log =>
                     `<div style="display:flex;gap:var(--space-3);padding:var(--space-3);background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.15);border-radius:var(--radius-md);font-size:0.85rem;margin-bottom:var(--space-2);"><div style="font-size:1.5rem;">${icons[log.type] || '📜'}</div><div style="flex:1;min-width:0;"><div style="font-weight:600;">${log.description}</div><div style="font-size:0.75rem;color:var(--color-text-muted);">${App._timeAgo(log.timestamp)}</div></div></div>`
                 ).join('');
@@ -3989,7 +4481,7 @@
         };
 
         // =============================================
-        // 9. GAME – مع تحسينات
+        // 10. GAME – مع مبلغ رهان لكل فئة وعرض الفائز
         // =============================================
         const Game = {
             currentWinCode: null,
@@ -4004,17 +4496,20 @@
                         `<div class="empty-state" style="grid-column:1/-1;"><div class="empty-state-icon">📦</div><div class="empty-state-title">لا توجد فئات نشطة حالياً</div></div>`;
                     return;
                 }
-                container.innerHTML = active.map(cat => `
+                container.innerHTML = active.map(cat => {
+                    const betAmount = cat.betAmount || 1000;
+                    return `
                     <div class="game-card">
                         <div class="game-card-icon">🎁</div>
                         <div class="game-card-value">${cat.value.toLocaleString()}</div>
                         <div class="game-card-label">نقطة Kratos</div>
+                        <div class="game-card-bet">🎯 مبلغ الرهان: ${betAmount.toLocaleString()} نقطة</div>
                         <button class="btn btn-game" onclick="Game.placeBet('${cat.id}')" id="betBtn_${cat.id}">
                             🎯 جرب حظك
-                            <span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ${GAME_CONFIG.BET_AMOUNT} نقطة</span>
+                            <span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ${betAmount.toLocaleString()} نقطة</span>
                         </button>
                     </div>
-                `).join('');
+                `}).join('');
                 await this._renderMyBets();
             },
 
@@ -4033,7 +4528,7 @@
                     const icon = isWin ? '🎉' : '🎰';
                     const cls = isWin ? 'tx-icon-win' : 'tx-icon-game';
                     const title = isWin ? `فزت بكود فئة ${bet.category_value}` : `رهان على فئة ${bet.category_value}`;
-                    return `<div class="tx-item"><div class="tx-icon ${cls}">${icon}</div><div class="tx-content"><div class="tx-title">${title}</div><div class="tx-meta">${App._timeAgo(bet.created_at)}</div></div><div class="tx-amount ${isWin ? 'credit' : 'debit'}">${isWin ? '+' : '-'}${GAME_CONFIG.BET_AMOUNT}</div></div>`;
+                    return `<div class="tx-item"><div class="tx-icon ${cls}">${icon}</div><div class="tx-content"><div class="tx-title">${title}</div><div class="tx-meta">${App._timeAgo(bet.created_at)}</div></div><div class="tx-amount ${isWin ? 'credit' : 'debit'}">${isWin ? '+' : '-'}${bet.bet_amount || 1000}</div></div>`;
                 }).join('');
             },
 
@@ -4044,21 +4539,18 @@
                     '<div class="spinner"></div><span>جاري...</span>'; }
                 try {
                     const user = await App.db.getUser(App.currentUser.telegramId);
-                    if (!user || user.balance < GAME_CONFIG.BET_AMOUNT) {
-                        Toast.show('⛔ رصيدك غير كافٍ (يحتاج 1000)', 'error');
-                        if (btn) { btn.disabled = false;
-                            btn.innerHTML =
-                                '🎯 جرب حظك<span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ' +
-                                GAME_CONFIG.BET_AMOUNT + ' نقطة</span>'; }
-                        return;
-                    }
                     const category = await App.db.get('game_categories', categoryId);
                     if (!category || category.status !== 'active') {
                         Toast.show('⚠️ الفئة غير متاحة', 'error');
                         if (btn) { btn.disabled = false;
-                            btn.innerHTML =
-                                '🎯 جرب حظك<span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ' +
-                                GAME_CONFIG.BET_AMOUNT + ' نقطة</span>'; }
+                            btn.innerHTML = this._getBtnHTML(category); }
+                        return;
+                    }
+                    const betAmount = category.betAmount || 1000;
+                    if (!user || user.balance < betAmount) {
+                        Toast.show(`⛔ رصيدك غير كافٍ (يحتاج ${betAmount.toLocaleString()})`, 'error');
+                        if (btn) { btn.disabled = false;
+                            btn.innerHTML = this._getBtnHTML(category); }
                         return;
                     }
                     const allCodes = await App.db.getAll('game_codes');
@@ -4066,32 +4558,30 @@
                     if (available.length === 0) {
                         Toast.show('⚠️ لا توجد أكواد متاحة لهذه الفئة', 'error');
                         if (btn) { btn.disabled = false;
-                            btn.innerHTML =
-                                '🎯 جرب حظك<span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ' +
-                                GAME_CONFIG.BET_AMOUNT + ' نقطة</span>'; }
+                            btn.innerHTML = this._getBtnHTML(category); }
                         return;
                     }
                     const before = user.balance;
                     await App.db.addTransaction({
                         userId: user.telegramId,
                         type: 'game_bet',
-                        amount: GAME_CONFIG.BET_AMOUNT,
+                        amount: betAmount,
                         balanceBefore: before,
-                        balanceAfter: before - GAME_CONFIG.BET_AMOUNT,
+                        balanceAfter: before - betAmount,
                         description: `رهان على فئة ${category.value}`,
                         note: 'لعبة صيد الأكواد',
                         performedBy: user.username
                     });
                     const adminPct = await App.db.getSetting('game_admin_percentage') || 60;
-                    const adminProfit = GAME_CONFIG.BET_AMOUNT * (adminPct / 100);
-                    const systemShare = GAME_CONFIG.BET_AMOUNT - adminProfit;
+                    const adminProfit = betAmount * (adminPct / 100);
+                    const systemShare = betAmount - adminProfit;
                     const bet = {
                         id: 'bet_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
                         user_id: user.telegramId,
                         user_name: user.username,
                         category_id: categoryId,
                         category_value: category.value,
-                        bet_amount: GAME_CONFIG.BET_AMOUNT,
+                        bet_amount: betAmount,
                         system_share: systemShare,
                         admin_profit: adminProfit,
                         is_winning_bet: false,
@@ -4106,6 +4596,8 @@
                         const code = available[0];
                         code.is_used = true;
                         code.winner_user_id = user.telegramId;
+                        code.winner_username = user.username;
+                        code.winner_telegram_id = user.telegramId;
                         code.won_at = Date.now();
                         code.expires_at = Date.now() + GAME_CONFIG.CLAIM_TIMEOUT;
                         await App.db.put('game_codes', code);
@@ -4116,8 +4608,8 @@
                             userId: user.telegramId,
                             type: 'game_win',
                             amount: category.value,
-                            balanceBefore: before - GAME_CONFIG.BET_AMOUNT,
-                            balanceAfter: before - GAME_CONFIG.BET_AMOUNT + category.value,
+                            balanceBefore: before - betAmount,
+                            balanceAfter: before - betAmount + category.value,
                             description: `🎉 فوز بكود فئة ${category.value}`,
                             note: `الكود: ${code.code}`,
                             performedBy: 'system'
@@ -4137,7 +4629,23 @@
                         }
                         this.currentWinCode = code;
                         this._showWinModal(code, category.value);
-                        // Achievement
+                        // إشعار فوز
+                        await Notifications.add({
+                            userId: user.telegramId,
+                            type: 'success',
+                            title: '🎉 لقد ربحت كوداً!',
+                            message: `فزت بكود بقيمة ${category.value.toLocaleString()} نقطة! استلمه خلال 5 دقائق.`,
+                            icon: '🏆',
+                            data: { code: code.code, category: category.value }
+                        });
+                        // إشعار للمشرف
+                        await Notifications.add({
+                            userId: 'tg_' + ADMIN_CONFIG.TELEGRAM_ID,
+                            type: 'success',
+                            title: '🎉 فوز جديد!',
+                            message: `${user.username} ربح كود فئة ${category.value}`,
+                            icon: '🏆'
+                        });
                         await App.db.unlockAchievement(user.telegramId, { id: 'first_win', name: 'أول فوز',
                             icon: '🏆', desc: 'فزت بأول كود' });
                     } else {
@@ -4146,7 +4654,6 @@
                     Toast.show('🎰 تم الرهان، ربما تكون الفائز القادم!', 'info');
                     await this.renderCategories();
                     await App.renderAll();
-                    // Achievement
                     const bets = await App.db.getAll('game_bets');
                     const userBets = bets.filter(b => b.user_id === user.telegramId);
                     if (userBets.length === 1) {
@@ -4159,10 +4666,13 @@
                     }
                 } catch (_) { Toast.show('❌ حدث خطأ في الرهان', 'error'); } finally {
                     if (btn) { btn.disabled = false;
-                        btn.innerHTML =
-                            '🎯 جرب حظك<span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ' +
-                            GAME_CONFIG.BET_AMOUNT + ' نقطة</span>'; }
+                        btn.innerHTML = this._getBtnHTML(category); }
                 }
+            },
+
+            _getBtnHTML(category) {
+                const betAmount = category?.betAmount || 1000;
+                return `🎯 جرب حظك<span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ${betAmount.toLocaleString()} نقطة</span>`;
             },
 
             _showWinModal(code, amount) {
@@ -4212,6 +4722,14 @@
                 document.getElementById('winCode').style.display = 'block';
                 document.getElementById('claimCodeBtn').style.display = 'none';
                 Toast.show('🎉 تم استلام الكود وحفظه في سجل أكوادك!', 'success');
+                // إشعار استلام
+                await Notifications.add({
+                    userId: App.currentUser.telegramId,
+                    type: 'success',
+                    title: '🎟️ تم استلام الكود',
+                    message: `الكود ${code.code} محفوظ في أكوادك الفائزة`,
+                    icon: '✅'
+                });
                 setTimeout(() => { App.closeModal('winModal');
                     this.currentWinCode = null;
                     App.renderAll(); }, 5000);
@@ -4223,9 +4741,19 @@
                 code.is_public_revealed = true;
                 code.revealed_at = Date.now();
                 await App.db.put('game_codes', code);
-                Toast.show('⏰ انتهت المهلة - الكود أصبح عاماً', 'warning');
+                Toast.show('⏰ انتهت المهلة - الكود أصبح عاماً مع معلومات الفائز', 'warning');
+                // إشعار للجميع عن الكود العام
+                await Notifications.broadcast(
+                    '🌐 كود جديد متاح للجميع',
+                    `الكود ${code.code} (فئة ${code.category_value}) أصبح متاحاً للجميع! الفائز: ${code.winner_username || 'مستخدم'}`,
+                    'broadcast'
+                );
                 App.closeModal('winModal');
                 this.currentWinCode = null;
+                // تحديث الأكواد العامة إذا كانت الصفحة مفتوحة
+                if (document.getElementById('page-public-codes').classList.contains('active')) {
+                    this.renderPublicCodes();
+                }
             },
 
             async renderMyWonCodes() {
@@ -4279,6 +4807,7 @@
                         <div style="flex:1;min-width:10rem;">
                             <div class="public-code-item-code">${code.code}</div>
                             <div class="public-code-item-meta">فئة: ${code.category_value} • كشف: ${new Date(code.revealed_at).toLocaleString('ar')}</div>
+                            <div class="public-code-item-winner">🏆 الفائز: ${code.winner_username || 'مستخدم'} (ID: ${code.winner_telegram_id || code.winner_user_id || 'غير معروف'})</div>
                         </div>
                         <button class="copy-btn" onclick="Game._copyCode('${code.code}', this)">📋 نسخ</button>
                     </div>
@@ -4309,15 +4838,27 @@
                             c.revealed_at = now;
                             await App.db.put('game_codes', c);
                             count++;
+                            // إشعار عام عن الكود
+                            await Notifications.broadcast(
+                                '🌐 كود جديد متاح للجميع',
+                                `الكود ${c.code} (فئة ${c.category_value}) أصبح متاحاً للجميع! الفائز: ${c.winner_username || 'مستخدم'}`,
+                                'broadcast'
+                            );
                         }
                     }
-                    if (count > 0) console.log(`🗑️ تم كشف ${count} كود للعامة`);
-                }, 60000);
+                    if (count > 0) {
+                        console.log(`🗑️ تم كشف ${count} كود للعامة مع معلومات الفائز`);
+                        // تحديث واجهة الأكواد العامة إذا كانت مفتوحة
+                        if (document.getElementById('page-public-codes').classList.contains('active')) {
+                            this.renderPublicCodes();
+                        }
+                    }
+                }, 30000);
             }
         };
 
         // =============================================
-        // 10. GAME ADMIN
+        // 11. GAME ADMIN – مع مبلغ رهان لكل فئة
         // =============================================
         const GameAdmin = {
             currentManageCategoryId: null,
@@ -4359,12 +4900,12 @@
                     const catCodes = codes.filter(c => c.category_id === cat.id);
                     const used = catCodes.filter(c => c.is_used).length;
                     const avail = catCodes.filter(c => !c.is_used).length;
-                    const statusClass = cat.status === 'active' ? 'status-active' : 'status-disabled';
+                    const betAmount = cat.betAmount || 1000;
                     const statusText = cat.status === 'active' ? '✅ نشط' : '⛔ معطل';
                     return `<div style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-4);margin-bottom:var(--space-2);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-3);">
                         <div style="flex:1;min-width:10rem;">
                             <div style="font-family:var(--font-family-display);font-weight:700;color:var(--color-pink);">فئة ${cat.value.toLocaleString()}</div>
-                            <div style="font-size:0.85rem;color:var(--color-text-muted);">الصندوق: ${cat.current_pool || 0} / ${cat.value} • الأكواد: ${avail} متاحة / ${used} مستخدمة • <span style="color:${cat.status === 'active' ? 'var(--color-success)' : 'var(--color-danger)'};">${statusText}</span></div>
+                            <div style="font-size:0.85rem;color:var(--color-text-muted);">الصندوق: ${cat.current_pool || 0} / ${cat.value} • مبلغ الرهان: ${betAmount.toLocaleString()} • الأكواد: ${avail} متاحة / ${used} مستخدمة • <span style="color:${cat.status === 'active' ? 'var(--color-success)' : 'var(--color-danger)'};">${statusText}</span></div>
                         </div>
                         <div class="action-btns">
                             <button class="action-btn action-btn-view" onclick="GameAdmin.manageCodes('${cat.id}')" title="إدارة الأكواد">🎟️</button>
@@ -4388,7 +4929,7 @@
                     `<div style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-4);margin-bottom:var(--space-2);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-3);">
                         <div style="flex:1;min-width:10rem;">
                             <div style="font-family:var(--font-family-display);font-weight:700;">${bet.user_name}</div>
-                            <div style="font-size:0.85rem;color:var(--color-text-muted);">فئة ${bet.category_value} • ${GAME_CONFIG.BET_AMOUNT} نقطة • ${bet.is_winning_bet ? '<span style="color:var(--color-success);">🎉 فاز</span>' : '🎰 راهن'} • ${App._timeAgo(bet.created_at)}</div>
+                            <div style="font-size:0.85rem;color:var(--color-text-muted);">فئة ${bet.category_value} • ${bet.bet_amount || 1000} نقطة • ${bet.is_winning_bet ? '<span style="color:var(--color-success);">🎉 فاز</span>' : '🎰 راهن'} • ${App._timeAgo(bet.created_at)}</div>
                         </div>
                         <div style="font-family:var(--font-family-display);font-weight:700;color:var(--color-warning);">+${bet.admin_profit.toFixed(0)}</div>
                     </div>`
@@ -4397,17 +4938,21 @@
 
             openAddCategory() {
                 document.getElementById('addCategoryForm').reset();
+                document.getElementById('categoryBetAmount').value = 1000;
                 document.getElementById('addCategoryModal').classList.add('active');
             },
 
             async addCategory() {
                 const value = parseInt(document.getElementById('categoryValue').value);
+                const betAmount = parseInt(document.getElementById('categoryBetAmount').value) || 1000;
                 const codesText = document.getElementById('categoryCodes').value.trim();
                 if (!value || value < 1000) { Toast.show('❌ المبلغ يجب أن يكون 1000 أو أكثر', 'error'); return; }
                 if (!codesText) { Toast.show('⚠️ يجب إدخال كود واحد على الأقل', 'error'); return; }
+                if (betAmount < 100) { Toast.show('❌ مبلغ الرهان يجب أن يكون 100 أو أكثر', 'error'); return; }
                 const list = codesText.split('\n').map(c => c.trim()).filter(c => c);
                 if (list.length === 0) { Toast.show('⚠️ لا توجد أكواد صالحة', 'error'); return; }
-                const cat = { id: 'cat_' + Date.now(), value, current_pool: 0, status: 'active', created_at: Date.now() };
+                const cat = { id: 'cat_' + Date.now(), value, betAmount, current_pool: 0, status: 'active',
+                    created_at: Date.now() };
                 await App.db.put('game_categories', cat);
                 for (const c of list) {
                     await App.db.put('game_codes', {
@@ -4418,6 +4963,8 @@
                         is_used: false,
                         claimed: false,
                         winner_user_id: null,
+                        winner_username: null,
+                        winner_telegram_id: null,
                         won_at: null,
                         claimed_at: null,
                         expires_at: null,
@@ -4427,7 +4974,7 @@
                     });
                 }
                 App.closeModal('addCategoryModal');
-                Toast.show(`✅ تم إنشاء الفئة مع ${list.length} كود`, 'success');
+                Toast.show(`✅ تم إنشاء الفئة مع ${list.length} كود ومبلغ رهان ${betAmount.toLocaleString()}`, 'success');
                 await this.refresh();
             },
 
@@ -4459,7 +5006,7 @@
                 content.innerHTML = `
                     <div style="margin-bottom:var(--space-4);">
                         <div style="font-family:var(--font-family-display);font-size:1.1rem;color:var(--color-pink);">فئة ${cat.value.toLocaleString()}</div>
-                        <div style="font-size:0.85rem;color:var(--color-text-muted);">إجمالي الأكواد: ${catCodes.length} • المستخدمة: ${catCodes.filter(c => c.is_used).length} • المتاحة: ${catCodes.filter(c => !c.is_used).length}</div>
+                        <div style="font-size:0.85rem;color:var(--color-text-muted);">مبلغ الرهان: ${(cat.betAmount || 1000).toLocaleString()} • إجمالي الأكواد: ${catCodes.length} • المستخدمة: ${catCodes.filter(c => c.is_used).length} • المتاحة: ${catCodes.filter(c => !c.is_used).length}</div>
                     </div>
                     <div style="max-height:18rem;overflow-y:auto;">
                         ${catCodes.length === 0 ? '<div class="empty-state"><div class="empty-state-icon">🎟️</div><div class="empty-state-title">لا توجد أكواد</div></div>' :
@@ -4467,7 +5014,7 @@
                             <div style="display:flex;justify-content:space-between;align-items:center;padding:var(--space-2);background:var(--color-bg-elevated);border-radius:var(--radius-sm);margin-bottom:var(--space-1);font-size:0.85rem;flex-wrap:wrap;gap:var(--space-2);">
                                 <div style="flex:1;min-width:0;">
                                     <div style="font-family:var(--font-family-display);font-weight:700;color:var(--color-warning);word-break:break-all;">${code.code}</div>
-                                    <div style="font-size:0.7rem;color:var(--color-text-muted);">${code.is_used ? (code.claimed ? '✅ مستلم' : '⏰ في الانتظار') : '🟢 متاح'}${code.winner_user_id ? ' • الفائز: ' + code.winner_user_id : ''}</div>
+                                    <div style="font-size:0.7rem;color:var(--color-text-muted);">${code.is_used ? (code.claimed ? '✅ مستلم' : '⏰ في الانتظار') : '🟢 متاح'}${code.winner_username ? ' • 🏆 ' + code.winner_username : ''}</div>
                                 </div>
                                 ${!code.is_used ? `<button class="action-btn action-btn-delete" onclick="GameAdmin.deleteCode('${code.id}')" title="حذف">🗑️</button>` : ''}
                             </div>
@@ -4491,6 +5038,8 @@
                         is_used: false,
                         claimed: false,
                         winner_user_id: null,
+                        winner_username: null,
+                        winner_telegram_id: null,
                         won_at: null,
                         claimed_at: null,
                         expires_at: null,
@@ -4513,10 +5062,9 @@
         };
 
         // =============================================
-        // 11. START
+        // 12. START
         // =============================================
         document.addEventListener('DOMContentLoaded', () => {
-            // التعامل مع التوجيه من الـ URL
             if (window.location.hash) {
                 const page = window.location.hash.replace('#', '');
                 if (page) {
@@ -4529,7 +5077,7 @@
             });
         });
 
-        // إضافة Service Worker بسيط للتخزين المؤقت
+        // Service Worker basic
         if ('serviceWorker' in navigator) {
             const swCode = `
                 self.addEventListener('install', e => {
