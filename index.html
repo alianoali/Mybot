@@ -3,26 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#0b1120">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <title>Kratos Bot | نظام احترافي</title>
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="description" content="Kratos Bot - نظام رصيد احترافي مع لعبة صيد الأكواد">
+    <title>Kratos Bot | النظام الاحترافي</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         /* ============================================
-           Design System (Tokens)
+           Design System (Tokens) – محسن
            ============================================ */
         :root {
-            /* Colors - Dark Theme (default) */
             --color-bg-base: #0b1120;
             --color-bg-surface: #111b2e;
             --color-bg-elevated: #1a2744;
-            --color-bg-card: rgba(17, 27, 46, 0.75);
+            --color-bg-card: rgba(17, 27, 46, 0.78);
             --color-bg-overlay: rgba(0, 0, 0, 0.7);
-            --color-border: rgba(127, 255, 0, 0.15);
-            --color-border-hover: rgba(127, 255, 0, 0.35);
+            --color-border: rgba(127, 255, 0, 0.12);
+            --color-border-hover: rgba(127, 255, 0, 0.3);
 
             --color-primary: #7fff00;
             --color-secondary: #00d4ff;
@@ -37,11 +38,9 @@
             --color-text-muted: #64748b;
             --color-text-inverse: #0b1120;
 
-            /* Typography */
             --font-family-base: 'Cairo', system-ui, -apple-system, sans-serif;
             --font-family-display: 'Orbitron', monospace;
 
-            /* Spacing */
             --space-1: 0.25rem;
             --space-2: 0.5rem;
             --space-3: 0.75rem;
@@ -50,29 +49,24 @@
             --space-8: 2rem;
             --space-12: 3rem;
 
-            /* Radius */
             --radius-sm: 0.5rem;
             --radius-md: 0.75rem;
             --radius-lg: 1rem;
             --radius-xl: 1.5rem;
             --radius-full: 9999px;
 
-            /* Shadows */
             --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
             --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
             --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.6);
-            --shadow-glow: 0 0 40px rgba(127, 255, 0, 0.15);
+            --shadow-glow: 0 0 40px rgba(127, 255, 0, 0.1);
 
-            /* Transitions */
             --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             --transition-bounce: 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 
-            /* Sizes */
             --header-height: 4.25rem;
             --container-max: 90rem;
             --touch-target: 2.75rem;
 
-            /* Z-index */
             --z-header: 100;
             --z-sidebar: 200;
             --z-modal: 300;
@@ -80,12 +74,11 @@
             --z-loader: 999;
         }
 
-        /* Light Theme */
         [data-theme="light"] {
             --color-bg-base: #f1f5f9;
             --color-bg-surface: #ffffff;
             --color-bg-elevated: #e2e8f0;
-            --color-bg-card: rgba(255, 255, 255, 0.8);
+            --color-bg-card: rgba(255, 255, 255, 0.85);
             --color-bg-overlay: rgba(0, 0, 0, 0.3);
             --color-border: rgba(0, 0, 0, 0.08);
             --color-border-hover: rgba(127, 255, 0, 0.4);
@@ -93,7 +86,7 @@
             --color-text-secondary: #334155;
             --color-text-muted: #94a3b8;
             --color-text-inverse: #ffffff;
-            --shadow-glow: 0 0 40px rgba(127, 255, 0, 0.08);
+            --shadow-glow: 0 0 40px rgba(127, 255, 0, 0.06);
         }
 
         /* ============================================
@@ -107,13 +100,11 @@
             box-sizing: border-box;
             -webkit-tap-highlight-color: transparent;
         }
-
         html {
             scroll-behavior: smooth;
             font-size: 16px;
             -webkit-text-size-adjust: 100%;
         }
-
         body {
             font-family: var(--font-family-base);
             background: var(--color-bg-base);
@@ -123,7 +114,6 @@
             transition: background var(--transition-base), color var(--transition-base);
             overflow-x: hidden;
         }
-
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -135,7 +125,6 @@
             background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
             border-radius: 3px;
         }
-
         img {
             max-width: 100%;
             display: block;
@@ -166,7 +155,7 @@
         }
 
         /* ============================================
-           Loader
+           Loader محسّن
            ============================================ */
         .app-loader {
             position: fixed;
@@ -185,10 +174,10 @@
         }
         .loader-content {
             text-align: center;
-            max-width: 20rem;
+            max-width: 22rem;
         }
         .loader-logo {
-            width: clamp(4.5rem, 12vw, 7rem);
+            width: clamp(5rem, 15vw, 7.5rem);
             filter: drop-shadow(0 0 30px rgba(127, 255, 0, 0.5));
             animation: pulse-glow 2s ease-in-out infinite;
         }
@@ -206,7 +195,7 @@
         .loader-text {
             font-family: var(--font-family-display);
             font-weight: 900;
-            font-size: clamp(1.2rem, 3vw, 1.6rem);
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
             letter-spacing: 0.2rem;
             margin-top: var(--space-4);
             background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
@@ -214,30 +203,21 @@
             -webkit-text-fill-color: transparent;
         }
         .loader-bar {
-            width: 12rem;
+            width: 14rem;
             max-width: 80%;
             height: 0.25rem;
-            background: rgba(127, 255, 0, 0.1);
+            background: rgba(127, 255, 0, 0.08);
             border-radius: 2px;
             margin: var(--space-4) auto 0;
             overflow: hidden;
+            position: relative;
         }
         .loader-bar-fill {
             height: 100%;
             background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
             border-radius: 2px;
-            animation: load-progress 1.8s ease-in-out infinite;
-        }
-        @keyframes load-progress {
-            0% {
-                width: 0;
-            }
-            50% {
-                width: 70%;
-            }
-            100% {
-                width: 100%;
-            }
+            width: 0%;
+            transition: width 0.3s ease;
         }
         .loader-status {
             margin-top: var(--space-3);
@@ -246,7 +226,7 @@
         }
 
         /* ============================================
-           Auth Gate
+           Auth Gate محسّن
            ============================================ */
         .auth-gate {
             position: fixed;
@@ -382,7 +362,7 @@
         }
 
         /* ============================================
-           Buttons
+           Buttons محسّنة
            ============================================ */
         .btn {
             display: inline-flex;
@@ -397,6 +377,18 @@
             min-height: var(--touch-target);
             white-space: nowrap;
             border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, 0);
+            transition: background var(--transition-base);
+        }
+        .btn:hover::after {
+            background: rgba(255, 255, 255, 0.06);
         }
         .btn-primary {
             background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
@@ -450,9 +442,22 @@
             cursor: not-allowed;
             transform: none !important;
         }
+        .btn .spinner {
+            width: 1.2rem;
+            height: 1.2rem;
+            border: 3px solid rgba(255, 255, 255, 0.2);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
         /* ============================================
-           Header
+           Header محسّن
            ============================================ */
         .app-header {
             position: fixed;
@@ -604,7 +609,7 @@
         }
 
         /* ============================================
-           Sidebar
+           Sidebar محسّن
            ============================================ */
         .sidebar-overlay {
             position: fixed;
@@ -623,8 +628,8 @@
         .sidebar {
             position: fixed;
             top: var(--header-height);
-            right: -22rem;
-            width: 22rem;
+            right: -24rem;
+            width: 24rem;
             max-width: 85vw;
             height: calc(100vh - var(--header-height));
             background: var(--color-bg-surface);
@@ -838,6 +843,7 @@
             transition: all var(--transition-base);
             position: relative;
             overflow: hidden;
+            cursor: default;
         }
         .stat-card::after {
             content: '';
@@ -1087,7 +1093,7 @@
         }
 
         /* ============================================
-           Admin
+           Admin – محسّن مع رسوم بيانية
            ============================================ */
         .admin-header {
             background: linear-gradient(145deg, rgba(245, 158, 11, 0.08), rgba(139, 92, 246, 0.04));
@@ -1159,6 +1165,36 @@
             font-size: 0.75rem;
             color: var(--color-text-muted);
             margin-top: var(--space-1);
+        }
+
+        /* Chart placeholder */
+        .chart-container {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            margin: var(--space-4) 0;
+            min-height: 10rem;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            gap: 0.5rem;
+        }
+        .chart-bar {
+            flex: 1;
+            background: linear-gradient(180deg, var(--color-primary), var(--color-secondary));
+            border-radius: 3px 3px 0 0;
+            min-height: 0.5rem;
+            transition: height 0.6s ease;
+            position: relative;
+        }
+        .chart-bar-label {
+            position: absolute;
+            bottom: -1.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.6rem;
+            color: var(--color-text-muted);
+            white-space: nowrap;
         }
 
         .admin-section {
@@ -1506,7 +1542,7 @@
         }
 
         /* ============================================
-           Modals
+           Modals محسّنة
            ============================================ */
         .modal-overlay {
             position: fixed;
@@ -1602,7 +1638,7 @@
         }
 
         /* ============================================
-           Toast
+           Toast محسّن
            ============================================ */
         .toast-container {
             position: fixed;
@@ -1728,20 +1764,6 @@
             right: calc(100% - 1.3rem - 0.15rem);
         }
 
-        .spinner {
-            width: 1.2rem;
-            height: 1.2rem;
-            border: 3px solid rgba(255, 255, 255, 0.2);
-            border-top-color: #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-        }
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
         .won-code-item {
             background: linear-gradient(145deg, rgba(245, 158, 11, 0.06), rgba(139, 92, 246, 0.03));
             border: 1px solid rgba(245, 158, 11, 0.2);
@@ -1814,7 +1836,6 @@
             transform: scale(1.04);
         }
 
-        /* Win Modal */
         .win-content {
             text-align: center;
             padding: var(--space-4) 0;
@@ -1872,7 +1893,7 @@
         }
 
         /* ============================================
-           Responsive
+           Responsive محسّن
            ============================================ */
         @media (max-width: 768px) {
             .app-main {
@@ -1955,9 +1976,9 @@
     ============================================ -->
     <div class="app-loader" id="appLoader">
         <div class="loader-content">
-            <img src="https://image.qwenlm.ai/public_source/cfaf052a-76de-4d8c-b30b-b8eae8f867f3/1bff17953-1ecf-4189-8d07-796e1504f729.png" alt="Kratos Bot" class="loader-logo">
+            <img src="https://image.qwenlm.ai/public_source/cfaf052a-76de-4d8c-b30b-b8eae8f867f3/1bff17953-1ecf-4189-8d07-796e1504f729.png" alt="Kratos Bot" class="loader-logo" loading="lazy">
             <div class="loader-text">KRATOS BOT</div>
-            <div class="loader-bar"><div class="loader-bar-fill"></div></div>
+            <div class="loader-bar"><div class="loader-bar-fill" id="loaderFill"></div></div>
             <div class="loader-status" id="loaderStatus">جاري التهيئة...</div>
         </div>
     </div>
@@ -1968,7 +1989,7 @@
     <div class="auth-gate" id="authGate">
         <div class="auth-card">
             <div class="auth-header">
-                <img src="https://image.qwenlm.ai/public_source/cfaf052a-76de-4d8c-b30b-b8eae8f867f3/1bff17953-1ecf-4189-8d07-796e1504f729.png" alt="Logo" class="auth-logo">
+                <img src="https://image.qwenlm.ai/public_source/cfaf052a-76de-4d8c-b30b-b8eae8f867f3/1bff17953-1ecf-4189-8d07-796e1504f729.png" alt="Logo" class="auth-logo" loading="lazy">
                 <div class="auth-title">KRATOS<span>BOT</span></div>
                 <div class="auth-sub">نظام رصيد + صيد الأكواد</div>
             </div>
@@ -2007,7 +2028,7 @@
         <header class="app-header">
             <div class="header-inner">
                 <div class="brand" onclick="App.navigate('home')">
-                    <img src="https://image.qwenlm.ai/public_source/cfaf052a-76de-4d8c-b30b-b8eae8f867f3/1bff17953-1ecf-4189-8d07-796e1504f729.png" alt="Logo" class="brand-img">
+                    <img src="https://image.qwenlm.ai/public_source/cfaf052a-76de-4d8c-b30b-b8eae8f867f3/1bff17953-1ecf-4189-8d07-796e1504f729.png" alt="Logo" class="brand-img" loading="lazy">
                     <div class="brand-title">KRATOS<span>BOT</span></div>
                 </div>
                 <div class="header-actions">
@@ -2301,7 +2322,7 @@
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--space-4);">
                         <div style="background:var(--color-bg-elevated);padding:var(--space-4);border-radius:var(--radius-md);">
                             <div style="font-size:0.8rem;color:var(--color-text-muted);">الإصدار</div>
-                            <div style="font-weight:700;">v6.0.0</div>
+                            <div style="font-weight:700;">v7.0.0</div>
                         </div>
                         <div style="background:var(--color-bg-elevated);padding:var(--space-4);border-radius:var(--radius-md);">
                             <div style="font-size:0.8rem;color:var(--color-text-muted);">التخزين</div>
@@ -2325,6 +2346,10 @@
                         <div class="admin-stat"><div class="admin-stat-value" id="adminTotalBalance">0</div><div class="admin-stat-label">إجمالي الأرصدة</div></div>
                         <div class="admin-stat"><div class="admin-stat-value" id="adminTotalTransactions">0</div><div class="admin-stat-label">المعاملات</div></div>
                         <div class="admin-stat"><div class="admin-stat-value" id="adminTotalCharged">0</div><div class="admin-stat-label">إجمالي الشحن</div></div>
+                    </div>
+                    <!-- Chart -->
+                    <div class="chart-container" id="adminChart">
+                        <!-- يتم إنشاء الأعمدة ديناميكياً -->
                     </div>
                 </div>
 
@@ -2386,7 +2411,6 @@
                         <button class="btn btn-danger" onclick="DataManager.refresh()">🔄 تحديث الإحصائيات</button>
                     </div>
                     <div class="data-grid">
-                        <!-- Delete Records -->
                         <div class="data-card warning">
                             <div class="data-card-icon">📋</div>
                             <div class="data-card-title">حذف السجلات</div>
@@ -2399,7 +2423,6 @@
                                 <button class="btn btn-warning btn-full" onclick="DataManager.openDeleteRecords()">🗑️ حذف السجلات</button>
                             </div>
                         </div>
-                        <!-- Delete DB -->
                         <div class="data-card danger">
                             <div class="data-card-icon">💥</div>
                             <div class="data-card-title">حذف قاعدة البيانات</div>
@@ -2412,7 +2435,6 @@
                                 <button class="btn btn-danger btn-full" onclick="DataManager.deleteDatabase()">💥 حذف قاعدة البيانات</button>
                             </div>
                         </div>
-                        <!-- Delete Old Sessions -->
                         <div class="data-card info">
                             <div class="data-card-icon">👻</div>
                             <div class="data-card-title">حذف الجلسات السابقة</div>
@@ -2425,7 +2447,6 @@
                                 <button class="btn btn-secondary btn-full" onclick="DataManager.openDeleteOldSessions()">👻 حذف الجلسات القديمة</button>
                             </div>
                         </div>
-                        <!-- Delete Log -->
                         <div class="data-card success">
                             <div class="data-card-icon">📜</div>
                             <div class="data-card-title">سجل عمليات الحذف</div>
@@ -2440,7 +2461,6 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Recent Delete Log -->
                     <div style="margin-top:var(--space-6);">
                         <h4 style="font-family:var(--font-family-display);color:var(--color-success);margin-bottom:var(--space-4);">📜 آخر عمليات الحذف</h4>
                         <div class="delete-log-list" id="recentDeleteLog">
@@ -2682,7 +2702,7 @@
     </div>
 
     <!-- ============================================
-    JAVASCRIPT – كل المنطق الأصلي مع تحسين التنظيم
+    JAVASCRIPT – كل المنطق مع التحسينات
     ============================================ -->
     <script>
         // =============================================
@@ -2690,14 +2710,43 @@
         // =============================================
         const ADMIN_CONFIG = { TELEGRAM_ID: 8614039081 };
         const GAME_CONFIG = { BET_AMOUNT: 1000, CLAIM_TIMEOUT: 5 * 60 * 1000 };
+        const APP_VERSION = 'v7.0.0';
 
         // =============================================
-        // 2. DATABASE (IndexedDB)
+        // 2. UTILITY: Encryption (بسيط للتشفير)
+        // =============================================
+        const Crypto = {
+            _key: 'KRATOS_SECRET_2026',
+            encrypt(text) {
+                if (!text) return text;
+                let result = '';
+                for (let i = 0; i < text.length; i++) {
+                    const charCode = text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length);
+                    result += String.fromCharCode(charCode);
+                }
+                return btoa(result);
+            },
+            decrypt(encoded) {
+                if (!encoded) return encoded;
+                try {
+                    const text = atob(encoded);
+                    let result = '';
+                    for (let i = 0; i < text.length; i++) {
+                        const charCode = text.charCodeAt(i) ^ this._key.charCodeAt(i % this._key.length);
+                        result += String.fromCharCode(charCode);
+                    }
+                    return result;
+                } catch { return encoded; }
+            }
+        };
+
+        // =============================================
+        // 3. DATABASE (IndexedDB) – مع تحسين الفهارس
         // =============================================
         class KratosDB {
             constructor() {
-                this.dbName = 'KratosBotDB_v7';
-                this.dbVersion = 4;
+                this.dbName = 'KratosBotDB_v8';
+                this.dbVersion = 5;
                 this.db = null;
             }
 
@@ -2709,38 +2758,53 @@
                         resolve(this.db); };
                     req.onupgradeneeded = (ev) => {
                         const db = ev.target.result;
+                        // Users
                         if (!db.objectStoreNames.contains('users')) {
                             const s = db.createObjectStore('users', { keyPath: 'telegramId' });
                             s.createIndex('username', 'username', { unique: false });
                             s.createIndex('isAdmin', 'isAdmin', { unique: false });
+                            s.createIndex('lastLogin', 'lastLogin', { unique: false });
+                            s.createIndex('isBanned', 'isBanned', { unique: false });
                         }
+                        // Transactions
                         if (!db.objectStoreNames.contains('transactions')) {
                             const s = db.createObjectStore('transactions', { keyPath: 'id' });
                             s.createIndex('userId', 'userId', { unique: false });
                             s.createIndex('type', 'type', { unique: false });
                             s.createIndex('timestamp', 'timestamp', { unique: false });
                         }
+                        // Settings
                         if (!db.objectStoreNames.contains('settings')) {
                             db.createObjectStore('settings', { keyPath: 'key' });
                         }
+                        // Game Categories
                         if (!db.objectStoreNames.contains('game_categories')) {
                             db.createObjectStore('game_categories', { keyPath: 'id' });
                         }
+                        // Game Codes
                         if (!db.objectStoreNames.contains('game_codes')) {
                             const s = db.createObjectStore('game_codes', { keyPath: 'id' });
                             s.createIndex('category_id', 'category_id', { unique: false });
                             s.createIndex('is_used', 'is_used', { unique: false });
                             s.createIndex('claimed', 'claimed', { unique: false });
                             s.createIndex('is_public_revealed', 'is_public_revealed', { unique: false });
+                            s.createIndex('winner_user_id', 'winner_user_id', { unique: false });
                         }
+                        // Game Bets
                         if (!db.objectStoreNames.contains('game_bets')) {
                             const s = db.createObjectStore('game_bets', { keyPath: 'id' });
                             s.createIndex('user_id', 'user_id', { unique: false });
                             s.createIndex('category_id', 'category_id', { unique: false });
                             s.createIndex('is_winning_bet', 'is_winning_bet', { unique: false });
+                            s.createIndex('created_at', 'created_at', { unique: false });
                         }
+                        // Delete Log
                         if (!db.objectStoreNames.contains('delete_log')) {
                             db.createObjectStore('delete_log', { keyPath: 'id' });
+                        }
+                        // Achievements
+                        if (!db.objectStoreNames.contains('achievements')) {
+                            db.createObjectStore('achievements', { keyPath: 'id' });
                         }
                     };
                 });
@@ -2802,6 +2866,7 @@
                 });
             }
 
+            // === User Operations ===
             async upsertUser(data) {
                 const existing = await this.get('users', data.telegramId);
                 const isAdmin = data.telegramUserId === ADMIN_CONFIG.TELEGRAM_ID;
@@ -2811,7 +2876,10 @@
                     isAdmin: isAdmin || existing.isAdmin || false,
                     lastLogin: Date.now(),
                     loginCount: (existing.loginCount || 0) + 1,
-                    updatedAt: Date.now()
+                    updatedAt: Date.now(),
+                    // تشفير البيانات الحساسة
+                    email: data.email ? Crypto.encrypt(data.email) : existing.email,
+                    phone: data.phone ? Crypto.encrypt(data.phone) : existing.phone,
                 } : {
                     id: this._id(),
                     telegramId: data.telegramId,
@@ -2820,8 +2888,8 @@
                     fullName: data.fullName || data.firstName || '',
                     firstName: data.firstName || '',
                     lastName: data.lastName || '',
-                    email: data.email || '',
-                    phone: data.phone || '',
+                    email: data.email ? Crypto.encrypt(data.email) : '',
+                    phone: data.phone ? Crypto.encrypt(data.phone) : '',
                     bio: data.bio || '',
                     avatar: data.photoUrl || null,
                     accountType: data.isBot ? 'bot' : 'user',
@@ -2841,20 +2909,36 @@
                     status: 'active',
                     language: data.languageCode || 'ar',
                     timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-                    activity: []
+                    activity: [],
+                    achievements: []
                 };
                 await this.put('users', user);
                 return user;
             }
 
-            async getUser(tgId) { return this.get('users', tgId); }
+            async getUser(tgId) {
+                const u = await this.get('users', tgId);
+                if (u) {
+                    // فك التشفير عند القراءة
+                    if (u.email) u.email = Crypto.decrypt(u.email);
+                    if (u.phone) u.phone = Crypto.decrypt(u.phone);
+                }
+                return u;
+            }
 
             async updateUser(tgId, updates) {
                 const u = await this.get('users', tgId);
                 if (!u) return null;
+                // تشفير الحقول الحساسة إذا وردت
+                if (updates.email) updates.email = Crypto.encrypt(updates.email);
+                if (updates.phone) updates.phone = Crypto.encrypt(updates.phone);
                 const updated = { ...u, ...updates, updatedAt: Date.now() };
                 await this.put('users', updated);
-                return updated;
+                // إرجاع البيانات مفككة
+                const result = { ...updated };
+                if (result.email) result.email = Crypto.decrypt(result.email);
+                if (result.phone) result.phone = Crypto.decrypt(result.phone);
+                return result;
             }
 
             async deleteUser(tgId) {
@@ -2867,6 +2951,7 @@
                 return { success: true };
             }
 
+            // === Transaction ===
             async addTransaction(tx) {
                 const t = {
                     id: 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
@@ -2903,6 +2988,7 @@
                 return all.sort((a, b) => b.timestamp - a.timestamp);
             }
 
+            // === Settings ===
             async getSetting(key) {
                 const s = await this.get('settings', key);
                 return s ? s.value : null;
@@ -2910,6 +2996,7 @@
 
             async setSetting(key, value) { await this.put('settings', { key, value }); }
 
+            // === Stats ===
             async getStats() {
                 const users = await this.getAll('users');
                 const txs = await this.getAll('transactions');
@@ -2923,6 +3010,7 @@
                 };
             }
 
+            // === Delete Log ===
             async addDeleteLog(entry) {
                 const log = {
                     id: 'log_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
@@ -2941,11 +3029,29 @@
 
             async clearDeleteLog() { await this.clear('delete_log'); }
 
+            // === Achievements ===
+            async getAchievements(userId) {
+                const u = await this.getUser(userId);
+                return u ? u.achievements || [] : [];
+            }
+
+            async unlockAchievement(userId, achievement) {
+                const u = await this.getUser(userId);
+                if (!u) return;
+                const list = u.achievements || [];
+                if (!list.find(a => a.id === achievement.id)) {
+                    list.push({ ...achievement, unlockedAt: Date.now() });
+                    await this.updateUser(userId, { achievements: list });
+                    return true;
+                }
+                return false;
+            }
+
             _id() { return 'id_' + Date.now().toString(36) + Math.random().toString(36).substr(2, 9); }
         }
 
         // =============================================
-        // 3. TELEGRAM HELPER
+        // 4. TELEGRAM HELPER
         // =============================================
         const TelegramHelper = {
             webApp: null,
@@ -3009,7 +3115,7 @@
         };
 
         // =============================================
-        // 4. TOAST
+        // 5. TOAST
         // =============================================
         const Toast = {
             show(msg, type = 'info', duration = 3500) {
@@ -3029,26 +3135,32 @@
         };
 
         // =============================================
-        // 5. MAIN APP
+        // 6. MAIN APP – مع توجيه (Routing) وتحسينات
         // =============================================
         const App = {
             db: new KratosDB(),
             currentUser: null,
             simulatedNum: 1,
             currentFilter: 'all',
+            _loaderFill: document.getElementById('loaderFill'),
 
             async init() {
-                this._updateLoader('جاري فتح قاعدة البيانات...');
+                this._updateLoader('جاري فتح قاعدة البيانات...', 10);
                 await this.db.open();
-                this._updateLoader('جاري التحقق من الجلسة...');
+                this._updateLoader('جاري التحقق من الجلسة...', 40);
                 await this._checkSession();
+                this._updateLoader('جاري تهيئة الواجهة...', 80);
                 this._bindEvents();
-                setTimeout(() => document.getElementById('appLoader').classList.add('hidden'), 800);
+                this._updateLoader('جاهز!', 100);
+                setTimeout(() => document.getElementById('appLoader').classList.add('hidden'), 600);
             },
 
-            _updateLoader(text) {
+            _updateLoader(text, progress) {
                 const el = document.getElementById('loaderStatus');
                 if (el) el.textContent = text;
+                if (this._loaderFill && progress !== undefined) {
+                    this._loaderFill.style.width = progress + '%';
+                }
             },
 
             async _checkSession() {
@@ -3080,9 +3192,26 @@
                 localStorage.setItem('kratos_last_user', this.currentUser.telegramId);
                 this.renderAll();
                 Game.startPublicRevealTask();
+                // التحقق من الإنجازات
+                this._checkAchievements();
                 const greet = this.currentUser.isAdmin ? '👑 مرحباً بك أيها المشرف!' :
                     `مرحباً ${this.currentUser.fullName || this.currentUser.username}!`;
                 Toast.show(greet, 'success');
+                // تسجيل الدخول في السجل
+                this.db.updateUser(this.currentUser.telegramId, { lastLogin: Date.now() });
+            },
+
+            _checkAchievements() {
+                const u = this.currentUser;
+                if (!u) return;
+                const achievements = [
+                    { id: 'first_login', name: 'أول دخول', icon: '🚀', desc: 'قمت بتسجيل الدخول لأول مرة' },
+                    { id: 'first_bet', name: 'أول رهان', icon: '🎰', desc: 'قمت بأول رهان في اللعبة' },
+                    { id: 'first_win', name: 'أول فوز', icon: '🏆', desc: 'فزت بأول كود' },
+                    { id: '10_bets', name: '10 رهانات', icon: '🎯', desc: 'قمت بـ 10 رهانات' },
+                    { id: '1000_balance', name: 'رصيد 1000', icon: '💰', desc: 'وصل رصيدك إلى 1000 نقطة' }
+                ];
+                // يمكن تفعيل الإنجازات تدريجياً حسب الأحداث
             },
 
             _bindEvents() {
@@ -3130,15 +3259,26 @@
                         this.renderAllTransactions();
                     });
                 });
-                window.addEventListener('load', () => setTimeout(() => document.getElementById('appLoader').classList.add(
-                    'hidden'), 1200));
 
-                // Theme from localStorage
+                // Theme
                 const savedTheme = localStorage.getItem('kratos_theme') || 'dark';
                 document.documentElement.setAttribute('data-theme', savedTheme);
                 document.getElementById('themeToggle').textContent = savedTheme === 'light' ? '☀️' : '🌙';
                 const t2 = document.getElementById('themeToggle2');
                 if (t2) t2.classList.toggle('active', savedTheme === 'dark');
+
+                // Keyboard shortcuts
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape') {
+                        document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
+                        if (document.getElementById('sidebar').classList.contains('active')) this._toggleSidebar();
+                    }
+                });
+
+                // Service Worker (PWA)
+                if ('serviceWorker' in navigator) {
+                    navigator.serviceWorker.register('/sw.js').catch(() => {});
+                }
             },
 
             async _simulateLogin() {
@@ -3188,6 +3328,8 @@
                 document.querySelectorAll('.bottom-nav-item, .sidebar-item').forEach(el => {
                     el.classList.toggle('active', el.dataset.page === page);
                 });
+                // تحديث URL
+                if (history.pushState) history.pushState(null, '', '#' + page);
                 if (page === 'admin') { Admin.renderDashboard();
                     GameAdmin.refresh();
                     DataManager.refresh(); }
@@ -3333,7 +3475,7 @@
             async exportData() {
                 const u = this.currentUser;
                 const txs = await this.db.getUserTransactions(u.telegramId);
-                const data = { exportedAt: new Date().toISOString(), user: u, transactions: txs };
+                const data = { exportedAt: new Date().toISOString(), user: u, transactions: txs, version: APP_VERSION };
                 const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -3369,7 +3511,7 @@
         };
 
         // =============================================
-        // 6. ADMIN
+        // 7. ADMIN – مع رسوم بيانية
         // =============================================
         const Admin = {
             async renderDashboard() {
@@ -3379,6 +3521,21 @@
                 document.getElementById('adminTotalTransactions').textContent = stats.totalTransactions;
                 document.getElementById('adminTotalCharged').textContent = stats.totalCharged.toFixed(0);
                 await this._renderUsers();
+                this._renderChart(stats);
+            },
+
+            _renderChart(stats) {
+                const container = document.getElementById('adminChart');
+                const data = [
+                    { label: 'مستخدمين', value: stats.totalUsers },
+                    { label: 'نشطاء', value: stats.activeUsers },
+                    { label: 'محظورين', value: stats.bannedUsers },
+                    { label: 'معاملات', value: Math.min(stats.totalTransactions, 100) }
+                ];
+                const max = Math.max(...data.map(d => d.value), 1);
+                container.innerHTML = data.map(d =>
+                    `<div class="chart-bar" style="height:${(d.value / max) * 100}%;flex:1;"><span class="chart-bar-label">${d.label}</span></div>`
+                ).join('');
             },
 
             async _renderUsers() {
@@ -3468,6 +3625,7 @@
                         <div class="user-avatar" style="margin:0 auto var(--space-4);width:5rem;height:5rem;font-size:2rem;">${u.avatar ? `<img src="${u.avatar}">` : (u.username || '?').charAt(0).toUpperCase()}</div>
                         <h3 style="font-family:var(--font-family-display);font-size:1.2rem;">${u.fullName || u.username}${u.isAdmin ? ' <span class="badge badge-admin">👑</span>' : ''}</h3>
                         <p style="color:var(--color-text-secondary);">@${u.username || 'unknown'}</p>
+                        ${(u.achievements && u.achievements.length) ? `<div style="margin-top:var(--space-2);display:flex;gap:var(--space-2);flex-wrap:wrap;justify-content:center;">${u.achievements.map(a => `<span style="background:rgba(127,255,0,0.1);padding:0.2rem 0.6rem;border-radius:var(--radius-full);font-size:0.7rem;">${a.icon} ${a.name}</span>`).join('')}</div>` : ''}
                     </div>
                     <div style="background:linear-gradient(145deg,rgba(127,255,0,0.05),rgba(0,212,255,0.02));border:1px solid var(--color-border-hover);border-radius:var(--radius-lg);padding:var(--space-6);text-align:center;margin-bottom:var(--space-6);">
                         <div style="font-size:0.85rem;color:var(--color-text-secondary);">الرصيد الحالي</div>
@@ -3518,7 +3676,7 @@
                 const gameCodes = await App.db.getAll('game_codes');
                 const gameBets = await App.db.getAll('game_bets');
                 const data = { exportedAt: new Date().toISOString(), users, transactions, gameCategories, gameCodes,
-                    gameBets };
+                    gameBets, version: APP_VERSION };
                 const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -3576,7 +3734,7 @@
         document.getElementById('adminFilterStatus')?.addEventListener('change', () => Admin._renderUsers());
 
         // =============================================
-        // 7. DATA MANAGER
+        // 8. DATA MANAGER – محسّن
         // =============================================
         const DataManager = {
             stats: {},
@@ -3801,8 +3959,8 @@
                 } else {
                     const icons = { delete_records: '🗑️', delete_old_sessions: '👻', delete_database: '💥' };
                     content.innerHTML = logs.map(log =>
-                        `<div class="delete-log-item" style="display:flex;gap:var(--space-3);padding:var(--space-3);background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.15);border-radius:var(--radius-md);font-size:0.85rem;margin-bottom:var(--space-2);"><div style="font-size:1.5rem;">${icons[log.type] || '📜'}</div><div style="flex:1;min-width:0;"><div style="font-weight:600;">${log.description}</div><div style="font-size:0.75rem;color:var(--color-text-muted);">${new Date(log.timestamp).toLocaleString('ar')} • بواسطة: ${log.adminId}</div></div></div>`
-                        ).join('');
+                        `<div style="display:flex;gap:var(--space-3);padding:var(--space-3);background:rgba(239,68,68,0.04);border:1px solid rgba(239,68,68,0.15);border-radius:var(--radius-md);font-size:0.85rem;margin-bottom:var(--space-2);"><div style="font-size:1.5rem;">${icons[log.type] || '📜'}</div><div style="flex:1;min-width:0;"><div style="font-weight:600;">${log.description}</div><div style="font-size:0.75rem;color:var(--color-text-muted);">${new Date(log.timestamp).toLocaleString('ar')} • بواسطة: ${log.adminId}</div></div></div>`
+                    ).join('');
                 }
                 App.closeModal('deleteLogModal');
                 setTimeout(() => document.getElementById('deleteLogModal').classList.add('active'), 100);
@@ -3831,7 +3989,7 @@
         };
 
         // =============================================
-        // 8. GAME
+        // 9. GAME – مع تحسينات
         // =============================================
         const Game = {
             currentWinCode: null,
@@ -3881,25 +4039,36 @@
 
             async placeBet(categoryId) {
                 const btn = document.getElementById(`betBtn_${categoryId}`);
-                if (btn) btn.disabled = true;
+                if (btn) { btn.disabled = true;
+                    btn.innerHTML =
+                    '<div class="spinner"></div><span>جاري...</span>'; }
                 try {
                     const user = await App.db.getUser(App.currentUser.telegramId);
                     if (!user || user.balance < GAME_CONFIG.BET_AMOUNT) {
                         Toast.show('⛔ رصيدك غير كافٍ (يحتاج 1000)', 'error');
-                        if (btn) btn.disabled = false;
+                        if (btn) { btn.disabled = false;
+                            btn.innerHTML =
+                                '🎯 جرب حظك<span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ' +
+                                GAME_CONFIG.BET_AMOUNT + ' نقطة</span>'; }
                         return;
                     }
                     const category = await App.db.get('game_categories', categoryId);
                     if (!category || category.status !== 'active') {
                         Toast.show('⚠️ الفئة غير متاحة', 'error');
-                        if (btn) btn.disabled = false;
+                        if (btn) { btn.disabled = false;
+                            btn.innerHTML =
+                                '🎯 جرب حظك<span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ' +
+                                GAME_CONFIG.BET_AMOUNT + ' نقطة</span>'; }
                         return;
                     }
                     const allCodes = await App.db.getAll('game_codes');
                     const available = allCodes.filter(c => c.category_id === categoryId && !c.is_used);
                     if (available.length === 0) {
                         Toast.show('⚠️ لا توجد أكواد متاحة لهذه الفئة', 'error');
-                        if (btn) btn.disabled = false;
+                        if (btn) { btn.disabled = false;
+                            btn.innerHTML =
+                                '🎯 جرب حظك<span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ' +
+                                GAME_CONFIG.BET_AMOUNT + ' نقطة</span>'; }
                         return;
                     }
                     const before = user.balance;
@@ -3968,13 +4137,32 @@
                         }
                         this.currentWinCode = code;
                         this._showWinModal(code, category.value);
+                        // Achievement
+                        await App.db.unlockAchievement(user.telegramId, { id: 'first_win', name: 'أول فوز',
+                            icon: '🏆', desc: 'فزت بأول كود' });
                     } else {
                         await App.db.put('game_categories', { ...category, current_pool: newPool });
                     }
                     Toast.show('🎰 تم الرهان، ربما تكون الفائز القادم!', 'info');
                     await this.renderCategories();
                     await App.renderAll();
-                } catch (_) { Toast.show('❌ حدث خطأ في الرهان', 'error'); } finally { if (btn) btn.disabled = false; }
+                    // Achievement
+                    const bets = await App.db.getAll('game_bets');
+                    const userBets = bets.filter(b => b.user_id === user.telegramId);
+                    if (userBets.length === 1) {
+                        await App.db.unlockAchievement(user.telegramId, { id: 'first_bet', name: 'أول رهان',
+                            icon: '🎰', desc: 'قمت بأول رهان في اللعبة' });
+                    }
+                    if (userBets.length === 10) {
+                        await App.db.unlockAchievement(user.telegramId, { id: '10_bets', name: '10 رهانات',
+                            icon: '🎯', desc: 'قمت بـ 10 رهانات' });
+                    }
+                } catch (_) { Toast.show('❌ حدث خطأ في الرهان', 'error'); } finally {
+                    if (btn) { btn.disabled = false;
+                        btn.innerHTML =
+                            '🎯 جرب حظك<span style="display:block;font-size:0.75rem;opacity:0.8;">بـ ' +
+                            GAME_CONFIG.BET_AMOUNT + ' نقطة</span>'; }
+                }
             },
 
             _showWinModal(code, amount) {
@@ -4065,7 +4253,7 @@
                 const u = await App.db.getUser(App.currentUser.telegramId);
                 const won = u.won_codes || [];
                 if (won.length === 0) { Toast.show('لا توجد أكواد للتصدير', 'warning'); return; }
-                const data = { exportedAt: new Date().toISOString(), user: u.username, won_codes: won };
+                const data = { exportedAt: new Date().toISOString(), user: u.username, won_codes: won, version: APP_VERSION };
                 const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
                 const url = URL.createObjectURL(blob);
                 const a = document.createElement('a');
@@ -4129,7 +4317,7 @@
         };
 
         // =============================================
-        // 9. GAME ADMIN
+        // 10. GAME ADMIN
         // =============================================
         const GameAdmin = {
             currentManageCategoryId: null,
@@ -4173,7 +4361,7 @@
                     const avail = catCodes.filter(c => !c.is_used).length;
                     const statusClass = cat.status === 'active' ? 'status-active' : 'status-disabled';
                     const statusText = cat.status === 'active' ? '✅ نشط' : '⛔ معطل';
-                    return `<div class="category-row" style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-4);margin-bottom:var(--space-2);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-3);">
+                    return `<div style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-4);margin-bottom:var(--space-2);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--space-3);">
                         <div style="flex:1;min-width:10rem;">
                             <div style="font-family:var(--font-family-display);font-weight:700;color:var(--color-pink);">فئة ${cat.value.toLocaleString()}</div>
                             <div style="font-size:0.85rem;color:var(--color-text-muted);">الصندوق: ${cat.current_pool || 0} / ${cat.value} • الأكواد: ${avail} متاحة / ${used} مستخدمة • <span style="color:${cat.status === 'active' ? 'var(--color-success)' : 'var(--color-danger)'};">${statusText}</span></div>
@@ -4325,14 +4513,48 @@
         };
 
         // =============================================
-        // 10. START
+        // 11. START
         // =============================================
         document.addEventListener('DOMContentLoaded', () => {
+            // التعامل مع التوجيه من الـ URL
+            if (window.location.hash) {
+                const page = window.location.hash.replace('#', '');
+                if (page) {
+                    setTimeout(() => App.navigate(page), 500);
+                }
+            }
             App.init().catch(err => {
                 console.error('Init error:', err);
                 document.getElementById('loaderStatus').textContent = '❌ حدث خطأ في التهيئة';
             });
         });
+
+        // إضافة Service Worker بسيط للتخزين المؤقت
+        if ('serviceWorker' in navigator) {
+            const swCode = `
+                self.addEventListener('install', e => {
+                    e.waitUntil(
+                        caches.open('kratos-cache-v1').then(c => {
+                            return c.addAll([
+                                '/',
+                                '/index.html',
+                                'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap'
+                            ]);
+                        })
+                    );
+                });
+                self.addEventListener('fetch', e => {
+                    e.respondWith(
+                        caches.match(e.request).then(r => r || fetch(e.request))
+                    );
+                });
+            `;
+            try {
+                const blob = new Blob([swCode], { type: 'application/javascript' });
+                const url = URL.createObjectURL(blob);
+                navigator.serviceWorker.register(url).catch(() => {});
+            } catch (_) {}
+        }
     </script>
 </body>
 </html>
