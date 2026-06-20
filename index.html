@@ -443,6 +443,14 @@
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(59, 130, 246, 0.35);
         }
+        .btn-support {
+            background: linear-gradient(135deg, #2aabee, #1e88c9);
+            color: #fff;
+        }
+        .btn-support:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(42, 171, 238, 0.4);
+        }
         .btn-full {
             width: 100%;
             justify-content: center;
@@ -2077,7 +2085,6 @@
         .withdrawal-item-winner {
             color: var(--color-warning);
             font-weight: 600;
-            font-size: 0.85rem;
         }
         .withdrawal-item-value {
             font-family: var(--font-family-display);
@@ -2340,7 +2347,7 @@
                         <div class="balance-hero-amount" id="currentBalance">0.00</div>
                         <div class="balance-hero-currency">نقطة Kratos</div>
                         <div class="balance-hero-actions">
-                            <button class="btn btn-primary" onclick="App.showChargeRequest()">📥 طلب شحن</button>
+                            <button class="btn btn-support" onclick="App.openSupport()">💬 طلب شحن عبر الدعم</button>
                             <button class="btn btn-secondary" onclick="App.navigate('transactions')">📊 السجل</button>
                             <button class="btn btn-game" onclick="App.navigate('game')">🎁 صيد الأكواد</button>
                         </div>
@@ -2453,7 +2460,7 @@
                 <div class="page-header">
                     <div>
                         <h1 class="page-title">سجل <span>السحوبات</span> 📜</h1>
-                        <p class="page-sub">جميع الأكواد التي تم سحبها (فائزة) مع المعرف الرقمي للفائزين</p>
+                        <p class="page-sub">جميع الأكواد التي تم سحبها (فائزة) مع تفاصيل الفائزين (المعرف الرقمي فقط)</p>
                     </div>
                 </div>
                 <div class="balance-hero" style="background:linear-gradient(145deg,rgba(0,212,255,0.06),rgba(139,92,246,0.03));border-color:rgba(0,212,255,0.2);">
@@ -2648,27 +2655,6 @@
                     <button class="btn btn-notification btn-full" onclick="Admin.sendBroadcast()">📢 إرسال الإشعار للجميع</button>
                 </div>
 
-                <!-- ===== NEW: Support Settings ===== -->
-                <div class="admin-section" style="border-color:rgba(0,212,255,0.3);">
-                    <div class="admin-section-title" style="color:var(--color-secondary);border-color:rgba(0,212,255,0.2);">
-                        <span>🆘 دعم العملاء (شحن الرصيد عبر تلغرام)</span>
-                    </div>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4);">
-                        <div class="form-group">
-                            <label class="form-label">معرف فريق الدعم (Telegram ID)</label>
-                            <input type="text" class="form-input" id="supportTelegramId" placeholder="مثال: 8614039081">
-                            <div class="form-hint">المعرف الرقمي لفريق دعم KRATOS BOT الذي سيتواصل معه المستخدمون لطلب الشحن</div>
-                        </div>
-                        <div style="display:flex;align-items:flex-end;padding-bottom:var(--space-4);">
-                            <button class="btn btn-primary btn-full" onclick="Admin.saveSupportId()">💾 حفظ المعرف</button>
-                        </div>
-                    </div>
-                    <div id="supportIdDisplay" style="background:var(--color-bg-elevated);padding:var(--space-4);border-radius:var(--radius-md);margin-top:var(--space-2);">
-                        <div style="font-size:0.85rem;color:var(--color-text-muted);">المعرف الحالي:</div>
-                        <div style="font-family:var(--font-family-display);font-weight:700;color:var(--color-secondary);" id="currentSupportId">لم يتم تعيينه بعد</div>
-                    </div>
-                </div>
-
                 <!-- Users -->
                 <div class="admin-section">
                     <div class="admin-section-title">
@@ -2828,7 +2814,7 @@
         </div>
     </div>
 
-    <!-- Charge Modal (معدل: شحن يدوي بواسطة المشرف) -->
+    <!-- Charge Modal (للمشرف) -->
     <div class="modal-overlay" id="chargeModal">
         <div class="modal">
             <div class="modal-header">
@@ -2853,30 +2839,29 @@
         </div>
     </div>
 
-    <!-- Request Charge (معدل: عرض معرف فريق الدعم) -->
+    <!-- Request Charge (معدل للدعم) -->
     <div class="modal-overlay" id="requestChargeModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">📥 طلب شحن الرصيد عبر تلغرام</div>
+                <div class="modal-title">📥 طلب شحن الرصيد</div>
                 <button class="modal-close" onclick="App.closeModal('requestChargeModal')">✕</button>
             </div>
-            <div class="info-box" style="border-color:var(--color-secondary);margin-bottom:var(--space-4);">
-                <div class="info-box-title" style="color:var(--color-secondary);">📱 طريقة الشحن</div>
-                <div class="info-box-text" id="supportInfoText">
-                    يتم الشحن فقط عبر تلغرام. تواصل مع فريق الدعم على المعرف التالي:
-                    <div style="font-family:var(--font-family-display);font-weight:700;color:var(--color-secondary);font-size:1.1rem;margin-top:var(--space-2);" id="supportIdDisplayModal">لم يتم تعيينه بعد</div>
-                    <div style="font-size:0.8rem;color:var(--color-text-muted);margin-top:var(--space-1);">أرسل له طلب الشحن مع المبلغ المطلوب</div>
+            <div style="text-align:center;padding:var(--space-4) 0;">
+                <div style="font-size:3rem;margin-bottom:var(--space-4);">💬</div>
+                <h3 style="font-family:var(--font-family-display);font-weight:700;margin-bottom:var(--space-3);">تواصل مع فريق الدعم</h3>
+                <p style="color:var(--color-text-secondary);margin-bottom:var(--space-4);line-height:1.8;">
+                    لشحن رصيدك، يرجى التواصل مع فريق الدعم عبر تلغرام.<br>
+                    سيتم الرد عليك في أقرب وقت لإتمام عملية الشحن يدوياً.
+                </p>
+                <div style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:var(--radius-md);padding:var(--space-4);margin-bottom:var(--space-6);">
+                    <div style="font-size:0.85rem;color:var(--color-text-muted);">📱 معرف فريق الدعم</div>
+                    <div style="font-family:var(--font-family-display);font-weight:700;color:var(--color-secondary);font-size:1.2rem;word-break:break-all;">@Kratos_Help_Support_Team</div>
                 </div>
+                <a href="https://t.me/Kratos_Help_Support_Team" target="_blank" class="btn btn-support btn-full" style="font-size:1rem;padding:var(--space-4);">
+                    💬 تواصل مع الدعم الآن
+                </a>
+                <button class="btn btn-secondary btn-full" style="margin-top:var(--space-2);" onclick="App.closeModal('requestChargeModal')">إلغاء</button>
             </div>
-            <form id="requestChargeForm">
-                <div class="form-group"><label class="form-label">المبلغ المطلوب</label><input type="number" class="form-input" id="requestAmount" placeholder="0.00" min="1" step="0.01" required><div class="form-hint">أدخل المبلغ الذي تريد شحنه</div></div>
-                <div class="form-group"><label class="form-label">طريقة الدفع</label><select class="form-input" id="requestMethod"><option value="telegram">💬 عبر تلغرام</option><option value="bank">🏦 تحويل بنكي</option><option value="crypto">₿ عملة رقمية</option></select></div>
-                <div class="form-group"><label class="form-label">ملاحظة</label><textarea class="form-input" id="requestNote" rows="3"></textarea></div>
-                <div style="display:flex;gap:var(--space-2);">
-                    <button type="button" class="btn btn-secondary" style="flex:1;" onclick="App.closeModal('requestChargeModal')">إلغاء</button>
-                    <button type="submit" class="btn btn-primary" style="flex:1;">📤 إرسال الطلب</button>
-                </div>
-            </form>
         </div>
     </div>
 
@@ -3033,6 +3018,7 @@
         const ADMIN_CONFIG = { TELEGRAM_ID: 8614039081 };
         const GAME_CONFIG = { CLAIM_TIMEOUT: 5 * 60 * 1000 };
         const APP_VERSION = 'v7.2.0';
+        const SUPPORT_USERNAME = '@Kratos_Help_Support_Team';
 
         // =============================================
         // 2. UTILITY: Encryption
@@ -3666,7 +3652,6 @@
             currentFilter: 'all',
             _loaderFill: document.getElementById('loaderFill'),
             _notificationsEnabled: true,
-            _supportId: null,
 
             async init() {
                 this._updateLoader('جاري فتح قاعدة البيانات...', 10);
@@ -3675,9 +3660,6 @@
                 await this._checkSession();
                 this._updateLoader('جاري تهيئة الواجهة...', 80);
                 this._bindEvents();
-                // تحميل معرف الدعم
-                this._supportId = await this.db.getSetting('support_telegram_id');
-                this._updateSupportDisplay();
                 this._updateLoader('جاهز!', 100);
                 setTimeout(() => document.getElementById('appLoader').classList.add('hidden'), 600);
                 const notifPref = await this.db.getSetting('notifications_enabled');
@@ -3758,8 +3740,7 @@
                     this.saveProfile(); });
                 document.getElementById('chargeForm').addEventListener('submit', (e) => { e.preventDefault();
                     Admin.processCharge(); });
-                document.getElementById('requestChargeForm').addEventListener('submit', (e) => { e.preventDefault();
-                    this._submitChargeRequest(); });
+                // تم إزالة استماع requestChargeForm لأنه الآن يستخدم زر الدعم
                 document.getElementById('addCategoryForm').addEventListener('submit', (e) => { e.preventDefault();
                     GameAdmin.addCategory(); });
 
@@ -3817,28 +3798,6 @@
                 const cur = parseFloat(document.getElementById('chargeCurrentBalance').textContent) || 0;
                 document.getElementById('chargeAddedAmount').textContent = added.toFixed(2);
                 document.getElementById('chargeNewBalance').textContent = (cur + added).toFixed(2);
-            },
-
-            _updateSupportDisplay() {
-                const id = this._supportId || 'لم يتم تعيينه بعد';
-                document.getElementById('currentSupportId').textContent = id;
-                document.getElementById('supportIdDisplayModal').textContent = id;
-                document.getElementById('supportTelegramId').value = this._supportId || '';
-                // تحديث نص معلومات الدعم
-                const infoText = document.getElementById('supportInfoText');
-                if (infoText) {
-                    if (this._supportId) {
-                        infoText.innerHTML = `
-                            يتم الشحن فقط عبر تلغرام. تواصل مع فريق الدعم على المعرف التالي:
-                            <div style="font-family:var(--font-family-display);font-weight:700;color:var(--color-secondary);font-size:1.1rem;margin-top:var(--space-2);">${this._supportId}</div>
-                            <div style="font-size:0.8rem;color:var(--color-text-muted);margin-top:var(--space-1);">أرسل له طلب الشحن مع المبلغ المطلوب</div>
-                        `;
-                    } else {
-                        infoText.innerHTML = `
-                            ⏳ لم يتم تعيين معرف فريق الدعم بعد. يرجى التواصل مع المشرف.
-                        `;
-                    }
-                }
             },
 
             async _simulateLogin() {
@@ -3953,9 +3912,6 @@
                 if (document.getElementById('page-withdrawal-history').classList.contains('active')) {
                     WithdrawalHistory.refresh();
                 }
-                // تحديث معرف الدعم
-                this._supportId = await this.db.getSetting('support_telegram_id');
-                this._updateSupportDisplay();
             },
 
             _renderRecent(txs) {
@@ -4001,49 +3957,14 @@
                 return `منذ ${d} ي`;
             },
 
-            showChargeRequest() {
-                // تحديث معرف الدعم قبل العرض
-                this._updateSupportDisplay();
-                document.getElementById('requestChargeForm').reset();
-                document.getElementById('requestChargeModal').classList.add('active');
+            // ===== طلب شحن جديد: فتح محادثة الدعم =====
+            openSupport() {
+                // فتح محادثة تلغرام مع فريق الدعم
+                window.open('https://t.me/Kratos_Help_Support_Team', '_blank');
+                Toast.show('💬 تم فتح محادثة الدعم', 'info');
             },
 
-            async _submitChargeRequest() {
-                const amount = parseFloat(document.getElementById('requestAmount').value);
-                const method = document.getElementById('requestMethod').value;
-                const note = document.getElementById('requestNote').value;
-                if (!amount || amount <= 0) { Toast.show('يرجى إدخال مبلغ صحيح', 'error'); return; }
-
-                // الحصول على معرف الدعم
-                const supportId = await this.db.getSetting('support_telegram_id');
-                if (!supportId) {
-                    Toast.show('⛔ لم يتم تعيين معرف فريق الدعم بعد، يرجى التواصل مع المشرف', 'error');
-                    return;
-                }
-
-                // إرسال إشعار لفريق الدعم
-                await Notifications.add({
-                    userId: 'tg_' + supportId,
-                    type: 'warning',
-                    title: '📥 طلب شحن جديد',
-                    message: `${this.currentUser.username} طلب شحن ${amount} نقطة عبر ${method}${note ? ' • ملاحظة: ' + note : ''}`,
-                    data: { user: this.currentUser.telegramId, amount, method, note },
-                    icon: '💰'
-                });
-
-                // إشعار تأكيدي للمستخدم
-                await Notifications.add({
-                    userId: this.currentUser.telegramId,
-                    type: 'info',
-                    title: '📤 تم إرسال طلب الشحن',
-                    message: `تم إرسال طلب شحن ${amount} نقطة إلى فريق الدعم. سيتم التواصل معك قريباً.`,
-                    icon: '📤'
-                });
-
-                this.closeModal('requestChargeModal');
-                Toast.show('✅ تم إرسال طلب الشحن لفريق الدعم', 'success');
-                await this.renderAll();
-            },
+            // تم إزالة دالة _submitChargeRequest لأنها أصبحت غير مستخدمة
 
             openEditProfile() {
                 const u = this.currentUser;
@@ -4109,7 +4030,7 @@
         };
 
         // =============================================
-        // 8. ADMIN – مع شحن النسبة المئوية + إعدادات الدعم
+        // 8. ADMIN – مع شحن النسبة المئوية
         // =============================================
         const Admin = {
             async renderDashboard() {
@@ -4120,10 +4041,6 @@
                 document.getElementById('adminTotalCharged').textContent = stats.totalCharged.toFixed(0);
                 await this._renderUsers();
                 this._renderChart(stats);
-                // تحديث عرض معرف الدعم
-                const supportId = await App.db.getSetting('support_telegram_id');
-                document.getElementById('supportTelegramId').value = supportId || '';
-                document.getElementById('currentSupportId').textContent = supportId || 'لم يتم تعيينه بعد';
             },
 
             _renderChart(stats) {
@@ -4360,25 +4277,6 @@
                 content.innerHTML =
                     `<h3 style="font-family:var(--font-family-display);margin-bottom:var(--space-4);">📊 جميع المعاملات (${txs.length})</h3><div style="max-height:25rem;overflow-y:auto;">${txs.length === 0 ? '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-title">لا توجد معاملات</div></div>' : txs.slice(0,50).map(t => `<div style="display:flex;justify-content:space-between;padding:var(--space-2);background:var(--color-bg-elevated);border-radius:var(--radius-sm);margin-bottom:var(--space-1);font-size:0.85rem;flex-wrap:wrap;gap:var(--space-2);"><div style="flex:1;min-width:0;"><div style="font-weight:600;">${t.description || t.type}</div><div style="font-size:0.7rem;color:var(--color-text-muted);">${t.performedBy} • ${App._timeAgo(t.timestamp)}</div></div><div style="font-family:var(--font-family-display);font-weight:700;color:${t.type === 'credit' || t.type === 'game_win' ? 'var(--color-success)' : 'var(--color-danger)'};">${t.type === 'credit' || t.type === 'game_win' ? '+' : '-'}${t.amount.toFixed(2)}</div></div>`).join('')}</div>`;
                 document.getElementById('userDetailModal').classList.add('active');
-            },
-
-            // ===== NEW: Support ID Management =====
-            async saveSupportId() {
-                const id = document.getElementById('supportTelegramId').value.trim();
-                if (!id) {
-                    Toast.show('⚠️ يرجى إدخال معرف صالح', 'error');
-                    return;
-                }
-                // تحقق من أن المعرف رقمي فقط
-                if (!/^\d+$/.test(id)) {
-                    Toast.show('⚠️ يجب أن يكون المعرف رقمياً فقط (أرقام)', 'error');
-                    return;
-                }
-                await App.db.setSetting('support_telegram_id', id);
-                App._supportId = id;
-                App._updateSupportDisplay();
-                Toast.show('✅ تم حفظ معرف فريق الدعم', 'success');
-                await this.renderDashboard();
             }
         };
 
@@ -4921,6 +4819,7 @@
                     `الكود ${code.code} (فئة ${code.category_value}) أصبح متاحاً للجميع! الفائز: ${code.winner_username || 'مستخدم'}`,
                     'broadcast'
                 );
+                // إضافة إلى سجل السحوبات (سيتم تحديثه تلقائياً عند عرض الصفحة)
                 App.closeModal('winModal');
                 this.currentWinCode = null;
                 if (document.getElementById('page-public-codes').classList.contains('active')) {
@@ -4977,19 +4876,16 @@
                         `<div class="empty-state"><div class="empty-state-icon">🎟️</div><div class="empty-state-title">لا توجد أكواد متاحة حالياً</div></div>`;
                     return;
                 }
-                container.innerHTML = publicCodes.map(code => {
-                    // عرض المعرف الرقمي فقط
-                    const winnerId = code.winner_telegram_id || code.winner_user_id || 'غير معروف';
-                    return `
+                container.innerHTML = publicCodes.map(code => `
                     <div class="public-code-item">
                         <div style="flex:1;min-width:10rem;">
                             <div class="public-code-item-code">${code.code}</div>
                             <div class="public-code-item-meta">فئة: ${code.category_value} • كشف: ${new Date(code.revealed_at).toLocaleString('ar')}</div>
-                            <div class="public-code-item-winner">🆔 المعرف: ${winnerId}</div>
+                            <div class="public-code-item-winner">🏆 الفائز: ${code.winner_username || 'مستخدم'} (ID: ${code.winner_telegram_id || code.winner_user_id || 'غير معروف'})</div>
                         </div>
                         <button class="copy-btn" onclick="Game._copyCode('${code.code}', this)">📋 نسخ</button>
                     </div>
-                `}).join('');
+                `).join('');
             },
 
             _copyCode(code, btn) {
@@ -5018,13 +4914,13 @@
                             count++;
                             await Notifications.broadcast(
                                 '🌐 كود جديد متاح للجميع',
-                                `الكود ${c.code} (فئة ${c.category_value}) أصبح متاحاً للجميع! المعرف: ${c.winner_telegram_id || c.winner_user_id || 'غير معروف'}`,
+                                `الكود ${c.code} (فئة ${c.category_value}) أصبح متاحاً للجميع! الفائز: ${c.winner_username || 'مستخدم'}`,
                                 'broadcast'
                             );
                         }
                     }
                     if (count > 0) {
-                        console.log(`🗑️ تم كشف ${count} كود للعامة مع المعرف الرقمي`);
+                        console.log(`🗑️ تم كشف ${count} كود للعامة مع معلومات الفائز`);
                         if (document.getElementById('page-public-codes').classList.contains('active')) {
                             this.renderPublicCodes();
                         }
@@ -5241,12 +5137,12 @@
         };
 
         // =============================================
-        // 12. WITHDRAWAL HISTORY – سجل السحوبات (معرف رقمي فقط)
+        // 12. WITHDRAWAL HISTORY – سجل السحوبات مع المعرف الرقمي فقط
         // =============================================
         const WithdrawalHistory = {
             async refresh() {
                 const codes = await App.db.getAll('game_codes');
-                // عرض جميع الأكواد التي تم ربحها (winner موجود) والتي انتهت صلاحيتها أو عامة
+                // عرض جميع الأكواد التي تم ربحها (winner موجود) والتي انتهت صلاحيتها (expired) أو عامة
                 const winningCodes = codes.filter(c => c.is_used && c.winner_user_id && (c.is_public_revealed || (c
                     .expires_at && Date.now() > c.expires_at)));
                 // ترتيب حسب تاريخ الفوز (الأحدث أولاً)
@@ -5259,7 +5155,7 @@
                     return;
                 }
                 container.innerHTML = winningCodes.map(code => {
-                    // عرض المعرف الرقمي فقط (بدون اسم المستخدم)
+                    // عرض المعرف الرقمي فقط (telegram user ID)
                     const winnerId = code.winner_telegram_id || code.winner_user_id || 'غير معروف';
                     return `
                     <div class="withdrawal-item">
@@ -5270,7 +5166,7 @@
                                 ${code.claimed ? ` • استلم: ${new Date(code.claimed_at).toLocaleString('ar')}` : ' • لم يستلم'}
                                 ${code.is_public_revealed ? ' • 🌐 عام' : ' • ⏰ منتهي'}
                             </div>
-                            <div class="withdrawal-item-winner">🆔 المعرف: ${winnerId}</div>
+                            <div class="withdrawal-item-winner">🏆 المعرف الرقمي: ${winnerId}</div>
                         </div>
                         <div class="withdrawal-item-value">${code.category_value.toLocaleString()}</div>
                     </div>
