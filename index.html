@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0b1120">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="description" content="Kratos Bot - نظام رصيد احترافي مع لعبة صيد الأكواد">
+    <meta name="description" content="Kratos Bot - نظام رصيد احترافي مع لعبة صيد الأكواد وتوافق عالمي">
     <title>Kratos Bot | النظام الاحترافي</title>
     <script src="https://telegram.org/js/telegram-web-app.js">
     </script>
@@ -14,8 +14,18 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
+        /* ============================================================
+           ** نظام التصميم المتقدم (Advanced Design System) **
+           ------------------------------------------------------------
+           1.  هوية بصرية قوية: ألوان نيون مع تدرجات وانعكاسات.
+           2.  خطوط عصرية: مزيج بين Cairo (العربي) و Orbitron (التقني).
+           3.  تأثيرات زجاجية (Glassmorphism) وخلفيات ضبابية.
+           4.  تخطيط مرن (Flexbox/Grid) يتكيف مع جميع الشاشات.
+           5.  رسوم متحركة سلسة (Cubic-bezier) وتعليقات تفاعلية.
+           ============================================================ */
+
         /* ============================================
-           Design System – محسن مع إضافات جديدة
+           الطبقة الأساسية (Root Variables)
            ============================================ */
         :root {
             --color-bg-base: #0b1120;
@@ -76,6 +86,9 @@
             --z-loader: 999;
         }
 
+        /* ============================================
+           الوضع الفاتح (Light Theme)
+           ============================================ */
         [data-theme="light"] {
             --color-bg-base: #f1f5f9;
             --color-bg-surface: #ffffff;
@@ -92,7 +105,7 @@
         }
 
         /* ============================================
-           Reset & Base
+           إعادة تعيين القيم (Reset & Base)
            ============================================ */
         *,
         *::before,
@@ -157,7 +170,7 @@
         }
 
         /* ============================================
-           Loader
+           مؤشر التحميل (Loader)
            ============================================ */
         .app-loader {
             position: fixed;
@@ -228,7 +241,7 @@
         }
 
         /* ============================================
-           Auth Gate
+           بوابة المصادقة (Auth Gate)
            ============================================ */
         .auth-gate {
             position: fixed;
@@ -364,7 +377,7 @@
         }
 
         /* ============================================
-           Buttons
+           الأزرار (Buttons)
            ============================================ */
         .btn {
             display: inline-flex;
@@ -475,7 +488,7 @@
         }
 
         /* ============================================
-           Header
+           الرأس (Header)
            ============================================ */
         .app-header {
             position: fixed;
@@ -644,7 +657,7 @@
         }
 
         /* ============================================
-           Sidebar
+           القائمة الجانبية (Sidebar)
            ============================================ */
         .sidebar-overlay {
             position: fixed;
@@ -754,7 +767,7 @@
         }
 
         /* ============================================
-           Main & Pages
+           المحتوى الرئيسي (Main)
            ============================================ */
         .webapp {
             display: none;
@@ -812,7 +825,7 @@
         }
 
         /* ============================================
-           Balance Hero
+           بطل الرصيد (Balance Hero)
            ============================================ */
         .balance-hero {
             background: linear-gradient(145deg, rgba(127, 255, 0, 0.06), rgba(0, 212, 255, 0.03));
@@ -862,7 +875,9 @@
             margin-top: var(--space-4);
         }
 
-        /* Stats Grid */
+        /* ============================================
+           بطاقات الإحصائيات (Stats Grid)
+           ============================================ */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
@@ -911,7 +926,7 @@
         }
 
         /* ============================================
-           Transactions
+           المعاملات (Transactions)
            ============================================ */
         .section {
             background: var(--color-bg-card);
@@ -1035,7 +1050,7 @@
         }
 
         /* ============================================
-           Game
+           اللعبة (Game)
            ============================================ */
         .game-hero {
             background: linear-gradient(145deg, rgba(236, 72, 153, 0.08), rgba(139, 92, 246, 0.05));
@@ -1138,7 +1153,7 @@
         }
 
         /* ============================================
-           Notifications Center
+           مركز الإشعارات (Notifications)
            ============================================ */
         .notif-item {
             display: flex;
@@ -1222,7 +1237,7 @@
         }
 
         /* ============================================
-           Admin – محسّن
+           لوحة المشرف (Admin)
            ============================================ */
         .admin-header {
             background: linear-gradient(145deg, rgba(245, 158, 11, 0.08), rgba(139, 92, 246, 0.04));
@@ -1526,7 +1541,7 @@
         }
 
         /* ============================================
-           Data Management Cards
+           بطاقات إدارة البيانات (Data Grid)
            ============================================ */
         .data-grid {
             display: grid;
@@ -1610,7 +1625,7 @@
         }
 
         /* ============================================
-           Bottom Nav
+           الشريط السفلي (Bottom Nav)
            ============================================ */
         .bottom-nav {
             position: fixed;
@@ -1687,7 +1702,7 @@
         }
 
         /* ============================================
-           Modals
+           النوافذ المنبثقة (Modals)
            ============================================ */
         .modal-overlay {
             position: fixed;
@@ -1783,7 +1798,7 @@
         }
 
         /* ============================================
-           Toast
+           الإشعارات اللحظية (Toast)
            ============================================ */
         .toast-container {
             position: fixed;
@@ -1860,7 +1875,7 @@
         }
 
         /* ============================================
-           Utilities
+           أدوات مساعدة (Utilities)
            ============================================ */
         .empty-state {
             text-align: center;
@@ -2052,9 +2067,6 @@
             font-size: 1.1rem;
         }
 
-        /* ============================================
-           سجل السحوبات (جديد)
-           ============================================ */
         .withdrawal-item {
             background: var(--color-bg-elevated);
             border: 1px solid var(--color-border);
@@ -2094,7 +2106,7 @@
         }
 
         /* ============================================
-           Responsive
+           التجاوبية (Responsive)
            ============================================ */
         @media (max-width: 768px) {
             .app-main {
@@ -2173,7 +2185,7 @@
 </head>
 <body>
     <!-- ============================================
-    LOADER
+    مؤشر التحميل (Loader)
     ============================================ -->
     <div class="app-loader" id="appLoader">
         <div class="loader-content">
@@ -2185,7 +2197,7 @@
     </div>
 
     <!-- ============================================
-    AUTH GATE
+    بوابة المصادقة (Auth Gate)
     ============================================ -->
     <div class="auth-gate" id="authGate">
         <div class="auth-card">
@@ -2216,16 +2228,16 @@
     </div>
 
     <!-- ============================================
-    TOAST CONTAINER
+    حاوية الإشعارات (Toast)
     ============================================ -->
     <div class="toast-container" id="toastContainer"></div>
 
     <!-- ============================================
-    WEBAPP
+    التطبيق الرئيسي (WebApp)
     ============================================ -->
     <div class="webapp" id="webapp">
 
-        <!-- HEADER -->
+        <!-- الرأس (Header) -->
         <header class="app-header">
             <div class="header-inner">
                 <div class="brand" onclick="App.navigate('home')">
@@ -2249,7 +2261,7 @@
             </div>
         </header>
 
-        <!-- SIDEBAR -->
+        <!-- القائمة الجانبية (Sidebar) -->
         <div class="sidebar-overlay" id="sidebarOverlay"></div>
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
@@ -2330,10 +2342,10 @@
             </nav>
         </aside>
 
-        <!-- MAIN CONTENT -->
+        <!-- المحتوى الرئيسي -->
         <main class="app-main">
 
-            <!-- ==================== HOME ==================== -->
+            <!-- الصفحة الرئيسية (Home) -->
             <div class="page active" id="page-home">
                 <div class="page-header">
                     <div>
@@ -2386,7 +2398,7 @@
                 </div>
             </div>
 
-            <!-- ==================== GAME ==================== -->
+            <!-- صفحة اللعبة (Game) -->
             <div class="page" id="page-game">
                 <div class="page-header">
                     <div>
@@ -2413,7 +2425,7 @@
                 </div>
             </div>
 
-            <!-- ==================== MY CODES ==================== -->
+            <!-- صفحة أكوادي الفائزة (My Codes) -->
             <div class="page" id="page-my-codes">
                 <div class="page-header">
                     <div>
@@ -2439,7 +2451,7 @@
                 </div>
             </div>
 
-            <!-- ==================== PUBLIC CODES ==================== -->
+            <!-- صفحة أكواد الرابحين (Public Codes) -->
             <div class="page" id="page-public-codes">
                 <div class="page-header">
                     <div>
@@ -2455,7 +2467,7 @@
                 </div>
             </div>
 
-            <!-- ==================== WITHDRAWAL HISTORY (جديد) ==================== -->
+            <!-- صفحة سجل السحوبات (Withdrawal History) -->
             <div class="page" id="page-withdrawal-history">
                 <div class="page-header">
                     <div>
@@ -2481,7 +2493,7 @@
                 </div>
             </div>
 
-            <!-- ==================== TRANSACTIONS ==================== -->
+            <!-- صفحة سجل المعاملات (Transactions) -->
             <div class="page" id="page-transactions">
                 <div class="page-header">
                     <div>
@@ -2504,7 +2516,7 @@
                 </div>
             </div>
 
-            <!-- ==================== PROFILE ==================== -->
+            <!-- صفحة الملف الشخصي (Profile) -->
             <div class="page" id="page-profile">
                 <div class="page-header">
                     <div>
@@ -2547,7 +2559,7 @@
                 </div>
             </div>
 
-            <!-- ==================== NOTIFICATIONS ==================== -->
+            <!-- صفحة الإشعارات (Notifications) -->
             <div class="page" id="page-notifications">
                 <div class="page-header">
                     <div>
@@ -2576,7 +2588,7 @@
                 </div>
             </div>
 
-            <!-- ==================== SETTINGS ==================== -->
+            <!-- صفحة الإعدادات (Settings) -->
             <div class="page" id="page-settings">
                 <div class="page-header">
                     <div>
@@ -2614,7 +2626,7 @@
                 </div>
             </div>
 
-            <!-- ==================== ADMIN ==================== -->
+            <!-- صفحة لوحة المشرف (Admin) -->
             <div class="page" id="page-admin">
                 <div class="admin-header">
                     <div class="admin-header-title">👑 لوحة تحكم المشرف</div>
@@ -2628,7 +2640,7 @@
                     <div class="chart-container" id="adminChart"></div>
                 </div>
 
-                <!-- Broadcast -->
+                <!-- البث العام (Broadcast) -->
                 <div class="admin-section" style="border-color:rgba(59,130,246,0.3);">
                     <div class="admin-section-title" style="color:var(--color-notification);border-color:rgba(59,130,246,0.2);">
                         <span>📢 الإشعارات العامة (Broadcast)</span>
@@ -2655,7 +2667,7 @@
                     <button class="btn btn-notification btn-full" onclick="Admin.sendBroadcast()">📢 إرسال الإشعار للجميع</button>
                 </div>
 
-                <!-- Users -->
+                <!-- إدارة المستخدمين -->
                 <div class="admin-section">
                     <div class="admin-section-title">
                         <span>👥 إدارة المستخدمين والأرصدة</span>
@@ -2677,7 +2689,7 @@
                     </div>
                 </div>
 
-                <!-- Game Management -->
+                <!-- إدارة اللعبة -->
                 <div class="admin-section" style="border-color:rgba(236,72,153,0.2);">
                     <div class="admin-section-title" style="color:var(--color-pink);border-color:rgba(236,72,153,0.2);">
                         <span>🎁 إدارة لعبة صيد الأكواد</span>
@@ -2706,7 +2718,7 @@
                     </div>
                 </div>
 
-                <!-- Data Management -->
+                <!-- إدارة البيانات -->
                 <div class="admin-section" style="border-color:rgba(239,68,68,0.2);">
                     <div class="admin-section-title" style="color:var(--color-danger);border-color:rgba(239,68,68,0.2);">
                         <span>🗑️ إدارة البيانات والحذف</span>
@@ -2774,7 +2786,7 @@
 
         </main>
 
-        <!-- BOTTOM NAV -->
+        <!-- الشريط السفلي (Bottom Navigation) -->
         <nav class="bottom-nav">
             <button class="bottom-nav-item active" data-page="home"><span class="bottom-nav-icon">💰</span><span>الرصيد</span></button>
             <button class="bottom-nav-item" data-page="game"><span class="bottom-nav-icon">🎁</span><span>اللعبة</span></button>
@@ -2791,10 +2803,10 @@
     </div>
 
     <!-- ============================================
-    MODALS
+    النوافذ المنبثقة (Modals)
     ============================================ -->
 
-    <!-- Edit Profile -->
+    <!-- تعديل الملف الشخصي -->
     <div class="modal-overlay" id="editProfileModal">
         <div class="modal">
             <div class="modal-header">
@@ -2814,7 +2826,7 @@
         </div>
     </div>
 
-    <!-- Charge Modal (للمشرف) -->
+    <!-- شحن الرصيد (للمشرف) -->
     <div class="modal-overlay" id="chargeModal">
         <div class="modal">
             <div class="modal-header">
@@ -2839,7 +2851,7 @@
         </div>
     </div>
 
-    <!-- Request Charge (معدل للدعم) -->
+    <!-- طلب شحن الرصيد (للمستخدمين - عبر الدعم) -->
     <div class="modal-overlay" id="requestChargeModal">
         <div class="modal">
             <div class="modal-header">
@@ -2865,7 +2877,7 @@
         </div>
     </div>
 
-    <!-- User Detail -->
+    <!-- تفاصيل المستخدم -->
     <div class="modal-overlay" id="userDetailModal">
         <div class="modal" style="max-width:38rem;">
             <div class="modal-header">
@@ -2876,7 +2888,7 @@
         </div>
     </div>
 
-    <!-- Win Modal -->
+    <!-- نافذة الفوز -->
     <div class="modal-overlay" id="winModal">
         <div class="modal" style="max-width:30rem;">
             <div class="win-content">
@@ -2892,7 +2904,7 @@
         </div>
     </div>
 
-    <!-- Add Category -->
+    <!-- إضافة فئة -->
     <div class="modal-overlay" id="addCategoryModal">
         <div class="modal">
             <div class="modal-header">
@@ -2911,7 +2923,7 @@
         </div>
     </div>
 
-    <!-- Manage Codes -->
+    <!-- إدارة الأكواد -->
     <div class="modal-overlay" id="manageCodesModal">
         <div class="modal" style="max-width:38rem;">
             <div class="modal-header">
@@ -2926,7 +2938,7 @@
         </div>
     </div>
 
-    <!-- Delete Records -->
+    <!-- حذف السجلات -->
     <div class="modal-overlay" id="deleteRecordsModal">
         <div class="modal">
             <div class="modal-header">
@@ -2962,7 +2974,7 @@
         </div>
     </div>
 
-    <!-- Delete Old Sessions -->
+    <!-- حذف الجلسات القديمة -->
     <div class="modal-overlay" id="deleteOldSessionsModal">
         <div class="modal">
             <div class="modal-header">
@@ -2997,7 +3009,7 @@
         </div>
     </div>
 
-    <!-- Delete Log Modal -->
+    <!-- سجل عمليات الحذف -->
     <div class="modal-overlay" id="deleteLogModal">
         <div class="modal" style="max-width:38rem;">
             <div class="modal-header">
@@ -3009,11 +3021,11 @@
     </div>
 
     <!-- ============================================
-    JAVASCRIPT – كل المنطق مع الإضافات الجديدة
+    جافا سكريبت – المنطق الكامل
     ============================================ -->
     <script>
         // =============================================
-        // 1. CONFIG
+        // 1. الإعدادات العامة (Config)
         // =============================================
         const ADMIN_CONFIG = { TELEGRAM_ID: 8614039081 };
         const GAME_CONFIG = { CLAIM_TIMEOUT: 5 * 60 * 1000 };
@@ -3021,7 +3033,7 @@
         const SUPPORT_USERNAME = '@Kratos_Help_Support_Team';
 
         // =============================================
-        // 2. UTILITY: Encryption
+        // 2. أدوات التشفير (Encryption)
         // =============================================
         const Crypto = {
             _key: 'KRATOS_SECRET_2026',
@@ -3049,7 +3061,7 @@
         };
 
         // =============================================
-        // 3. DATABASE (IndexedDB) – مع تخزين الإشعارات
+        // 3. قاعدة البيانات (IndexedDB)
         // =============================================
         class KratosDB {
             constructor() {
@@ -3173,7 +3185,7 @@
                 });
             }
 
-            // === User Operations ===
+            // عمليات المستخدمين
             async upsertUser(data) {
                 const existing = await this.get('users', data.telegramId);
                 const isAdmin = data.telegramUserId === ADMIN_CONFIG.TELEGRAM_ID;
@@ -3256,7 +3268,7 @@
                 return { success: true };
             }
 
-            // === Transaction ===
+            // عمليات المعاملات
             async addTransaction(tx) {
                 const t = {
                     id: 'tx_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
@@ -3293,7 +3305,7 @@
                 return all.sort((a, b) => b.timestamp - a.timestamp);
             }
 
-            // === Settings ===
+            // الإعدادات
             async getSetting(key) {
                 const s = await this.get('settings', key);
                 return s ? s.value : null;
@@ -3301,7 +3313,7 @@
 
             async setSetting(key, value) { await this.put('settings', { key, value }); }
 
-            // === Stats ===
+            // الإحصائيات
             async getStats() {
                 const users = await this.getAll('users');
                 const txs = await this.getAll('transactions');
@@ -3315,7 +3327,7 @@
                 };
             }
 
-            // === Delete Log ===
+            // سجل الحذف
             async addDeleteLog(entry) {
                 const log = {
                     id: 'log_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
@@ -3334,7 +3346,7 @@
 
             async clearDeleteLog() { await this.clear('delete_log'); }
 
-            // === Achievements ===
+            // الإنجازات
             async getAchievements(userId) {
                 const u = await this.getUser(userId);
                 return u ? u.achievements || [] : [];
@@ -3352,7 +3364,7 @@
                 return false;
             }
 
-            // === Notifications ===
+            // الإشعارات
             async addNotification(data) {
                 const n = {
                     id: 'notif_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
@@ -3415,7 +3427,7 @@
         }
 
         // =============================================
-        // 4. TELEGRAM HELPER
+        // 4. مساعد تلغرام (Telegram Helper)
         // =============================================
         const TelegramHelper = {
             webApp: null,
@@ -3479,7 +3491,7 @@
         };
 
         // =============================================
-        // 5. TOAST
+        // 5. الإشعارات اللحظية (Toast)
         // =============================================
         const Toast = {
             show(msg, type = 'info', duration = 3500) {
@@ -3499,7 +3511,7 @@
         };
 
         // =============================================
-        // 6. NOTIFICATIONS SYSTEM
+        // 6. نظام الإشعارات (Notifications)
         // =============================================
         const Notifications = {
             currentFilter: 'all',
@@ -3643,7 +3655,7 @@
         };
 
         // =============================================
-        // 7. MAIN APP
+        // 7. التطبيق الرئيسي (App)
         // =============================================
         const App = {
             db: new KratosDB(),
@@ -3723,8 +3735,7 @@
             },
 
             _checkAchievements() {
-                const u = this.currentUser;
-                if (!u) return;
+                // يمكن إضافة منطق الإنجازات هنا
             },
 
             _bindEvents() {
@@ -3740,7 +3751,6 @@
                     this.saveProfile(); });
                 document.getElementById('chargeForm').addEventListener('submit', (e) => { e.preventDefault();
                     Admin.processCharge(); });
-                // تم إزالة استماع requestChargeForm لأنه الآن يستخدم زر الدعم
                 document.getElementById('addCategoryForm').addEventListener('submit', (e) => { e.preventDefault();
                     GameAdmin.addCategory(); });
 
@@ -3908,7 +3918,6 @@
                 document.getElementById('detailLang').textContent = u.language === 'ar' ? 'العربية' : 'English';
                 document.getElementById('detailTgId').textContent = u.telegramId;
                 Notifications._updateBadge();
-                // تحديث سجل السحوبات إذا كانت الصفحة مفتوحة
                 if (document.getElementById('page-withdrawal-history').classList.contains('active')) {
                     WithdrawalHistory.refresh();
                 }
@@ -3957,14 +3966,11 @@
                 return `منذ ${d} ي`;
             },
 
-            // ===== طلب شحن جديد: فتح محادثة الدعم =====
+            // فتح محادثة الدعم (طلب الشحن)
             openSupport() {
-                // فتح محادثة تلغرام مع فريق الدعم
                 window.open('https://t.me/Kratos_Help_Support_Team', '_blank');
                 Toast.show('💬 تم فتح محادثة الدعم', 'info');
             },
-
-            // تم إزالة دالة _submitChargeRequest لأنها أصبحت غير مستخدمة
 
             openEditProfile() {
                 const u = this.currentUser;
@@ -4030,7 +4036,7 @@
         };
 
         // =============================================
-        // 8. ADMIN – مع شحن النسبة المئوية
+        // 8. لوحة المشرف (Admin)
         // =============================================
         const Admin = {
             async renderDashboard() {
@@ -4209,55 +4215,6 @@
                 await this._renderUsers();
             },
 
-            async exportAllData() {
-                const users = await App.db.getAll('users');
-                const transactions = await App.db.getAll('transactions');
-                const gameCategories = await App.db.getAll('game_categories');
-                const gameCodes = await App.db.getAll('game_codes');
-                const gameBets = await App.db.getAll('game_bets');
-                const notifications = await App.db.getAll('notifications');
-                const data = { exportedAt: new Date().toISOString(), users, transactions, gameCategories, gameCodes,
-                    gameBets, notifications, version: APP_VERSION };
-                const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = `kratos_full_backup_${Date.now()}.json`;
-                a.click();
-                URL.revokeObjectURL(url);
-                Toast.show('✅ تم التصدير', 'success');
-            },
-
-            importData() {
-                const input = document.createElement('input');
-                input.type = 'file';
-                input.accept = '.json';
-                input.onchange = async (e) => {
-                    const file = e.target.files[0];
-                    if (!file) return;
-                    const reader = new FileReader();
-                    reader.onload = async (ev) => {
-                        try {
-                            const data = JSON.parse(ev.target.result);
-                            if (!confirm('⚠️ سيتم استبدال البيانات الحالية!')) return;
-                            if (data.users) for (const u of data.users) await App.db.put('users', u);
-                            if (data.transactions) for (const tx of data.transactions) await App.db.put(
-                                'transactions', tx);
-                            if (data.gameCategories) for (const c of data.gameCategories) await App.db.put(
-                                'game_categories', c);
-                            if (data.gameCodes) for (const c of data.gameCodes) await App.db.put('game_codes', c);
-                            if (data.gameBets) for (const b of data.gameBets) await App.db.put('game_bets', b);
-                            if (data.notifications) for (const n of data.notifications) await App.db.put(
-                                'notifications', n);
-                            Toast.show('✅ تم الاستيراد', 'success');
-                            await this.renderDashboard();
-                        } catch (_) { Toast.show('❌ خطأ في الملف', 'error'); }
-                    };
-                    reader.readAsText(file);
-                };
-                input.click();
-            },
-
             async sendBroadcast() {
                 const title = document.getElementById('broadcastTitle').value.trim();
                 const message = document.getElementById('broadcastMessage').value.trim();
@@ -4269,23 +4226,15 @@
                 document.getElementById('broadcastMessage').value = '';
                 Toast.show('📢 تم إرسال الإشعار للجميع', 'success');
                 await App.db.addDeleteLog({ type: 'broadcast', description: `إشعار عام: ${title}` });
-            },
-
-            async viewAllActivities() {
-                const txs = await App.db.getAllTransactions();
-                const content = document.getElementById('userDetailContent');
-                content.innerHTML =
-                    `<h3 style="font-family:var(--font-family-display);margin-bottom:var(--space-4);">📊 جميع المعاملات (${txs.length})</h3><div style="max-height:25rem;overflow-y:auto;">${txs.length === 0 ? '<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-title">لا توجد معاملات</div></div>' : txs.slice(0,50).map(t => `<div style="display:flex;justify-content:space-between;padding:var(--space-2);background:var(--color-bg-elevated);border-radius:var(--radius-sm);margin-bottom:var(--space-1);font-size:0.85rem;flex-wrap:wrap;gap:var(--space-2);"><div style="flex:1;min-width:0;"><div style="font-weight:600;">${t.description || t.type}</div><div style="font-size:0.7rem;color:var(--color-text-muted);">${t.performedBy} • ${App._timeAgo(t.timestamp)}</div></div><div style="font-family:var(--font-family-display);font-weight:700;color:${t.type === 'credit' || t.type === 'game_win' ? 'var(--color-success)' : 'var(--color-danger)'};">${t.type === 'credit' || t.type === 'game_win' ? '+' : '-'}${t.amount.toFixed(2)}</div></div>`).join('')}</div>`;
-                document.getElementById('userDetailModal').classList.add('active');
             }
         };
 
-        // Admin filters
+        // مرشحات المشرف
         document.getElementById('adminSearchInput')?.addEventListener('input', () => Admin._renderUsers());
         document.getElementById('adminFilterStatus')?.addEventListener('change', () => Admin._renderUsers());
 
         // =============================================
-        // 9. DATA MANAGER
+        // 9. إدارة البيانات (Data Manager)
         // =============================================
         const DataManager = {
             stats: {},
@@ -4556,7 +4505,7 @@
         };
 
         // =============================================
-        // 10. GAME – مع مبلغ رهان لكل فئة وعرض الفائز
+        // 10. لعبة صيد الأكواد (Game)
         // =============================================
         const Game = {
             currentWinCode: null,
@@ -4819,7 +4768,6 @@
                     `الكود ${code.code} (فئة ${code.category_value}) أصبح متاحاً للجميع! الفائز: ${code.winner_username || 'مستخدم'}`,
                     'broadcast'
                 );
-                // إضافة إلى سجل السحوبات (سيتم تحديثه تلقائياً عند عرض الصفحة)
                 App.closeModal('winModal');
                 this.currentWinCode = null;
                 if (document.getElementById('page-public-codes').classList.contains('active')) {
@@ -4933,7 +4881,7 @@
         };
 
         // =============================================
-        // 11. GAME ADMIN – مع مبلغ رهان لكل فئة
+        // 11. إدارة اللعبة (Game Admin)
         // =============================================
         const GameAdmin = {
             currentManageCategoryId: null,
@@ -5137,15 +5085,13 @@
         };
 
         // =============================================
-        // 12. WITHDRAWAL HISTORY – سجل السحوبات مع المعرف الرقمي فقط
+        // 12. سجل السحوبات (معرف رقمي فقط)
         // =============================================
         const WithdrawalHistory = {
             async refresh() {
                 const codes = await App.db.getAll('game_codes');
-                // عرض جميع الأكواد التي تم ربحها (winner موجود) والتي انتهت صلاحيتها (expired) أو عامة
                 const winningCodes = codes.filter(c => c.is_used && c.winner_user_id && (c.is_public_revealed || (c
                     .expires_at && Date.now() > c.expires_at)));
-                // ترتيب حسب تاريخ الفوز (الأحدث أولاً)
                 winningCodes.sort((a, b) => (b.won_at || 0) - (a.won_at || 0));
                 document.getElementById('totalWithdrawalsCount').textContent = winningCodes.length;
                 const container = document.getElementById('withdrawalHistoryList');
@@ -5155,7 +5101,6 @@
                     return;
                 }
                 container.innerHTML = winningCodes.map(code => {
-                    // عرض المعرف الرقمي فقط (telegram user ID)
                     const winnerId = code.winner_telegram_id || code.winner_user_id || 'غير معروف';
                     return `
                     <div class="withdrawal-item">
@@ -5175,7 +5120,7 @@
         };
 
         // =============================================
-        // 13. START
+        // 13. بدء التطبيق
         // =============================================
         document.addEventListener('DOMContentLoaded', () => {
             if (window.location.hash) {
@@ -5190,7 +5135,7 @@
             });
         });
 
-        // Service Worker basic
+        // Service Worker (تخزين مؤقت)
         if ('serviceWorker' in navigator) {
             const swCode = `
                 self.addEventListener('install', e => {
