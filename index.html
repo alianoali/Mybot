@@ -2045,6 +2045,47 @@
         }
 
         /* ============================================
+           سجل السحوبات (جديد)
+           ============================================ */
+        .withdrawal-item {
+            background: var(--color-bg-elevated);
+            border: 1px solid var(--color-border);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+            margin-bottom: var(--space-2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: var(--space-3);
+            transition: all var(--transition-base);
+        }
+        .withdrawal-item:hover {
+            border-color: var(--color-secondary);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.06);
+        }
+        .withdrawal-item-code {
+            font-family: var(--font-family-display);
+            font-weight: 700;
+            color: var(--color-secondary);
+            word-break: break-all;
+        }
+        .withdrawal-item-meta {
+            font-size: 0.75rem;
+            color: var(--color-text-muted);
+        }
+        .withdrawal-item-winner {
+            color: var(--color-warning);
+            font-weight: 600;
+        }
+        .withdrawal-item-value {
+            font-family: var(--font-family-display);
+            font-weight: 700;
+            color: var(--color-success);
+            font-size: 1.1rem;
+        }
+
+        /* ============================================
            Responsive
            ============================================ */
         @media (max-width: 768px) {
@@ -2236,6 +2277,13 @@
                         <div class="sidebar-item-desc">الأكواد المتاحة للجميع</div>
                     </div>
                 </div>
+                <div class="sidebar-item" data-page="withdrawal-history">
+                    <div class="sidebar-item-icon">📜</div>
+                    <div class="sidebar-item-content">
+                        <div class="sidebar-item-title">سجل السحوبات</div>
+                        <div class="sidebar-item-desc">جميع الأكواد المسحوبة</div>
+                    </div>
+                </div>
                 <div class="sidebar-item" data-page="transactions">
                     <div class="sidebar-item-icon">📊</div>
                     <div class="sidebar-item-content">
@@ -2399,6 +2447,32 @@
                 </div>
             </div>
 
+            <!-- ==================== WITHDRAWAL HISTORY (جديد) ==================== -->
+            <div class="page" id="page-withdrawal-history">
+                <div class="page-header">
+                    <div>
+                        <h1 class="page-title">سجل <span>السحوبات</span> 📜</h1>
+                        <p class="page-sub">جميع الأكواد التي تم سحبها (فائزة) مع تفاصيل الفائزين</p>
+                    </div>
+                </div>
+                <div class="balance-hero" style="background:linear-gradient(145deg,rgba(0,212,255,0.06),rgba(139,92,246,0.03));border-color:rgba(0,212,255,0.2);">
+                    <div class="balance-hero-content">
+                        <div class="balance-hero-label">📊 إجمالي الأكواد المسحوبة</div>
+                        <div class="balance-hero-amount" id="totalWithdrawalsCount">0</div>
+                        <div class="balance-hero-currency">كود</div>
+                    </div>
+                </div>
+                <div class="section">
+                    <div class="section-header">
+                        <div class="section-title">📋 سجل السحوبات</div>
+                        <button class="btn btn-secondary" onclick="WithdrawalHistory.refresh()">🔄 تحديث</button>
+                    </div>
+                    <div id="withdrawalHistoryList">
+                        <div class="empty-state"><div class="empty-state-icon">📜</div><div class="empty-state-title">لا توجد سحوبات حتى الآن</div></div>
+                    </div>
+                </div>
+            </div>
+
             <!-- ==================== TRANSACTIONS ==================== -->
             <div class="page" id="page-transactions">
                 <div class="page-header">
@@ -2518,7 +2592,7 @@
                     <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(10rem,1fr));gap:var(--space-4);">
                         <div style="background:var(--color-bg-elevated);padding:var(--space-4);border-radius:var(--radius-md);">
                             <div style="font-size:0.8rem;color:var(--color-text-muted);">الإصدار</div>
-                            <div style="font-weight:700;">v7.1.0</div>
+                            <div style="font-weight:700;">v7.2.0</div>
                         </div>
                         <div style="background:var(--color-bg-elevated);padding:var(--space-4);border-radius:var(--radius-md);">
                             <div style="font-size:0.8rem;color:var(--color-text-muted);">التخزين</div>
@@ -2697,6 +2771,7 @@
             <button class="bottom-nav-item active" data-page="home"><span class="bottom-nav-icon">💰</span><span>الرصيد</span></button>
             <button class="bottom-nav-item" data-page="game"><span class="bottom-nav-icon">🎁</span><span>اللعبة</span></button>
             <button class="bottom-nav-item" data-page="my-codes"><span class="bottom-nav-icon">🎟️</span><span>أكوادي</span></button>
+            <button class="bottom-nav-item" data-page="withdrawal-history"><span class="bottom-nav-icon">📜</span><span>السحوبات</span></button>
             <button class="bottom-nav-item" data-page="notifications" id="bottomNavNotif" style="position:relative;">
                 <span class="bottom-nav-icon">🔔</span>
                 <span>إشعارات</span>
@@ -2731,19 +2806,21 @@
         </div>
     </div>
 
-    <!-- Charge -->
+    <!-- Charge Modal (معدل لإضافة النسبة المئوية) -->
     <div class="modal-overlay" id="chargeModal">
         <div class="modal">
             <div class="modal-header">
-                <div class="modal-title">💰 شحن رصيد المستخدم</div>
+                <div class="modal-title">💰 شحن رصيد المستخدم (نسبة مئوية)</div>
                 <button class="modal-close" onclick="App.closeModal('chargeModal')">✕</button>
             </div>
             <form id="chargeForm">
                 <div class="form-group"><label class="form-label">المستخدم</label><input type="text" class="form-input" id="chargeUserName" readonly style="background:var(--color-bg-elevated);"><input type="hidden" id="chargeUserId"></div>
-                <div class="form-group"><label class="form-label">المبلغ</label><input type="number" class="form-input" id="chargeAmount" placeholder="0.00" min="0" step="0.01" required><div class="form-hint">أدخل المبلغ المراد شحنه</div></div>
+                <div class="form-group"><label class="form-label">المبلغ الأساسي</label><input type="number" class="form-input" id="chargeBaseAmount" placeholder="0.00" min="0" step="0.01" required><div class="form-hint">أدخل المبلغ الذي سيتم احتساب النسبة منه</div></div>
+                <div class="form-group"><label class="form-label">النسبة المئوية للشحن (%)</label><input type="number" class="form-input" id="chargePercentage" placeholder="مثال: 10" min="0" max="100" step="0.1" required value="10"><div class="form-hint">سيتم إضافة هذه النسبة من المبلغ الأساسي إلى رصيد المستخدم</div></div>
                 <div class="form-group"><label class="form-label">ملاحظة (اختياري)</label><textarea class="form-input" id="chargeNote" rows="2"></textarea></div>
                 <div style="background:var(--color-bg-elevated);padding:var(--space-4);border-radius:var(--radius-md);margin-bottom:var(--space-4);">
                     <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-1);"><span style="color:var(--color-text-muted);font-size:0.85rem;">الرصيد الحالي:</span><span style="font-family:var(--font-family-display);font-weight:700;color:var(--color-primary);" id="chargeCurrentBalance">0.00</span></div>
+                    <div style="display:flex;justify-content:space-between;margin-bottom:var(--space-1);"><span style="color:var(--color-text-muted);font-size:0.85rem;">المبلغ المضاف (نسبة):</span><span style="font-family:var(--font-family-display);font-weight:700;color:var(--color-secondary);" id="chargeAddedAmount">0.00</span></div>
                     <div style="display:flex;justify-content:space-between;"><span style="color:var(--color-text-muted);font-size:0.85rem;">الرصيد بعد الشحن:</span><span style="font-family:var(--font-family-display);font-weight:700;color:var(--color-success);" id="chargeNewBalance">0.00</span></div>
                 </div>
                 <div style="display:flex;gap:var(--space-2);">
@@ -2925,7 +3002,7 @@
         // =============================================
         const ADMIN_CONFIG = { TELEGRAM_ID: 8614039081 };
         const GAME_CONFIG = { CLAIM_TIMEOUT: 5 * 60 * 1000 };
-        const APP_VERSION = 'v7.1.0';
+        const APP_VERSION = 'v7.2.0';
 
         // =============================================
         // 2. UTILITY: Encryption
@@ -2960,8 +3037,8 @@
         // =============================================
         class KratosDB {
             constructor() {
-                this.dbName = 'KratosBotDB_v8';
-                this.dbVersion = 6;
+                this.dbName = 'KratosBotDB_v9';
+                this.dbVersion = 7;
                 this.db = null;
             }
 
@@ -3013,7 +3090,6 @@
                         if (!db.objectStoreNames.contains('achievements')) {
                             db.createObjectStore('achievements', { keyPath: 'id' });
                         }
-                        // NEW: Notifications store
                         if (!db.objectStoreNames.contains('notifications')) {
                             const s = db.createObjectStore('notifications', { keyPath: 'id' });
                             s.createIndex('userId', 'userId', { unique: false });
@@ -3424,14 +3500,12 @@
                     broadcast: data.broadcast || false,
                     icon: data.icon || null
                 });
-                // إظهار توست فوري للمستخدم الحالي
                 const current = App.currentUser;
                 if (notif.userId === 'all' || notif.userId === current?.telegramId) {
                     const icon = notif.icon || this._getIcon(notif.type);
                     Toast.show(`${icon} ${notif.title}: ${notif.message}`, notif.type, 4000);
                 }
                 this._updateBadge();
-                // تحديث واجهة الإشعارات إذا كانت مفتوحة
                 if (document.getElementById('page-notifications').classList.contains('active')) {
                     this.render();
                 }
@@ -3543,7 +3617,6 @@
                 return new Date(ts).toLocaleDateString('ar');
             },
 
-            // دالة لإرسال إشعار لمستخدم معين أو للجميع
             async sendToUser(userId, title, message, type = 'info') {
                 return await this.add({ userId, title, message, type });
             },
@@ -3573,7 +3646,6 @@
                 this._bindEvents();
                 this._updateLoader('جاهز!', 100);
                 setTimeout(() => document.getElementById('appLoader').classList.add('hidden'), 600);
-                // تحميل تفضيل الإشعارات
                 const notifPref = await this.db.getSetting('notifications_enabled');
                 this._notificationsEnabled = notifPref !== null ? notifPref : true;
                 const toggle = document.getElementById('notifToggle');
@@ -3607,7 +3679,7 @@
                         if (user) { this.currentUser = user;
                             this._enterApp(); return; }
                     }
-                    document.getElementById('authGate').classlist.remove('hidden');
+                    document.getElementById('authGate').classList.remove('hidden');
                 }
             },
 
@@ -3618,7 +3690,6 @@
                 this.renderAll();
                 Game.startPublicRevealTask();
                 this._checkAchievements();
-                // إشعار ترحيبي
                 if (this.currentUser.loginCount <= 2) {
                     Notifications.add({
                         userId: this.currentUser.telegramId,
@@ -3632,14 +3703,12 @@
                     `مرحباً ${this.currentUser.fullName || this.currentUser.username}!`;
                 Toast.show(greet, 'success');
                 this.db.updateUser(this.currentUser.telegramId, { lastLogin: Date.now() });
-                // تحديث عدد الإشعارات
                 setTimeout(() => Notifications._updateBadge(), 500);
             },
 
             _checkAchievements() {
                 const u = this.currentUser;
                 if (!u) return;
-                // يمكن تفعيل الإنجازات تدريجياً حسب الأحداث
             },
 
             _bindEvents() {
@@ -3659,11 +3728,11 @@
                     this._submitChargeRequest(); });
                 document.getElementById('addCategoryForm').addEventListener('submit', (e) => { e.preventDefault();
                     GameAdmin.addCategory(); });
-                document.getElementById('chargeAmount').addEventListener('input', (e) => {
-                    const amt = parseFloat(e.target.value) || 0;
-                    const cur = parseFloat(document.getElementById('chargeCurrentBalance').textContent) || 0;
-                    document.getElementById('chargeNewBalance').textContent = (cur + amt).toFixed(2);
-                });
+
+                // حساب المبلغ المضاف في نافذة الشحن
+                document.getElementById('chargeBaseAmount').addEventListener('input', () => this._updateChargePreview());
+                document.getElementById('chargePercentage').addEventListener('input', () => this._updateChargePreview());
+
                 document.getElementById('deleteRecordType')?.addEventListener('change', () => DataManager.updateRecordCount());
                 document.getElementById('inactiveDays')?.addEventListener('change', () => DataManager.updateAffectedUsers());
 
@@ -3689,14 +3758,12 @@
                     });
                 });
 
-                // Theme
                 const savedTheme = localStorage.getItem('kratos_theme') || 'dark';
                 document.documentElement.setAttribute('data-theme', savedTheme);
                 document.getElementById('themeToggle').textContent = savedTheme === 'light' ? '☀️' : '🌙';
                 const t2 = document.getElementById('themeToggle2');
                 if (t2) t2.classList.toggle('active', savedTheme === 'dark');
 
-                // Keyboard
                 document.addEventListener('keydown', (e) => {
                     if (e.key === 'Escape') {
                         document.querySelectorAll('.modal-overlay.active').forEach(m => m.classList.remove('active'));
@@ -3704,10 +3771,18 @@
                     }
                 });
 
-                // Service Worker
                 if ('serviceWorker' in navigator) {
                     navigator.serviceWorker.register('/sw.js').catch(() => {});
                 }
+            },
+
+            _updateChargePreview() {
+                const base = parseFloat(document.getElementById('chargeBaseAmount').value) || 0;
+                const pct = parseFloat(document.getElementById('chargePercentage').value) || 0;
+                const added = base * (pct / 100);
+                const cur = parseFloat(document.getElementById('chargeCurrentBalance').textContent) || 0;
+                document.getElementById('chargeAddedAmount').textContent = added.toFixed(2);
+                document.getElementById('chargeNewBalance').textContent = (cur + added).toFixed(2);
             },
 
             async _simulateLogin() {
@@ -3773,6 +3848,7 @@
                 if (page === 'game') Game.renderCategories();
                 if (page === 'my-codes') Game.renderMyWonCodes();
                 if (page === 'public-codes') Game.renderPublicCodes();
+                if (page === 'withdrawal-history') WithdrawalHistory.refresh();
                 if (page === 'notifications') Notifications.render();
                 if (page === 'settings') this._updateStorageInfo();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -3817,6 +3893,10 @@
                 document.getElementById('detailLang').textContent = u.language === 'ar' ? 'العربية' : 'English';
                 document.getElementById('detailTgId').textContent = u.telegramId;
                 Notifications._updateBadge();
+                // تحديث سجل السحوبات إذا كانت الصفحة مفتوحة
+                if (document.getElementById('page-withdrawal-history').classList.contains('active')) {
+                    WithdrawalHistory.refresh();
+                }
             },
 
             _renderRecent(txs) {
@@ -3882,8 +3962,7 @@
                     note: `طريقة: ${method} | ${note}`,
                     performedBy: this.currentUser.username
                 });
-                // إشعار للمشرف
-                const adminNotif = await Notifications.add({
+                await Notifications.add({
                     userId: 'tg_' + ADMIN_CONFIG.TELEGRAM_ID,
                     type: 'warning',
                     title: '📥 طلب شحن جديد',
@@ -3960,7 +4039,7 @@
         };
 
         // =============================================
-        // 8. ADMIN – مع إشعارات البث
+        // 8. ADMIN – مع شحن النسبة المئوية
         // =============================================
         const Admin = {
             async renderDashboard() {
@@ -4032,42 +4111,48 @@
                     document.getElementById('chargeUserId').value = tgId;
                     document.getElementById('chargeUserName').value = `${u.fullName || u.username} (@${u.username})`;
                     document.getElementById('chargeCurrentBalance').textContent = (u.balance || 0).toFixed(2);
-                    document.getElementById('chargeNewBalance').textContent = (u.balance || 0).toFixed(2);
-                    document.getElementById('chargeAmount').value = '';
+                    document.getElementById('chargeBaseAmount').value = '';
+                    document.getElementById('chargePercentage').value = '10';
                     document.getElementById('chargeNote').value = '';
+                    document.getElementById('chargeAddedAmount').textContent = '0.00';
+                    document.getElementById('chargeNewBalance').textContent = (u.balance || 0).toFixed(2);
                     document.getElementById('chargeModal').classList.add('active');
                 });
             },
 
             async processCharge() {
                 const userId = document.getElementById('chargeUserId').value;
-                const amount = parseFloat(document.getElementById('chargeAmount').value);
+                const baseAmount = parseFloat(document.getElementById('chargeBaseAmount').value);
+                const percentage = parseFloat(document.getElementById('chargePercentage').value);
                 const note = document.getElementById('chargeNote').value;
-                if (!amount || amount <= 0) { Toast.show('يرجى إدخال مبلغ صحيح', 'error'); return; }
+                if (!baseAmount || baseAmount <= 0) { Toast.show('يرجى إدخال مبلغ أساسي صحيح', 'error'); return; }
+                if (isNaN(percentage) || percentage < 0 || percentage > 100) { Toast.show('النسبة يجب أن تكون بين 0 و 100',
+                        'error'); return; }
+                const addedAmount = baseAmount * (percentage / 100);
+                if (addedAmount <= 0) { Toast.show('المبلغ المضاف يجب أن يكون أكبر من 0', 'error'); return; }
                 const user = await App.db.getUser(userId);
                 if (!user) { Toast.show('المستخدم غير موجود', 'error'); return; }
                 const before = user.balance || 0;
-                const after = before + amount;
+                const after = before + addedAmount;
                 await App.db.addTransaction({
                     userId,
                     type: 'credit',
-                    amount,
+                    amount: addedAmount,
                     balanceBefore: before,
                     balanceAfter: after,
-                    description: 'شحن رصيد بواسطة المشرف',
-                    note: note || 'شحن يدوي',
+                    description: `شحن رصيد بواسطة المشرف (نسبة ${percentage}% من ${baseAmount})`,
+                    note: note || `شحن يدوي: ${baseAmount} × ${percentage}% = ${addedAmount}`,
                     performedBy: App.currentUser.username
                 });
-                // إشعار للمستخدم
                 await Notifications.add({
                     userId: userId,
                     type: 'success',
                     title: '💰 تم شحن رصيدك',
-                    message: `تم شحن ${amount.toFixed(2)} نقطة بواسطة المشرف`,
+                    message: `تم شحن ${addedAmount.toFixed(2)} نقطة (نسبة ${percentage}% من ${baseAmount}) بواسطة المشرف`,
                     icon: '💳'
                 });
                 App.closeModal('chargeModal');
-                Toast.show(`✅ تم شحن ${amount.toFixed(2)} نقطة`, 'success');
+                Toast.show(`✅ تم شحن ${addedAmount.toFixed(2)} نقطة (${percentage}% من ${baseAmount})`, 'success');
                 await this.renderDashboard();
                 if (document.getElementById('page-home').classList.contains('active')) await App.renderAll();
             },
@@ -4192,7 +4277,6 @@
                 document.getElementById('broadcastTitle').value = '';
                 document.getElementById('broadcastMessage').value = '';
                 Toast.show('📢 تم إرسال الإشعار للجميع', 'success');
-                // إضافة سجل
                 await App.db.addDeleteLog({ type: 'broadcast', description: `إشعار عام: ${title}` });
             },
 
@@ -4629,7 +4713,6 @@
                         }
                         this.currentWinCode = code;
                         this._showWinModal(code, category.value);
-                        // إشعار فوز
                         await Notifications.add({
                             userId: user.telegramId,
                             type: 'success',
@@ -4638,7 +4721,6 @@
                             icon: '🏆',
                             data: { code: code.code, category: category.value }
                         });
-                        // إشعار للمشرف
                         await Notifications.add({
                             userId: 'tg_' + ADMIN_CONFIG.TELEGRAM_ID,
                             type: 'success',
@@ -4722,7 +4804,6 @@
                 document.getElementById('winCode').style.display = 'block';
                 document.getElementById('claimCodeBtn').style.display = 'none';
                 Toast.show('🎉 تم استلام الكود وحفظه في سجل أكوادك!', 'success');
-                // إشعار استلام
                 await Notifications.add({
                     userId: App.currentUser.telegramId,
                     type: 'success',
@@ -4742,17 +4823,19 @@
                 code.revealed_at = Date.now();
                 await App.db.put('game_codes', code);
                 Toast.show('⏰ انتهت المهلة - الكود أصبح عاماً مع معلومات الفائز', 'warning');
-                // إشعار للجميع عن الكود العام
                 await Notifications.broadcast(
                     '🌐 كود جديد متاح للجميع',
                     `الكود ${code.code} (فئة ${code.category_value}) أصبح متاحاً للجميع! الفائز: ${code.winner_username || 'مستخدم'}`,
                     'broadcast'
                 );
+                // إضافة إلى سجل السحوبات (سيتم تحديثه تلقائياً عند عرض الصفحة)
                 App.closeModal('winModal');
                 this.currentWinCode = null;
-                // تحديث الأكواد العامة إذا كانت الصفحة مفتوحة
                 if (document.getElementById('page-public-codes').classList.contains('active')) {
                     this.renderPublicCodes();
+                }
+                if (document.getElementById('page-withdrawal-history').classList.contains('active')) {
+                    WithdrawalHistory.refresh();
                 }
             },
 
@@ -4838,7 +4921,6 @@
                             c.revealed_at = now;
                             await App.db.put('game_codes', c);
                             count++;
-                            // إشعار عام عن الكود
                             await Notifications.broadcast(
                                 '🌐 كود جديد متاح للجميع',
                                 `الكود ${c.code} (فئة ${c.category_value}) أصبح متاحاً للجميع! الفائز: ${c.winner_username || 'مستخدم'}`,
@@ -4848,9 +4930,11 @@
                     }
                     if (count > 0) {
                         console.log(`🗑️ تم كشف ${count} كود للعامة مع معلومات الفائز`);
-                        // تحديث واجهة الأكواد العامة إذا كانت مفتوحة
                         if (document.getElementById('page-public-codes').classList.contains('active')) {
                             this.renderPublicCodes();
+                        }
+                        if (document.getElementById('page-withdrawal-history').classList.contains('active')) {
+                            WithdrawalHistory.refresh();
                         }
                     }
                 }, 30000);
@@ -5062,7 +5146,43 @@
         };
 
         // =============================================
-        // 12. START
+        // 12. WITHDRAWAL HISTORY – سجل السحوبات
+        // =============================================
+        const WithdrawalHistory = {
+            async refresh() {
+                const codes = await App.db.getAll('game_codes');
+                // عرض جميع الأكواد التي تم ربحها (winner موجود) والتي انتهت صلاحيتها (expired) أو عامة
+                // أو ببساطة جميع الأكواد التي فاز بها أحد (is_used = true و winner_user_id موجود)
+                const winningCodes = codes.filter(c => c.is_used && c.winner_user_id && (c.is_public_revealed || (c
+                    .expires_at && Date.now() > c.expires_at)));
+                // ترتيب حسب تاريخ الفوز (الأحدث أولاً)
+                winningCodes.sort((a, b) => (b.won_at || 0) - (a.won_at || 0));
+                document.getElementById('totalWithdrawalsCount').textContent = winningCodes.length;
+                const container = document.getElementById('withdrawalHistoryList');
+                if (winningCodes.length === 0) {
+                    container.innerHTML =
+                        `<div class="empty-state"><div class="empty-state-icon">📜</div><div class="empty-state-title">لا توجد سحوبات حتى الآن</div><div class="empty-state-text">ستظهر هنا الأكواد التي تم ربحها وانتهت صلاحيتها</div></div>`;
+                    return;
+                }
+                container.innerHTML = winningCodes.map(code => `
+                    <div class="withdrawal-item">
+                        <div style="flex:1;min-width:10rem;">
+                            <div class="withdrawal-item-code">${code.code}</div>
+                            <div class="withdrawal-item-meta">
+                                فئة: ${code.category_value} • ربح: ${code.won_at ? new Date(code.won_at).toLocaleString('ar') : 'غير معروف'}
+                                ${code.claimed ? ` • استلم: ${new Date(code.claimed_at).toLocaleString('ar')}` : ' • لم يستلم'}
+                                ${code.is_public_revealed ? ' • 🌐 عام' : ' • ⏰ منتهي'}
+                            </div>
+                            <div class="withdrawal-item-winner">🏆 الفائز: ${code.winner_username || 'مستخدم'} (ID: ${code.winner_telegram_id || code.winner_user_id || 'غير معروف'})</div>
+                        </div>
+                        <div class="withdrawal-item-value">${code.category_value.toLocaleString()}</div>
+                    </div>
+                `).join('');
+            }
+        };
+
+        // =============================================
+        // 13. START
         // =============================================
         document.addEventListener('DOMContentLoaded', () => {
             if (window.location.hash) {
